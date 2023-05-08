@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     debugPaintSizeEnabled = true;  // HERE FOR DESIGN BOUNDARY'S
     return MaterialApp(
 
-      title: 'Test ',
+      title: 'Test data',
       theme: ThemeData(
 
         primarySwatch: Colors.red,
