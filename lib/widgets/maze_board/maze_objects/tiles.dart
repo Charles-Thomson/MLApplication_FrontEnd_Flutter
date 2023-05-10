@@ -11,8 +11,54 @@ class TileGrid extends StatelessWidget{
   final double tileOffSet = 5;
   final Color primaryColor = Colors.grey;
 
+
   @override
   Widget build(BuildContext context){
+    List fullTileIndex = List.generate(16, (index) => 0); // +1 as it's a loop
+    Color thisUsedColor = primaryColor;
+
+    // adding to the list at the index relating to the tile index
+    int addToListFunction(int index, var tileStatus){
+
+      fullTileIndex[index] += 1;
+      print("The current list of index's:  $fullTileIndex ");
+      int returnVal = fullTileIndex[index];
+      return returnVal;
+    }
+
+    void setNewColor(int index){
+      int stateValue = fullTileIndex[index];
+      if (stateValue == 2){
+        thisUsedColor = Colors.blue;
+        print("Changed to blue");
+    }else{
+      thisUsedColor = Colors.blue;
+    }
+    }
+
+    List <Widget>tileList = List.generate(mapSize * mapSize,
+            (index){
+          return CompleteTile(
+            // These values correspond to the receiving func(val, val)
+            key: UniqueKey(),
+
+            callback: (index, tileStateValue) {
+              int returnVal = addToListFunction(index,tileStateValue);
+              setNewColor(index);
+
+              return returnVal;
+            },
+
+            tileState: fullTileIndex[index],
+            tileHeight: tileHeight,
+            tileWidth: tileWidth,
+            tileOffSet: tileOffSet,
+            tileIndex: index,
+            primaryColor: thisUsedColor,
+          );
+        }
+    );
+
     return SizedBox(
       height: 160,
       width: 160,
@@ -20,51 +66,47 @@ class TileGrid extends StatelessWidget{
           crossAxisCount: mapSize,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
-          children: List.generate(mapSize * mapSize,
-                  (index){
-                  return CompleteTile(
-                      tileHeight: tileHeight,
-                      tileWidth: tileWidth,
-                      tileOffSet: tileOffSet,
-                      tileIndex: index,
-                      primaryColor: primaryColor);
-                  }
-          ),
+
+          children: tileList
       ),
     );
   }
 }
 
 class CompleteTile extends StatelessWidget{
-  const CompleteTile({super.key,
+  const CompleteTile({required Key key,
+    required this.tileState,
+    required this.callback,
     required this.tileHeight,
     required this.tileWidth,
     required this.tileOffSet,
     required this.tileIndex,
-    required this.primaryColor});
+    required this.primaryColor}): super(key: key);
 
+  final int tileState;
+  final int Function(int, int) callback;
   final double tileHeight;
   final double tileWidth;
   final double tileOffSet;
   final int tileIndex;
   final Color primaryColor;
 
-
   @override
   Widget build(BuildContext context){
-    bool unusedTile = false;
+
     double offSetX = 2;
     double offSetY = 2;
     Color usedColor = primaryColor;
-    List<int> unusedTiles = [10,11,12,1,2];
 
-    if (unusedTiles.contains(tileIndex)){
+    if (tileState == 2){
       usedColor = Colors.red;
-      unusedTile = true;
       offSetX = 10;
       offSetY = 10;
     }
-    CustomPainter painter = TilePainter(unusedTile: unusedTile);
+    if (tileState == 1){
+      usedColor = Colors.blue;
+    }
+
     return Transform.translate(
       offset: Offset(offSetX, offSetY),
       child: SizedBox(
@@ -75,16 +117,20 @@ class CompleteTile extends StatelessWidget{
           children: [
               CustomPaint(
                   size: Size(tileHeight, tileWidth),
-                  painter: painter
+                  painter: TilePainter(tileState: tileState)
               ),
 
               TileTop(
+                  myOnPressed: (index,tileStateValue) {
+                    int returnVal = callback(index, tileStateValue);
+                    return returnVal;
+                  },
                   tileHeight: tileHeight,
                   tileWidth: tileWidth,
                   tileOffSet: tileOffSet,
                   tileIndex: tileIndex,
-                  primaryColor: usedColor,
-                  unusedTile: unusedTile)
+                  primaryColor: primaryColor,
+                  )
           ]
         )
       ),
@@ -92,75 +138,101 @@ class CompleteTile extends StatelessWidget{
   }
 }
 
-
 class TileTop extends StatefulWidget{
+
   const TileTop({super.key,
+    required this.myOnPressed,// this is the callback to top level
     required this.tileHeight,
     required this.tileWidth,
     required this.tileOffSet,
     required this.tileIndex,
     required this.primaryColor,
-    required this.unusedTile});
+    });
 
+  final int Function(int, int) myOnPressed;
   final double tileHeight;
   final double tileWidth;
   final double tileOffSet;
   final int tileIndex;
   final Color primaryColor;
-  final bool unusedTile;
+
 
   @override
   State<TileTop> createState() => _TileTop();
 }
 class _TileTop extends State<TileTop>{
-  get primaryColor => widget.primaryColor;
+  int tileStateValue = 0;
+  late Color localPrimaryColor;
 
+  // Color thiPrimaryColor = Colors.blueGrey;
+
+  get primaryColor => localPrimaryColor;
+  get tileIndex => widget.tileIndex;
+  // set newPrimaryColor(Color newColor){
+  //   thiPrimaryColor = newColor;
+  // }
+
+  @override
+  void initState(){
+    localPrimaryColor = widget.primaryColor;
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context){
-    return Container(
+    return  InkWell(
+      onTap: () {
+        // incrementState();
+        int newTileStateValue = widget.myOnPressed.call(tileIndex, tileStateValue) ;
+
+        setState(() {
+          tileStateValue = newTileStateValue ;
+
+        });
+        print("tapped on container $tileIndex: State: $tileStateValue");},
+
+      child: Container(
         height: widget.tileHeight,
         width: widget.tileWidth,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-            gradient: RadialGradient(
-              colors: <Color>[
-                primaryColor.shade300,
-                primaryColor.shade400,
-                primaryColor.shade500,
-                primaryColor.shade600,
-              ],
-            ),
-            boxShadow: [BoxShadow(
+          borderRadius: BorderRadius.circular(4),
+          gradient: RadialGradient(
+            colors: <Color>[
+            primaryColor.shade300,
+            primaryColor.shade400,
+            primaryColor.shade500,
+            primaryColor.shade600,
+            ],
+          ),
+          boxShadow: [BoxShadow(
             color: Colors.white.withOpacity(0.8),
-            blurRadius: 4,
-            offset: const Offset(0.5, 0.5),
+            blurRadius: 2,
+            offset: const Offset(1, 1),
             blurStyle: BlurStyle.solid
-          )
-        ]
-      ),
+            )
+          ]
+        ),
       child: Center(
-        child: Text(widget.tileIndex.toString())
-      )
+          child: Text(tileIndex.toString())
+        )
+      ),
     );
-
   }
 }
 
-// played with height from size.height
-//
 class TilePainter extends CustomPainter{
-  TilePainter({required this.unusedTile});
+  TilePainter({required this.tileState});
 
   final double edgeRadius = 2;
-  final bool unusedTile;
+  final int tileState;
 
   final tilePaint = Paint();
   double depth = 8; // normally 20
 
   @override
   void paint(Canvas canvas, Size size){
-    if (unusedTile == true){
+    if (tileState == 2){
       depth = 0;
     }
     tilePaint.shader = ui.Gradient.linear(const Offset(0, 20), const Offset(20, 0), [
