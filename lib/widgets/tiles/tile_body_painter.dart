@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 class TilePainter extends CustomPainter{
-  TilePainter({required this.tileState, required this.depth, required Listenable repaint}): super(repaint: repaint);
+  TilePainter({required this.tileState, required this.depth});
 
   final double edgeRadius = 2;
   final double depth;

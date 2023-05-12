@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze/built_maze.dart';
 import 'package:ann_app/widgets/pathselector/pop_up_selector_button.dart';
+import 'package:ann_app/widgets/stats_board/stats_board_body.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -24,7 +25,10 @@ class _MyHomePageState extends State<MyHomePage> {
           const Center(
             child: BuiltMaze()
             ),
-          const SizedBox(height: 350),
+          const SizedBox(height: 100),
+          const StatsBoardBody(),
+          const SizedBox(height: 50),
+
           Row(
             children: const [
               SizedBox(width: 300),
