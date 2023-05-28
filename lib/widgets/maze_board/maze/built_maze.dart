@@ -9,8 +9,9 @@ double edgeRadius = 20;
 double rimOffSet = 30;
 
 class BuiltMaze extends StatelessWidget{
-  const BuiltMaze({super.key});
+  const BuiltMaze({super.key, required this.updateTileData_CallBack});
 
+  final int Function(int, int) updateTileData_CallBack;
   @override
   Widget build(BuildContext context){
     return Transform.rotate(
@@ -35,7 +36,12 @@ class BuiltMaze extends StatelessWidget{
           Positioned(
             bottom: rimOffSet   ,
             right: rimOffSet ,
-            child: const TileGrid(),
+            child: TileGrid(
+                updateTileData_CallBack: (index, tileState){
+                  int newTileState = updateTileData_CallBack(index, tileState);
+                  return newTileState;
+                }
+            ),
           ),
       ]
     ),

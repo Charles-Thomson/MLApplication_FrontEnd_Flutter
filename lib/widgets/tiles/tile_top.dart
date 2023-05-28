@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 class TileTop extends StatefulWidget{
 
   const TileTop({super.key,
-    required this.myOnPressed,// this is the callback to top level
+    required this.updateTileData_CallBack,// this is the callback to top level
     required this.tileHeight,
     required this.tileWidth,
     required this.tileIndex,
     required this.primaryColor,
   });
 
-  final int Function(int, int) myOnPressed;
+  final int Function(int, int) updateTileData_CallBack;
   final double tileHeight;
   final double tileWidth;
   final int tileIndex;
@@ -22,7 +22,7 @@ class TileTop extends StatefulWidget{
   State<TileTop> createState() => _TileTop();
 }
 class _TileTop extends State<TileTop>{
-  int tileStateValue = 0;
+  int tileState = 0;
   get tileIndex => widget.tileIndex;
   get primaryColor => widget.primaryColor;
 
@@ -32,10 +32,9 @@ class _TileTop extends State<TileTop>{
   Widget build(BuildContext context){
     return  InkWell(
         onTap: () {
-          int newTileStateValue = widget.myOnPressed.call(tileIndex, tileStateValue) ;
-          // does this need to be tracked down on the widget level ?
+          int newTileState = widget.updateTileData_CallBack.call(tileIndex, tileState) ;
           setState(() {
-            tileStateValue = newTileStateValue ;
+            tileState = newTileState ;
           });
           },
 

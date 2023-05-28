@@ -6,13 +6,13 @@ import 'package:ann_app/widgets/tiles/tile_config.dart' as config;
 
 class NewCompleteTile extends StatefulWidget{
   const NewCompleteTile({super.key,
-    required this.callback,
+    required this.updateTileData_CallBack,
     required this.tileHeight,
     required this.tileWidth,
     required this.tileIndex,
     });
 
-  final int Function(int, int) callback;
+  final int Function(int, int) updateTileData_CallBack;
   final double tileHeight;
   final double tileWidth;
   final int tileIndex;
@@ -54,10 +54,10 @@ class _NewCompleteTile extends State<NewCompleteTile>{
           painter: TilePainter(tileState: tileStateValue, depth: depth)
           ),
                 TileTop(
-                  myOnPressed: (index,tileStateValue) {
-                    int returnVal = widget.callback(index, tileStateValue);
-                    checkForRedraw(returnVal); // In current widget
-                    return returnVal; // -> tile_top
+                  updateTileData_CallBack: (index,tileState) {
+                    int newTileState = widget.updateTileData_CallBack(index, tileState);
+                    checkForRedraw(newTileState); // In current widget
+                    return newTileState; // -> tile_top
                   },
                   tileHeight: widget.tileHeight,
                   tileWidth: widget.tileWidth,
