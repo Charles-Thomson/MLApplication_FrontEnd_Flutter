@@ -61,11 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void testApiCall() async {
     var testQuery = "TestQuery";
-    String url = "http://10.0.2.2:5000/test_print?query=$testQuery";
+    String url = "";
     try{
+      String tileDataString = tileData.join(',');
+      url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
       data = await passmap(url);
       tagsJson = jsonDecode(data)['output'];
-      //tagsJson = jsonDecode(data)['second'];
       finaldata = tagsJson.toString();
       print("in the call");
       print(finaldata);
