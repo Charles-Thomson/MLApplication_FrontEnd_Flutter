@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

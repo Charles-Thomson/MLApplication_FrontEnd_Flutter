@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/weight_heuristic_selection_button.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/activation_function_selection_button.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/generation_concatenation_function_button.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
 
 class CustomBottomNavBar extends StatefulWidget{
   const CustomBottomNavBar(this.dockedLocation, {super.key});
@@ -21,8 +25,16 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> builtNavBarItems = [];
-    builtNavBarItems = buildNavBar(dockedLocation);
+    Widget placeHolder = Opacity(opacity: 0.0,
+        child: IconButton(onPressed: () {},
+            icon: const Icon(Icons.abc)));
+    // need to give the cards seperate ID's
+    List<Widget> builtNavBarItems =  [placeHolder,
+                                      const PopOutCard(), const PopOutCard()
+
+    ];
+    //builtNavBarItems = [];
+    //buildNavBar(dockedLocation);
 
     return BottomAppBar(
       height: 60,
@@ -30,8 +42,9 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
       color: Colors.blue,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
+        children:  [
           ...builtNavBarItems
+          //HeuristicSelectionButton()
         ]
       )
     );
