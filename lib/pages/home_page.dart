@@ -17,6 +17,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   List tileData = List.generate(16, (index) => 1); // +1 as it's a loop
+  String weightHeuristic = "";
+
+  void updateWeightHeuristic(String newWeightHeuristic){
+    weightHeuristic = newWeightHeuristic;
+    print(weightHeuristic);
+    print("In the home Page");
+
+  }
 
   int updateTileListData(int index, var tileState){
     if(tileData[index] >= 3){
@@ -83,7 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: CustomBottomNavBar(dockedLocation),
+      bottomNavigationBar: CustomBottomNavBar(dockedLocation, updateWeightHeuristic: (newWeightHeuristic){
+        updateWeightHeuristic(newWeightHeuristic);
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: testApiCall,
         child: const Icon(Icons.ac_unit)

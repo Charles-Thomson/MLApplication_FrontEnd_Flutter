@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/weight_heuristic_selection_button.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/activation_function_selection_button.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/generation_concatenation_function_button.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
+
+import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_activation.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_weight_heuristic.dart';
+import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_generation_concaternation.dart';
 
 class CustomBottomNavBar extends StatefulWidget{
-  const CustomBottomNavBar(this.dockedLocation, {super.key});
+  const CustomBottomNavBar(this.dockedLocation,{super.key, required this.updateWeightHeuristic});
 
   final FloatingActionButtonLocation dockedLocation;
+  final Function(String) updateWeightHeuristic;
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBar();
@@ -28,10 +29,15 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
     Widget placeHolder = Opacity(opacity: 0.0,
         child: IconButton(onPressed: () {},
             icon: const Icon(Icons.abc)));
-    // need to give the cards seperate ID's
-    List<Widget> builtNavBarItems =  [placeHolder,
-                                      const PopOutCard(), const PopOutCard()
 
+
+    List<Widget> builtNavBarItems =  [
+      placeHolder,
+      WeightHeuristicNavButton(updateWeightHeuristic: (newWeightHeuristic){
+      widget.updateWeightHeuristic(newWeightHeuristic);
+      }),
+      const ActivationNavButton(),
+      const GenerationNavButton()
     ];
     //builtNavBarItems = [];
     //buildNavBar(dockedLocation);
@@ -54,37 +60,37 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
       // This needs to be cleaned up
       // Build statically then display is the other option , will be easier on the
       // onPress handling ?
-      List<Widget> buildNavBar(dockedLocation){
-        List<Widget> navBarItems = [];
-        Widget placeHolder = Opacity(opacity: 0.0,
-                                    child: IconButton(onPressed: () {},
-                                    icon: const Icon(Icons.abc)));
-
-        if(dockedLocation == FloatingActionButtonLocation.startDocked){
-          List<Widget> items = [];
-          for(Icon thisIcon in frontDockedIcons){
-            Widget item = buildNavItem(thisIcon: thisIcon);
-            items.add(item);
-          }
-          navBarItems = items;
-          navBarItems.insert(0,placeHolder);
-
-        } else if(dockedLocation == FloatingActionButtonLocation.endDocked){
-          List<Widget> items = [];
-          for(Icon thisIcon in endDockedIcons){
-            Widget item = buildNavItem(thisIcon: thisIcon);
-            items.add(item);
-          }
-          navBarItems = items;
-          navBarItems.add(placeHolder);
-        }
-          return navBarItems;
-      }
-
-      Widget buildNavItem({required Icon thisIcon}){
-          Widget thisButton = IconButton(onPressed: () {}, icon: thisIcon);
-          return thisButton;
-      }
+      // List<Widget> buildNavBar(dockedLocation){
+      //   List<Widget> navBarItems = [];
+      //   Widget placeHolder = Opacity(opacity: 0.0,
+      //                               child: IconButton(onPressed: () {},
+      //                               icon: const Icon(Icons.abc)));
+      //
+      //   if(dockedLocation == FloatingActionButtonLocation.startDocked){
+      //     List<Widget> items = [];
+      //     for(Icon thisIcon in frontDockedIcons){
+      //       Widget item = buildNavItem(thisIcon: thisIcon);
+      //       items.add(item);
+      //     }
+      //     navBarItems = items;
+      //     navBarItems.insert(0,placeHolder);
+      //
+      //   } else if(dockedLocation == FloatingActionButtonLocation.endDocked){
+      //     List<Widget> items = [];
+      //     for(Icon thisIcon in endDockedIcons){
+      //       Widget item = buildNavItem(thisIcon: thisIcon);
+      //       items.add(item);
+      //     }
+      //     navBarItems = items;
+      //     navBarItems.add(placeHolder);
+      //   }
+      //     return navBarItems;
+      // }
+      //
+      // Widget buildNavItem({required Icon thisIcon}){
+      //     Widget thisButton = IconButton(onPressed: () {}, icon: thisIcon);
+      //     return thisButton;
+      // }
 
 
 }
