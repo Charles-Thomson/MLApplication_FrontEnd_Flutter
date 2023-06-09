@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ann_app/widgets/dropdownselector.dart';
 
 import 'package:ann_app/widgets/nav_bar_buttons/hero_route.dart';
 const String _weightpopouttag = "weight-pop-out";
@@ -47,8 +48,10 @@ class WeightPopOutTile extends StatefulWidget{
 class _WeightPopOutTile extends State<WeightPopOutTile> {
 
   //set currentSelectedValue(String? currentSelectedValue) {}
-  String? currentSelectedValue = "";
-  var menuItems = ["","1", "2", "3"];
+  String? currentSelectedValue = "Weight Heuristic";
+  var menuItems = ["Weight Heuristic","1", "2", "3"];
+
+  get updateSelectedValue => widget.updateWeightHeuristic;
 
   @override
   Widget build(BuildContext context) {
@@ -92,51 +95,32 @@ class _WeightPopOutTile extends State<WeightPopOutTile> {
                 width: 340,
                 color: Colors.white,
                 child:
-                  Column( children:   [
-                     Material(
-                      child:  InputDecorator(
-                      decoration: InputDecoration(
-                      labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                      errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                      hintText: 'Testing hint text',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                      isEmpty: currentSelectedValue == '',
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: currentSelectedValue,
-                            onChanged: (String? newValue) {
-                              widget.updateWeightHeuristic(newValue!);
-                              setState(() {
-                                currentSelectedValue = newValue;
-                              });
-
-
-                            },
-
-                            isDense: true,
-                            items: menuItems.map((String value){
-                              return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value)
-                              );
-                            }
-                            ).toList(),
-
-                          )
-                        )
-
-
-                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:   [
+                    const SizedBox(
+                      height: 40,
+                      child: Material(
+                        child: Text(
+                            style: TextStyle(fontSize: 20)
+                            ,"Test Title "),
+                      )
+                    ),
+                     const SizedBox(
+                       height: 10
+                     ),
+                     SizedBox(
+                       height: 100,
+                       width: 300,
+                       child: DropDownMenu(updateSelectedValue, menuItems, "Weight Heuristic")
+                     )
+                    ]
                   )
-
-                  ]
-                    )
               )
               ))
             )
         ),
       );
-
   }
 }
 
