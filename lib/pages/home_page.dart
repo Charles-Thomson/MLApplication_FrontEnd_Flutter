@@ -17,13 +17,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   List tileData = List.generate(16, (index) => 1); // +1 as it's a loop
-  String weightHeuristic = "";
+  Map<String, String> configData = {'Weight Heuristic': "", "Hidden Activation Function:": "1","Output Activation Function:": "1", "Generation Concatenation": "2"};
 
-  void updateWeightHeuristic(String newWeightHeuristic){
-    weightHeuristic = newWeightHeuristic;
-    print(weightHeuristic);
-    print("In the home Page");
-
+  void updateConfigData(String configKey, String newValue){
+    configData[configKey] = newValue;
+    print(configData);
   }
 
   int updateTileListData(int index, var tileState){
@@ -91,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: CustomBottomNavBar(dockedLocation, updateWeightHeuristic: (newWeightHeuristic){
-        updateWeightHeuristic(newWeightHeuristic);
+      bottomNavigationBar: CustomBottomNavBar(dockedLocation, updateConfigData: (configKey, newValue){
+        updateConfigData(configKey, newValue);
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: testApiCall,
@@ -108,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
               updateTileData_CallBack: (index, tileState){
                 int newTileState = updateTileListData(index, tileState);
                 return newTileState;
-
                 }
               )
             ),

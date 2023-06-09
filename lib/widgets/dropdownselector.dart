@@ -2,23 +2,19 @@ import 'package:flutter/material.dart';
 
 
 class DropDownMenu extends StatefulWidget{
-  const DropDownMenu(this.updateSelectedValue, this.menuItems, this.selectorTitleName, {super.key});
+  const DropDownMenu(this.updateConfigData, this.menuItems, this.configKey, {super.key});
 
-  final Function(String) updateSelectedValue;
+  final Function(String, String) updateConfigData;
   final List<String> menuItems;
-  final String selectorTitleName;
-
+  final String configKey;
 
   @override
   State<DropDownMenu> createState() => _DropDownMenu();
-
 }
 
 class _DropDownMenu extends State<DropDownMenu>{
-
-  get selectorTitleName => widget.selectorTitleName;
+  get selectorTitleName => widget.configKey;
   late String? currentSelectedValue;
-
 
   @override
   void initState(){
@@ -42,6 +38,7 @@ class _DropDownMenu extends State<DropDownMenu>{
 
       Material(
         child:  SizedBox(
+          height: 55,
           child: InputDecorator(
               decoration: InputDecoration(
                   labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
@@ -51,9 +48,10 @@ class _DropDownMenu extends State<DropDownMenu>{
               isEmpty: currentSelectedValue == '',
               child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
+                    isExpanded: true,
                     value: currentSelectedValue,
                     onChanged: (String? newValue) {
-                      widget.updateSelectedValue(newValue!);
+                      widget.updateConfigData(widget.configKey, newValue!);
                       setState(() {
                         currentSelectedValue = newValue;
                       });
@@ -66,17 +64,11 @@ class _DropDownMenu extends State<DropDownMenu>{
                       );
                     }
                     ).toList(),
-
                   )
               )
-
-
           ),
         ),
       )
-
-
-
     ]
     );
   }

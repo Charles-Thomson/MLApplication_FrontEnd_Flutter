@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:ann_app/widgets/nav_bar_buttons/hero_route.dart';
+import 'package:ann_app/widgets/dropdownselector.dart';
+
 const String _generationpopouttag = "generation-pop-out";
 class GenerationNavButton extends StatelessWidget{
-  const GenerationNavButton({super.key});
+  const GenerationNavButton({super.key, required this.updateConfigData});
+
+  final Function(String, String) updateConfigData;
 
   @override
   Widget build(BuildContext context){
@@ -11,7 +15,9 @@ class GenerationNavButton extends StatelessWidget{
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).push(HeroDialogRoute(builder: (context){
-              return const _GenerationPopOutTile();
+              return GenerationPopOutTile(updateConfigData: (configKey, newValue){
+                updateConfigData(configKey, newValue);
+              });
             }));
           },
           child: Hero(
@@ -30,9 +36,12 @@ class GenerationNavButton extends StatelessWidget{
   }
 }
 
-class _GenerationPopOutTile extends StatelessWidget {
-  /// {@macro add_todo_popup_card}
-  const _GenerationPopOutTile({super.key});
+class GenerationPopOutTile extends StatelessWidget {
+  GenerationPopOutTile({super.key, required this.updateConfigData});
+
+  final Function(String, String) updateConfigData;
+  final  menuItems = ["Generation concatenation","Merging", "Avg"];
+  final String configKey = "Generation Concatenation";
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +77,36 @@ class _GenerationPopOutTile extends StatelessWidget {
                     blurStyle: BlurStyle.solid
                 )],
               ),
+
+              child: Center(child:
+              Container(
+                  height: 170,
+                  width: 340,
+                  color: Colors.white,
+                  child:
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:   [
+                        const SizedBox(
+                            height: 40,
+                            child: Material(
+                              child: Text(
+                                  style: TextStyle(fontSize: 20)
+                                  ,"Generation Concatenation"),
+                            )
+                        ),
+                        const SizedBox(
+                            height: 10
+                        ),
+                        SizedBox(
+                            height: 100,
+                            width: 300,
+                            child: DropDownMenu(updateConfigData, menuItems, configKey)
+                        )
+                      ]
+                  )
+              )
+              )
             )
         ),
       ),

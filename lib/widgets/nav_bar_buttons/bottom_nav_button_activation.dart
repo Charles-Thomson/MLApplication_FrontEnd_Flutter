@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:ann_app/widgets/nav_bar_buttons/hero_route.dart';
+import 'package:ann_app/widgets/dropdownselector.dart';
 const String _activationpopouttag = "activation-pop-out";
 class ActivationNavButton extends StatelessWidget{
-  const ActivationNavButton({super.key});
+  const ActivationNavButton({super.key, required this.updateConfigData});
+  final Function(String, String) updateConfigData;
 
   @override
   Widget build(BuildContext context){
@@ -11,7 +13,9 @@ class ActivationNavButton extends StatelessWidget{
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(HeroDialogRoute(builder: (context){
-            return const _ActivationPopOutTile();
+            return ActivationPopOutTile(updateConfigData: (configKey, newValue){
+              updateConfigData(configKey, newValue);
+            });
           }));
         },
         child: Hero(
@@ -30,9 +34,13 @@ class ActivationNavButton extends StatelessWidget{
   }
 }
 
-class _ActivationPopOutTile extends StatelessWidget {
-  /// {@macro add_todo_popup_card}
-  const _ActivationPopOutTile({super.key});
+class ActivationPopOutTile extends StatelessWidget {
+  ActivationPopOutTile({super.key, required this.updateConfigData});
+  final Function(String, String) updateConfigData;
+  final hiddenMenuItems = ["Hidden Activation Function", "Relu", "Leaky Relu", "Sigmoid", "Liner"];
+  final outputMenuItems = ["Output Activation Function", "Arg max", "Soft max"];
+  final hiddenConfigKey = "Hidden Activation Function";
+  final outputConfigKey = "Output Activation Function";
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +76,44 @@ class _ActivationPopOutTile extends StatelessWidget {
                     blurStyle: BlurStyle.solid
                 )],
               ),
+                child: Center(child:
+                Container(
+                    height: 170,
+                    width: 340,
+                    color: Colors.white,
+                    child:
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:   [
+                          const SizedBox(
+                              height: 20,
+                              child: Material(
+                                child: Text(
+                                    style: TextStyle(fontSize: 18)
+                                    ,"Weight Heuristic"),
+                              )
+                          ),
+                          const SizedBox(
+                              height: 2
+                          ),
+                          SizedBox(
+                              height: 70,
+                              width: 300,
+                              child: DropDownMenu(updateConfigData, hiddenMenuItems, hiddenConfigKey)
+                          ),
+                          const SizedBox(
+                            height: 5
+                          ),
+                          SizedBox(
+                              height: 70,
+                              width: 300,
+                              child: DropDownMenu(updateConfigData, outputMenuItems, outputConfigKey)
+                          )
+                        ]
+                    )
+                )
+                )
+
             )
         ),
       ),
