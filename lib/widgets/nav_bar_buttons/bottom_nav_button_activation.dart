@@ -37,10 +37,10 @@ class ActivationNavButton extends StatelessWidget{
 class ActivationPopOutTile extends StatelessWidget {
   ActivationPopOutTile({super.key, required this.updateConfigData});
   final Function(String, String) updateConfigData;
-  final hiddenMenuItems = ["Hidden Activation Function", "Relu", "Leaky Relu", "Sigmoid", "Liner"];
+  final hiddenMenuItems = ["Hidden Activation Function", "Relu", "Leaky Relu", "Sigmoid", "Linear"];
   final outputMenuItems = ["Output Activation Function", "Arg max", "Soft max"];
-  final hiddenConfigKey = "Hidden Activation Function";
-  final outputConfigKey = "Output Activation Function";
+  final hiddenConfigKey = "HIDDEN_LAYER_ACTIVATION_FUNCTION";
+  final outputConfigKey = "OUTPUT_LAYER_ACTIVATION_FUNCTION";
 
   @override
   Widget build(BuildContext context) {

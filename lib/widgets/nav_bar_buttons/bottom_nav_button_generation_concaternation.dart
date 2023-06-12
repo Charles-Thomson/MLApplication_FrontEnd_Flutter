@@ -41,7 +41,7 @@ class GenerationPopOutTile extends StatelessWidget {
 
   final Function(String, String) updateConfigData;
   final  menuItems = ["Generation concatenation","Merging", "Avg"];
-  final String configKey = "Generation Concatenation";
+  final String configKey = "WEIGHTS_CONCATENATION_FUNCTIONS";
 
   @override
   Widget build(BuildContext context) {

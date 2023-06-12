@@ -39,8 +39,8 @@ class WeightPopOutTile extends StatelessWidget{
   WeightPopOutTile({super.key, required this.updateConfigData});
 
   final Function(String, String) updateConfigData;
-  final  menuItems = ["Weight Heuristic","HE", "Sigmoid", "tahn"];
-  final String configKey = "Weight Heuristic";
+  final  menuItems = ["Weight Heuristic","HE", "xavier", "normalized xavier"];
+  final String configKey = "WEIGHT_INITALIZATION_HEURISTIC";
 
   @override
   Widget build(BuildContext context) {

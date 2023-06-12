@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,7 +18,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   List tileData = List.generate(16, (index) => 1); // +1 as it's a loop
-  Map<String, String> configData = {'Weight Heuristic': "", "Hidden Activation Function:": "1","Output Activation Function:": "1", "Generation Concatenation": "2"};
+  get stringCurrentTileData => tileData.join(",");
+  Map<String, String> configData = {
+
+    'WEIGHT_INITALIZATION_HEURISTIC': "1",
+    "HIDDEN_LAYER_ACTIVATION_FUNCTION": "1",
+    "OUTPUT_LAYER_ACTIVATION_FUNCTION": "1",
+    "WEIGHTS_CONCATENATION_FUNCTIONS": "2",
+    "MAX_GENERATION_SIZE": "2",
+    "STARTING_FITNESS_THRESHOLD": "3.0",
+    "DESIERED_FIT_GENERATION_SIZE": "5",
+    "ENV_MAP": "",
+    "ENV_MAP_DIMENSIONS": "4",
+    "ENVIRONMENT_START_STATE": "1",
+    "MAX_EPISODE_DURATION": "10",
+    "NUMBER_OF_GENERATIONS" : "10"
+  };
 
   void updateConfigData(String configKey, String newValue){
     configData[configKey] = newValue;
@@ -70,13 +86,23 @@ class _MyHomePageState extends State<MyHomePage> {
     var testQuery = "TestQuery";
     String url = "";
     try{
-      String tileDataString = tileData.join(',');
-      url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
+      var payload = {};
+      configData["ENV_MAP"] = stringCurrentTileData;
+      payload['payloadBody'] = configData;
+      print(configData["ENV_MAP"].runtimeType);
+      String encodedPayload = json.encode(payload);
+      url = "http://10.0.2.2:5000/PAYLOAD?query=$encodedPayload";
       data = await passmap(url);
-      tagsJson = jsonDecode(data)['output'];
-      finaldata = tagsJson.toString();
-      print("in the call");
-      print(finaldata);
+      print(data);
+      print("SYSTEM -> Data Passed to backend");
+
+      // String tileDataString = tileData.join(',');
+      // url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
+      // data = await passmap(url);
+      // tagsJson = jsonDecode(data)['output'];
+      // finaldata = tagsJson.toString();
+      // print("in the call");
+      // print(finaldata);
 
     }catch(e){
       print("In the catch");
