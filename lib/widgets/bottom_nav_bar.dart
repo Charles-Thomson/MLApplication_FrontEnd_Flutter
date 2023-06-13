@@ -1,3 +1,4 @@
+import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_activation.dart';
@@ -28,6 +29,9 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
 
     List<Widget> builtNavBarItems =  [
       placeHolder,
+      FunctionSettingsButton(updateConfigData: (configKey, newValue){
+       widget.updateConfigData(configKey, newValue);
+      }),
       WeightHeuristicNavButton(updateConfigData: (configKey, newValue){
       widget.updateConfigData(configKey, newValue);
       }),

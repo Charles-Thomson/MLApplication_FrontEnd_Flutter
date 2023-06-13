@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
 
+import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
@@ -20,11 +22,11 @@ class _MyHomePageState extends State<MyHomePage> {
   List tileData = List.generate(16, (index) => 1); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {
-
     'WEIGHT_INITALIZATION_HEURISTIC': "1",
     "HIDDEN_LAYER_ACTIVATION_FUNCTION": "1",
     "OUTPUT_LAYER_ACTIVATION_FUNCTION": "1",
     "WEIGHTS_CONCATENATION_FUNCTIONS": "2",
+
     "MAX_GENERATION_SIZE": "2",
     "STARTING_FITNESS_THRESHOLD": "3.0",
     "DESIERED_FIT_GENERATION_SIZE": "5",
@@ -120,7 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: testApiCall,
-        child: const Icon(Icons.ac_unit)
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.start_outlined)
         ,),
       floatingActionButtonLocation: dockedLocation,
 
