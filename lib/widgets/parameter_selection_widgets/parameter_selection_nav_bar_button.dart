@@ -41,8 +41,6 @@ class ParameterSettingsPopOut extends StatefulWidget{
 
   final Function(String, String) updateConfigData;
 
-
-
   @override
   State<ParameterSettingsPopOut> createState() => _ParameterSettingsPopOut();
 
@@ -53,6 +51,13 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
   get updateConfigData => widget.updateConfigData;
   final _formKey = GlobalKey<FormState>();
 
+  final List<String> textFormLabelTexts = [
+    "Max Generation Size",
+    "Number of Generations",
+    "Max* Episode duration",
+    "Desired Fit Generation Size",
+    "Starting Fitness Threshold"
+  ];
 
   final maxGenerationSizeController = TextEditingController();
   final startingFitnessThresholdController  = TextEditingController();
@@ -62,6 +67,33 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
 
   @override
   Widget build(BuildContext context) {
+    List<TextEditingController> textControllers = [
+      maxGenerationSizeController,
+      startingFitnessThresholdController,
+      desiredFitGenerationSizeController,
+      maxEpisodeDurationController,
+      numberOfGenerationsController
+    ];
+
+    List builtTextFormFields = List<Widget>.generate(textControllers.length, (int index){
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: TextFormField(
+
+              controller: textControllers[index],
+              decoration: InputDecoration(
+                labelText: textFormLabelTexts[index],
+              ),
+              validator: (maxGenerationSizeInputValue){
+                if (maxGenerationSizeInputValue == null || maxGenerationSizeInputValue.isEmpty){
+                  return 'Please enter value';
+                }
+                return null;
+              }
+            ),
+      );
+      }
+    );
 
     return Center(
       child: Padding(
@@ -106,12 +138,15 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
                         //mainAxisAlignment: MainAxisAlignment.center,
                           children:    [
                             SizedBox(
-                                height: 30,
+                                height: 40,
                                 child: Material(
                                   color: Colors.white.withOpacity(0),
-                                  child: const Text(
-                                      style: TextStyle(fontSize: 20)
-                                      ,"PARAMETER SELECTION "),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                        style: TextStyle(fontSize: 20)
+                                        ,"PARAMETER SELECTION "),
+                                  ),
                                 )
                             ),
                             Material(
@@ -119,98 +154,38 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
                               child: Center(
                                 child: Form(
                                   key: _formKey,
-
                                   child: Padding(
-                                    padding: const EdgeInsets.all(40.0),
+                                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                                     child: Column(
-                                      children: [
-                                        TextFormField(
-                                          controller: maxGenerationSizeController,
-                                          decoration: const InputDecoration(
-                                            labelText: "Max Generation Size"
-                                          ),
-                                          validator: (maxGenerationSizeInputValue){
-                                            if (maxGenerationSizeInputValue == null || maxGenerationSizeInputValue.isEmpty){
-                                              return 'Please enter value';
-                                            }
-                                            return null;
-                                          }
-                                        ),
-                                        TextFormField(
-                                          controller: numberOfGenerationsController,
-                                            decoration: const InputDecoration(
-                                                labelText: "Number of Generations"
-                                            ),
-                                            validator: (numberOfGenerationsInputValue){
-                                              if (numberOfGenerationsInputValue == null || numberOfGenerationsInputValue.isEmpty){
-                                                return 'Please enter value';
-                                              }
-                                              return null;
-                                            }
-                                        ),
-
-                                        TextFormField(
-                                          controller: maxEpisodeDurationController,
-                                            decoration: const InputDecoration(
-                                                labelText: "Max* Episode duration"
-                                            ),
-                                            validator: (maxEpisodeDurationInputValue ){
-                                              if (maxEpisodeDurationInputValue == null || maxEpisodeDurationInputValue.isEmpty){
-                                                return 'Please enter value';
-                                              }
-                                              return null;
-                                            }
-                                        ),
-                                        TextFormField(
-                                          controller: desiredFitGenerationSizeController,
-                                            decoration: const InputDecoration(
-                                                labelText: "Desired Fit Generation Size"
-                                            ),
-                                            validator: (desiredFitGenerationSizeInputValue){
-                                              if (desiredFitGenerationSizeInputValue == null || desiredFitGenerationSizeInputValue.isEmpty){
-                                                return 'Please enter value';
-                                              }
-                                              return null;
-                                            }
-                                        ),
-
-                                        TextFormField(
-                                          controller: startingFitnessThresholdController,
-                                            decoration: const InputDecoration(
-                                                labelText: "Starting Fitness Threshold"
-                                            ),
-                                            validator: (startingFitnessThresholdInputValue){
-                                              if (startingFitnessThresholdInputValue == null || startingFitnessThresholdInputValue.isEmpty){
-                                                return 'Please enter value';
-                                              }
-                                              return null;
-                                            }
-                                        ),
-                                         Center(
-                                          child: ElevatedButton(onPressed: (){
-                                            if(_formKey.currentState!.validate()) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text("DOING WORK")),
-                                              );
-                                              updateConfigData("MAX_GENERATION_SIZE",maxGenerationSizeController.text);
-                                              updateConfigData("STARTING_FITNESS_THRESHOLD",startingFitnessThresholdController.text);
-                                              updateConfigData("DESIRED_FIT_GENERATION_SIZE",desiredFitGenerationSizeController.text);
-                                              updateConfigData("MAX_EPISODE_DURATION",maxEpisodeDurationController.text);
-                                              updateConfigData("NUMBER_OF_GENERATIONS",numberOfGenerationsController.text);
-
-                                            }
-                                          },
-                                              child: const Text("Submit ")
-                                          )
-                                        )
+                                      children: 
+                                      [
+                                        ...builtTextFormFields,
                                       ]
                                     ),
                                   )
-
                                 ),
                               ),
+                            ),
+
+                            Center(
+                                child: ElevatedButton(onPressed: (){
+                                  if(_formKey.currentState!.validate()) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      const SnackBar(
+                                          content: Text("DOING WORK")),
+                                    );
+                                    // lazy but works - may find better solution
+                                    updateConfigData("MAX_GENERATION_SIZE",maxGenerationSizeController.text);
+                                    updateConfigData("STARTING_FITNESS_THRESHOLD",startingFitnessThresholdController.text);
+                                    updateConfigData("DESIRED_FIT_GENERATION_SIZE",desiredFitGenerationSizeController.text);
+                                    updateConfigData("MAX_EPISODE_DURATION",maxEpisodeDurationController.text);
+                                    updateConfigData("NUMBER_OF_GENERATIONS",numberOfGenerationsController.text);
+
+                                  }
+                                },
+                                    child: const Text("Submit ")
+                                )
                             )
 
 
