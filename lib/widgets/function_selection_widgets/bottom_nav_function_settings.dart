@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/dropdownselector.dart';
+
 import 'package:ann_app/widgets/function_selection_widgets/function_selection_nav_bar.dart';
 
 import 'package:ann_app/widgets/nav_bar_buttons/hero_route.dart';
+
+import 'package:ann_app/widgets/function_selection_widgets/selection_cards/activation_function_selection_card.dart';
+import 'package:ann_app/widgets/function_selection_widgets/selection_cards/weight_heuristic_selection_card.dart';
+import 'package:ann_app/widgets/function_selection_widgets/selection_cards/genertion_concatenation_selection_card.dart';
+import 'package:ann_app/widgets/function_selection_widgets/selection_cards/landing_card.dart';
+
+
 const String _functionspopouttag = "functions-pop-out";
 
 class FunctionSettingsButton extends StatelessWidget{
   const FunctionSettingsButton({super.key, required this.updateConfigData});
-
   final Function(String, String) updateConfigData;
 
   @override
@@ -15,10 +21,13 @@ class FunctionSettingsButton extends StatelessWidget{
     return  Padding(padding: const EdgeInsets.all(2),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(HeroDialogRoute(builder: (context){
-              return const FunctionSettingsButtonPopOut();
-            }));
-          },
+              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                return FunctionSettingsButtonPopOut(updateConfigData: updateConfigData);
+              }
+            )
+          );
+        },
+
           child: Hero(
               tag: _functionspopouttag,
               child: Material(
@@ -37,35 +46,38 @@ class FunctionSettingsButton extends StatelessWidget{
 }
 
 class FunctionSettingsButtonPopOut extends StatefulWidget{
-  const FunctionSettingsButtonPopOut({super.key});
+  const FunctionSettingsButtonPopOut({super.key, required this.updateConfigData});
+
+  final Function(String, String) updateConfigData;
+
+
 
   @override
   State<FunctionSettingsButtonPopOut> createState() => _FunctionSettingsButtonPopOut();
+
 }
 
 class _FunctionSettingsButtonPopOut extends State<FunctionSettingsButtonPopOut>{
-  // final Function(String, String) updateConfigData;
-  final  menuItems = ["Weight Heuristic","HE", "xavier", "normalized xavier"];
-  final String configKey = "WEIGHT_INITALIZATION_HEURISTIC";
-
-  Widget selectedCard = const ActivationCard();
+  Widget currentCard = const InfoCard();
+  get updateConfigData => widget.updateConfigData;
 
   @override
   Widget build(BuildContext context) {
+    var availableCards = {
+      "ActivationFunction": ActivationCard(updateConfigData: updateConfigData),
+      "WeightHeuristic":  WeightCard(updateConfigData: updateConfigData),
+      "GenerationConcatenation": ConcatenationCard(updateConfigData: updateConfigData)
+    };
 
-
-
-    void changeVisableCard(String newCard){
-      print("Button called at top level");
-      if (newCard == "WeightCard"){
-        Future.delayed(Duration.zero,(){
-          setState(() {
-            selectedCard = const WeightCard();
-          });
-        }
-        );
-      }
+    void callbackUpdateCard(String newCard){
+      Widget newSelectedCard = availableCards[newCard] as Widget;
+      setState(() {
+        currentCard = newSelectedCard;
+      });
     }
+
+    
+
 
     return Center(
       child: Padding(
@@ -106,31 +118,43 @@ class _FunctionSettingsButtonPopOut extends State<FunctionSettingsButtonPopOut>{
                       width: 340,
                       color: Colors.white.withOpacity(0.7),
                       child:
+
                       Column(
                           //mainAxisAlignment: MainAxisAlignment.center,
                           children:    [
-                             SizedBox(
-                                height: 40,
-                                child: Material(
-                                  color: Colors.white.withOpacity(0),
-                                  child: const Text(
-                                      style: TextStyle(fontSize: 20)
-                                      ,"FUNCTION SELECTION "),
+                             Flexible(
+                               flex: 1,
+                               child: SizedBox(
+                                  height: 30,
+                                  child: Material(
+                                    color: Colors.white.withOpacity(0),
+                                    child: const Text(
+                                        style: TextStyle(fontSize: 20)
+                                        ,"PROCESS SELECTION "),
+                                  )
+                            ),
+                             ),
+                            // place holder for the tile to be shown
+                             Flexible(
+                               flex: 12,
+                               child: SizedBox(
+                                height: 440,
+                                width: 320,
+                                child: Center(
+                                    child: currentCard
                                 )
                             ),
-                            // place holder for the tile to be shown
-                            const SizedBox(
-                              height: 430,
-                              child: Center(
-                                  child: ActivationCard()
-                              )
-                            ),
+                             ),
                             // cal back of a set state to the new shown tile
-                            SizedBox(
-                              height: 80,
-                              child: FunctionSelectionNavBar(changeVisableCardCallBack: (newCard){
-                                changeVisableCard(newCard);
-                              }),
+                            Flexible(
+                              flex:2,
+                              child: SizedBox(
+                                height: 90,
+                                child: FunctionSelectionNavBar(
+                                    changeVisableCardCallBack: (newCard){
+                                  callbackUpdateCard(newCard);
+                                }),
+                              ),
                             ),
                           ]
                       )
@@ -142,73 +166,7 @@ class _FunctionSettingsButtonPopOut extends State<FunctionSettingsButtonPopOut>{
   }
 }
 
-class ActivationCard extends StatelessWidget{
-  const ActivationCard({super.key});
 
-  @override
-  Widget build(BuildContext context){
-    return Container(
-
-        color: Colors.white,
-        child:
-        Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:   const [
-               SizedBox(
-                  height: 40,
-                  child: Material(
-                    child: Text(
-                        style: TextStyle(fontSize: 20)
-                        ,"Activation Functions"),
-                  )
-              ),
-               SizedBox(
-                  height: 10
-              ),
-              SizedBox(
-                  height: 100,
-                  width: 300,
-                  // child: DropDownMenu(updateConfigData, menuItems, configKey)
-              )
-            ]
-        )
-    );
-  }
-}
-
-class WeightCard extends StatelessWidget{
-  const WeightCard({super.key});
-
-  @override
-  Widget build(BuildContext context){
-    return Container(
-
-        color: Colors.white,
-        child:
-        Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:   const [
-              SizedBox(
-                  height: 40,
-                  child: Material(
-                    child: Text(
-                        style: TextStyle(fontSize: 20)
-                        ,"Weight Heuristic"),
-                  )
-              ),
-              SizedBox(
-                  height: 10
-              ),
-              SizedBox(
-                height: 100,
-                width: 300,
-                // child: DropDownMenu(updateConfigData, menuItems, configKey)
-              )
-            ]
-        )
-    );
-  }
-}
 
 
 

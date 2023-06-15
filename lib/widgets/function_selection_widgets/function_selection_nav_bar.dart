@@ -14,11 +14,13 @@ class FunctionSelectionNavBar extends StatelessWidget{
             SizedBox(
               width: 110,
               child: TextButton.icon(
-                style: const ButtonStyle(
-                  splashFactory: NoSplash.splashFactory,
-                ),
+                // style: const ButtonStyle(
+                //   splashFactory: NoSplash.splashFactory,
+                // ),
                 onPressed:
-                changeVisableCardCallBack("WeightCard") , icon: Column(
+                () {changeVisableCardCallBack("WeightHeuristic");} ,
+
+                icon: Column(
                 children: const [
                   Icon(
                     Icons.balance_outlined,
@@ -42,7 +44,8 @@ class FunctionSelectionNavBar extends StatelessWidget{
                 style: const ButtonStyle(
                   splashFactory: NoSplash.splashFactory,
                 ),
-                onPressed: () {}, icon: Column(
+                onPressed: () {changeVisableCardCallBack("ActivationFunction");} ,
+                icon: Column(
                   children: const [
                     Icon(
                         Icons.functions_sharp,
@@ -66,7 +69,8 @@ class FunctionSelectionNavBar extends StatelessWidget{
                 style: const ButtonStyle(
                   splashFactory: NoSplash.splashFactory,
                 ),
-                onPressed: () {}, icon: Column(
+                onPressed: () {changeVisableCardCallBack("GenerationConcatenation");} ,
+                icon: Column(
                   children: const [
                     Icon(
                         Icons.mediation_rounded,

@@ -12,19 +12,6 @@ class TileGrid extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    // List fullTileIndex = List.generate(16, (index) => 1); // +1 as it's a loop
-    //
-    // // adding to the list at the index relating to the tile index
-    // int addToListFunction(int index, var tileStatus){
-    //   if(fullTileIndex[index] >= 3){
-    //     fullTileIndex[index] = 1;
-    //   }else{
-    //     fullTileIndex[index] += 1;
-    //   }
-    //   print("The current list of index's:  $fullTileIndex ");
-    //   int returnVal = fullTileIndex[index];
-    //   return returnVal;
-    // }
 
     List <Widget>tileList = List.generate(mapSize * mapSize,
             (index){

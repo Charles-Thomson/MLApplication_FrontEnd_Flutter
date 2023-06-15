@@ -11,6 +11,27 @@ abstract class Tile{
   double get getDepth;
 
 }
+class StartTile implements Tile{
+
+  @override
+  Color primaryColor = Colors.green;
+
+  @override
+  double depth = 10;
+
+  @override
+  double tileOffSet = 0;
+
+  @override
+  get getPrimaryColor => primaryColor;
+
+  @override
+  get getTileOffSet => tileOffSet;
+
+  @override
+  get getDepth => depth;
+}
+
 class OpenTile implements Tile{
 
   @override

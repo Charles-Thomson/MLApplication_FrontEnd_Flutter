@@ -17,20 +17,20 @@ class NewCompleteTile extends StatefulWidget{
   final double tileWidth;
   final int tileIndex;
 
-  @override
+@override
   State<NewCompleteTile> createState() => _NewCompleteTile();
 }
 
 class _NewCompleteTile extends State<NewCompleteTile>{
   config.Tile currentTileConfig = config.OpenTile();
   List<config.Tile> tileConfigs = [config.OpenTile(), // Padding at the start due to open tile = 1 on backend.
-                                   config.OpenTile(),
+                                  config.StartTile(),
                                    config.ObstacleTile(),
                                    config.GoalTile()];
 
   @override
   Widget build(BuildContext context){
-    int tileStateValue = 1;
+    int tileStateValue = 0;
     double tileOffSet = currentTileConfig.getTileOffSet;
     double depth = currentTileConfig.getDepth;
     Color primaryColor = currentTileConfig.getPrimaryColor;

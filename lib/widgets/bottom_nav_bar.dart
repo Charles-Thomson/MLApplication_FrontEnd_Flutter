@@ -1,9 +1,8 @@
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
+import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_activation.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_weight_heuristic.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/bottom_nav_button_generation_concaternation.dart';
+
 
 class CustomBottomNavBar extends StatefulWidget{
   const CustomBottomNavBar( this.dockedLocation, {super.key,required this.updateConfigData});
@@ -29,18 +28,13 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
 
     List<Widget> builtNavBarItems =  [
       placeHolder,
+      ParameterSettingsButton(updateConfigData: (configKey, newValue){
+        widget.updateConfigData(configKey, newValue);
+      }),
       FunctionSettingsButton(updateConfigData: (configKey, newValue){
        widget.updateConfigData(configKey, newValue);
       }),
-      WeightHeuristicNavButton(updateConfigData: (configKey, newValue){
-      widget.updateConfigData(configKey, newValue);
-      }),
-      ActivationNavButton(updateConfigData: (configKey, newValue){
-        widget.updateConfigData(configKey, newValue);
-      }),
-      GenerationNavButton(updateConfigData: (configKey, newValue){
-        widget.updateConfigData(configKey, newValue);
-      }),
+
     ];
 
     return BottomAppBar(

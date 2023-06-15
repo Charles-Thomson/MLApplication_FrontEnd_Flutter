@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze/built_maze.dart';
@@ -8,6 +9,11 @@ import 'dart:convert';
 import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
 
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
+
+//TODO: Work out bug with the rendering on the button press to open Hero
+//TODO: Refactor layouts to use Flexible ?
+//TODO: Clean up file structure - remove dead code
+//TODO: Refactor down cards and clean up design
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -19,22 +25,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List tileData = List.generate(16, (index) => 1); // +1 as it's a loop
+  List tileData = List.generate(16, (index) => 0); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {
-    'WEIGHT_INITALIZATION_HEURISTIC': "1",
-    "HIDDEN_LAYER_ACTIVATION_FUNCTION": "1",
-    "OUTPUT_LAYER_ACTIVATION_FUNCTION": "1",
-    "WEIGHTS_CONCATENATION_FUNCTIONS": "2",
-
-    "MAX_GENERATION_SIZE": "2",
-    "STARTING_FITNESS_THRESHOLD": "3.0",
-    "DESIERED_FIT_GENERATION_SIZE": "5",
+    'WEIGHT_INITALIZATION_HEURISTIC': "",
+    "HIDDEN_LAYER_ACTIVATION_FUNCTION": "",
+    "OUTPUT_LAYER_ACTIVATION_FUNCTION": "",
+    "WEIGHTS_CONCATENATION_FUNCTIONS": "",
+    "MAX_GENERATION_SIZE": "",
+    "STARTING_FITNESS_THRESHOLD": "",
+    "DESIRED_FIT_GENERATION_SIZE": "",
     "ENV_MAP": "",
-    "ENV_MAP_DIMENSIONS": "4",
-    "ENVIRONMENT_START_STATE": "1",
-    "MAX_EPISODE_DURATION": "10",
-    "NUMBER_OF_GENERATIONS" : "10"
+    "MAX_EPISODE_DURATION": "",
+    "NUMBER_OF_GENERATIONS" : "",
+    "ENV_MAP_DIMENSIONS": "",
+    "ENVIRONMENT_START_STATE": "",
   };
 
   void updateConfigData(String configKey, String newValue){
@@ -44,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int updateTileListData(int index, var tileState){
     if(tileData[index] >= 3){
-      tileData[index] = 1;
+      tileData[index] = 0;
     }else{
       tileData[index] += 1;
     }
@@ -83,20 +88,37 @@ class _MyHomePageState extends State<MyHomePage> {
   String finaldata = '';
   List tagsJson = [];
 
+  // no guard for multiple start tiles
+  void setMapData(){
+    double mapDimensions = sqrt(tileData.length);
+    configData["ENV_MAP_DIMENSIONS"] = mapDimensions.toString();
+    int startLocationValue = 1;
+    int startLocationIndex = tileData.indexOf(startLocationValue);
+    tileData[startLocationIndex] = 0;
+    configData["ENVIRONMENT_START_STATE"] = startLocationIndex.toString();
+    configData["ENV_MAP"] = stringCurrentTileData;
+  }
+
+  void testCallPayloadSetting(){
+    setMapData();
+    print(configData);
+
+  }
 
   void testApiCall() async {
     var testQuery = "TestQuery";
     String url = "";
     try{
       var payload = {};
-      configData["ENV_MAP"] = stringCurrentTileData;
-      payload['payloadBody'] = configData;
-      print(configData["ENV_MAP"].runtimeType);
-      String encodedPayload = json.encode(payload);
-      url = "http://10.0.2.2:5000/PAYLOAD?query=$encodedPayload";
-      data = await passmap(url);
-      print(data);
-      print("SYSTEM -> Data Passed to backend");
+      setMapData();
+      print(configData); // test
+
+      // payload['payloadBody'] = configData;
+      // String encodedPayload = json.encode(payload);
+      // url = "http://10.0.2.2:5000/PAYLOAD?query=$encodedPayload";
+      // data = await passmap(url);
+      // print(data);
+      // print("SYSTEM -> Data Passed to backend");
 
       // String tileDataString = tileData.join(',');
       // url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
@@ -121,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
         updateConfigData(configKey, newValue);
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed: testApiCall,
+        onPressed: testCallPayloadSetting,
         backgroundColor: Colors.blue,
         child: const Icon(Icons.start_outlined)
         ,),

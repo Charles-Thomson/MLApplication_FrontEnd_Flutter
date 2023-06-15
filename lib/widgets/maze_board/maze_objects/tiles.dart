@@ -1,3 +1,7 @@
+// DEPRECATED _ NEEDS TO BE REMOVED
+
+
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -168,9 +172,6 @@ class _TileTop extends State<TileTop>{
 
   get primaryColor => localPrimaryColor;
   get tileIndex => widget.tileIndex;
-  // set newPrimaryColor(Color newColor){
-  //   thiPrimaryColor = newColor;
-  // }
 
   @override
   void initState(){
