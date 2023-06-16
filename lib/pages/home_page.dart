@@ -1,20 +1,19 @@
-import 'dart:convert';
-import 'dart:math';
 
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/maze_board/maze/built_maze.dart';
+import 'package:ann_app/widgets/maze_board/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:ann_app/widgets/nav_bar_buttons/testing_pop_out.dart';
+import 'package:ann_app/widgets/agent/agent_animation.dart';
 
-import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
+
 
 
 //TODO: Work out bug with the rendering on the button press to open Hero
 //TODO: Refactor layouts to use Flexible ?
-//TODO: Clean up file structure - remove dead code
 //TODO: Refactor down cards and clean up design
+
+// TODO: Do we refactor to use x , y location over states
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -29,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List tileData = List.generate(16, (index) => 0); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {
-    'WEIGHT_INITALIZATION_HEURISTIC': "",
+    'WEIGHT_INITIALIZATION_HEURISTIC': "",
     "HIDDEN_LAYER_ACTIVATION_FUNCTION": "",
     "OUTPUT_LAYER_ACTIVATION_FUNCTION": "",
     "WEIGHTS_CONCATENATION_FUNCTIONS": "",
@@ -45,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateConfigData(String configKey, String newValue){
     configData[configKey] = newValue;
-    print(configData);
   }
 
   int updateTileListData(int index, var tileState){
@@ -54,7 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }else{
       tileData[index] += 1;
     }
-    print("The current list of index's:  $tileData ");
     int returnVal = tileData[index];
     return returnVal;
   }
@@ -68,15 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if(dockedLocation == endDocked){
         dockedLocation = frontDocked;
-        print("Tile data requested $tileData");
+        // print("Tile data requested $tileData");
       }else if(dockedLocation == frontDocked) {
         dockedLocation = endDocked;
-        print("Tile data requested $tileData");
+        // print("Tile data requested $tileData");
       }
     });
   }
 
-  passmap(String url) async {
+  passMap(String url) async {
     http.Response response = await http.get(Uri.parse(url));
 
     return response.body;
@@ -86,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String map = '';
 
   String data = '';
-  String finaldata = '';
+  String finalData = '';
   List tagsJson = [];
 
   // no guard for multiple start tiles
@@ -102,35 +99,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void testCallPayloadSetting(){
     setMapData();
-    print(configData);
+    // print(configData);
 
   }
 
   void testApiCall() async {
-    var testQuery = "TestQuery";
-    String url = "";
+    //var testQuery = "TestQuery";
+    //String url = "";
     try{
-      var payload = {};
+      //var payload = {};
       setMapData();
-      print(configData); // test
+      // print(configData); // test
 
       // payload['payloadBody'] = configData;
       // String encodedPayload = json.encode(payload);
       // url = "http://10.0.2.2:5000/PAYLOAD?query=$encodedPayload";
-      // data = await passmap(url);
+      // data = await pass-map(url);
       // print(data);
       // print("SYSTEM -> Data Passed to backend");
 
       // String tileDataString = tileData.join(',');
       // url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
-      // data = await passmap(url);
+      // data = await pass-map(url);
       // tagsJson = jsonDecode(data)['output'];
-      // finaldata = tagsJson.toString();
+      // final-data = tagsJson.toString();
       // print("in the call");
-      // print(finaldata);
+      // print(final-data);
 
     }catch(e){
-      print("In the catch");
+      // print("In the catch");
     }
 
   }
@@ -161,6 +158,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               )
             ),
+          const SizedBox(
+            height: 100
+          ),
+           const AgentAnimation(),
           ]
          ),
       );

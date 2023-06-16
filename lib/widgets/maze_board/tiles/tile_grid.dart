@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/tiles/complete_tile.dart';
+import 'package:ann_app/widgets/maze_board/tiles/complete_tile.dart';
 
 
 class TileGrid extends StatelessWidget{

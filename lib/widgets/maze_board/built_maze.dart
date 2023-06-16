@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/maze_board/maze_walls/body_painter.dart';
-import 'package:ann_app/widgets/tiles/tile_grid.dart';
-import 'package:ann_app/widgets/maze_board/maze_walls/rim_painter.dart';
+import 'package:ann_app/widgets/maze_board/maze_body/body_painter.dart';
+import 'package:ann_app/widgets/maze_board/tiles/tile_grid.dart';
+import 'package:ann_app/widgets/maze_board/maze_body/rim_painter.dart';
 
 double mazeHeight = 200;
 double mazeWidth = 200 ;

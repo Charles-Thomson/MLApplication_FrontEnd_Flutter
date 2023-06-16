@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/tiles/tile_top.dart';
-import 'package:ann_app/widgets/tiles/tile_body_painter.dart';
-import 'package:ann_app/widgets/tiles/tile_config.dart' as config;
+import 'package:ann_app/widgets/maze_board/tiles/tile_top.dart';
+import 'package:ann_app/widgets/maze_board/tiles/tile_body_painter.dart';
+import 'package:ann_app/widgets/maze_board/tiles/tile_config.dart' as config;
 
 
 class NewCompleteTile extends StatefulWidget{
