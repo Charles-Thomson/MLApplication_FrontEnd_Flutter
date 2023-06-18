@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/tiles/tile_top.dart';
 import 'package:ann_app/widgets/maze_board/tiles/tile_body_painter.dart';
-import 'package:ann_app/widgets/maze_board/tiles/tile_config.dart' as config;
+import 'package:ann_app/widgets/maze_board/tiles/tile_config.dart' as tile_config;
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 
 
 class NewCompleteTile extends StatefulWidget{
-  const NewCompleteTile({super.key,
-    required this.updateTileData_CallBack,
-    required this.tileHeight,
-    required this.tileWidth,
+   NewCompleteTile({super.key,
+    required this.updateTileDataCallBack,
     required this.tileIndex,
     });
 
-  final int Function(int, int) updateTileData_CallBack;
-  final double tileHeight;
-  final double tileWidth;
+  final int Function(int, int) updateTileDataCallBack;
+  final double tileHeight = maze_config.tileHeight;
+  final double tileWidth = maze_config.tileWidth;
   final int tileIndex;
 
 @override
@@ -22,11 +21,12 @@ class NewCompleteTile extends StatefulWidget{
 }
 
 class _NewCompleteTile extends State<NewCompleteTile>{
-  config.Tile currentTileConfig = config.OpenTile();
-  List<config.Tile> tileConfigs = [config.OpenTile(), // Padding at the start due to open tile = 1 on backend.
-                                  config.StartTile(),
-                                   config.ObstacleTile(),
-                                   config.GoalTile()];
+  tile_config.Tile currentTileConfig = tile_config.OpenTile();
+  List<tile_config.Tile> tileConfigs = [
+    tile_config.OpenTile(), // Padding at the start due to open tile = 1 on backend.
+    tile_config.StartTile(),
+    tile_config.ObstacleTile(),
+    tile_config.GoalTile()];
 
   @override
   Widget build(BuildContext context){
@@ -54,13 +54,12 @@ class _NewCompleteTile extends State<NewCompleteTile>{
           painter: TilePainter(tileState: tileStateValue, depth: depth)
           ),
                 TileTop(
-                  updateTileData_CallBack: (index,tileState) {
-                    int newTileState = widget.updateTileData_CallBack(index, tileState);
+                  updateTileDataCallBack: (index,tileState) {
+                    int newTileState = widget.updateTileDataCallBack(index, tileState);
                     checkForRedraw(newTileState); // In current widget
                     return newTileState; // -> tile_top
                   },
-                  tileHeight: widget.tileHeight,
-                  tileWidth: widget.tileWidth,
+
                   tileIndex: widget.tileIndex,
                   primaryColor: primaryColor,
                 )

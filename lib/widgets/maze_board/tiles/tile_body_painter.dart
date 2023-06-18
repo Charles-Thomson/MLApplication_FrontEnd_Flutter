@@ -8,22 +8,12 @@ class TilePainter extends CustomPainter{
   final double edgeRadius = 2;
   final double depth;
   final tilePaint = Paint();
-
   int tileState;
-  //double depth = depth; // normally 20
-
   get newTileState => tileState;
 
   @override
   void paint(Canvas canvas, Size size){
-    // tileState ++;
-    // //double depth = 8; // normally 20
-    // print("In painter with state value of $newTileState");
-    // if (tileState == 2){
-    //   print("Changing depth on the painter");
-    //   depth = 0;
-    //
-    // }
+
     tilePaint.shader = ui.Gradient.linear(const Offset(0, 20), const Offset(20, 0), [
       Colors.blueGrey.shade700,
       Colors.blueGrey.shade500,

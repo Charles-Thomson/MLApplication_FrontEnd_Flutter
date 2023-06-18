@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 
 
 class TileTop extends StatefulWidget{
-
-  const TileTop({super.key,
-    required this.updateTileData_CallBack,// this is the callback to top level
-    required this.tileHeight,
-    required this.tileWidth,
+    const TileTop({super.key,
+    required this.updateTileDataCallBack,// this is the callback to top level
     required this.tileIndex,
     required this.primaryColor,
   });
 
-  final int Function(int, int) updateTileData_CallBack;
-  final double tileHeight;
-  final double tileWidth;
+  final int Function(int, int) updateTileDataCallBack;
   final int tileIndex;
   final Color primaryColor;
-
 
   @override
   State<TileTop> createState() => _TileTop();
@@ -26,21 +21,19 @@ class _TileTop extends State<TileTop>{
   get tileIndex => widget.tileIndex;
   get primaryColor => widget.primaryColor;
 
-
-
   @override
   Widget build(BuildContext context){
     return  InkWell(
         onTap: () {
-          int newTileState = widget.updateTileData_CallBack.call(tileIndex, tileState) ;
+          int newTileState = widget.updateTileDataCallBack.call(tileIndex, tileState) ;
           setState(() {
             tileState = newTileState ;
           });
           },
 
         child: Container(
-            height: widget.tileHeight,
-            width: widget.tileWidth,
+            height: maze_config.tileHeight,
+            width: maze_config.tileWidth,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 gradient: RadialGradient(

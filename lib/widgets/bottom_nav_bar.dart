@@ -1,5 +1,6 @@
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
 import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
+import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
 import 'package:flutter/material.dart';
 
 
@@ -25,9 +26,11 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
         child: IconButton(onPressed: () {},
             icon: const Icon(Icons.abc)));
 
-
     List<Widget> builtNavBarItems =  [
       placeHolder,
+      MazeSettingsButton(updateConfigData: (configKey, newValue){
+        widget.updateConfigData(configKey, newValue);
+      }),
       ParameterSettingsButton(updateConfigData: (configKey, newValue){
         widget.updateConfigData(configKey, newValue);
       }),

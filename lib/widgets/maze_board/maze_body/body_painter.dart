@@ -1,17 +1,13 @@
 import'dart:ui' as ui;
 import 'dart:math';
 import 'package:flutter/material.dart';
-
-
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 class BodyPainter extends CustomPainter {
-  BodyPainter({required this.edgeRadius});
-
-  final double edgeRadius;
+  BodyPainter();
 
   final bodyPaint = Paint();
-  
-  
+
   @override
   void paint(Canvas canvas, Size size) {
     bodyPaint.shader = ui.Gradient.linear(
@@ -27,7 +23,7 @@ class BodyPainter extends CustomPainter {
       ],
       [0.01, 0.2, 0.49, 0.52, 0.6, 1],
     );
-    double radiosOffset = edgeRadius;
+    double radiosOffset = config.edgeRadius;
     double borderRadiusOffset =
         (radiosOffset * sqrt(2) - radiosOffset) / sqrt(2);
     double distance = 30;
@@ -58,18 +54,9 @@ class BodyPainter extends CustomPainter {
       5,
       false,
     );
-
     canvas.drawPath(bodyPath, bodyPaint);
-
-
   }
-  
 
-  // Since this Sky painter has no fields, it always paints
-  // the same thing and semantics information is the same.
-  // Therefore we return false here. If we had fields (set
-  // from the constructor) then we would return true if any
-  // of them differed from the same fields on the oldDelegate.
   @override
   bool shouldRepaint(BodyPainter oldDelegate) => false;
   @override

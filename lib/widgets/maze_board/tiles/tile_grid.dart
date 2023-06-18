@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/tiles/complete_tile.dart';
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 
 class TileGrid extends StatelessWidget{
-  const TileGrid({super.key, required this.updateTileData_CallBack});
+  TileGrid({super.key, required this.updateTileDataCallBack});
 
-  final Function(int,int) updateTileData_CallBack;
-  final int mapSize = 4;
-  final double tileHeight = 40;
-  final double tileWidth = 40;
+  final Function(int,int) updateTileDataCallBack;
+  final int mapSize = config.mapSize;
 
   @override
   Widget build(BuildContext context){
@@ -19,25 +18,22 @@ class TileGrid extends StatelessWidget{
             // These values correspond to the receiving func(val, val)
             key: UniqueKey(),
 
-            updateTileData_CallBack: (index, tileState) {
-              int newTileState = updateTileData_CallBack(index,tileState);
+            updateTileDataCallBack: (index, tileState) {
+              int newTileState = updateTileDataCallBack(index,tileState);
               return newTileState;
             },
-            tileHeight: tileHeight,
-            tileWidth: tileWidth,
             tileIndex: index,
           );
         }
     );
 
     return SizedBox(
-      height: 160,
-      width: 160,
+      height: config.tileGridHeight,
+      width: config.tileGridWidth,
       child: GridView.count(
           crossAxisCount: mapSize,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
-
           children: tileList
       ),
     );

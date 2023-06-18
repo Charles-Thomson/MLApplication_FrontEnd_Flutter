@@ -1,17 +1,14 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
-import 'package:ann_app/widgets/agent/agent_animation.dart';
-
-
-
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 
 //TODO: Work out bug with the rendering on the button press to open Hero
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Refactor down cards and clean up design
+//TODO: Bug with higher number of buttons making outliers un-clickable - due to the offset maybe ?
 
 // TODO: Do we refactor to use x , y location over states
 
@@ -25,7 +22,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List tileData = List.generate(16, (index) => 0); // +1 as it's a loop
+  List tileData = List.generate(maze_config.mapSizeStates, (index) => 0); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {
     'WEIGHT_INITIALIZATION_HEURISTIC': "",
@@ -131,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,21 +148,24 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children:  [
           const SizedBox(height: 100),
-          Center(
-            child: BuiltMaze(
-              updateTileData_CallBack: (index, tileState){
-                int newTileState = updateTileListData(index, tileState);
-                return newTileState;
-                }
-              )
-            ),
+          Stack(
+            children: [
+            Center(
+              child: BuiltMaze(
+                updateTileDataCallBack: (index, tileState){
+                  int newTileState = updateTileListData(index, tileState);
+                  return newTileState;
+                  }
+                )
+              ),
           const SizedBox(
             height: 100
           ),
-           const AgentAnimation(),
+
           ]
          ),
-      );
+  ]
+      ));
      // This trailing comma makes auto-formatting nicer for build methods.
   }
 }

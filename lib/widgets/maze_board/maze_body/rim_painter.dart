@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 class RimContainer extends StatelessWidget{
-    const RimContainer({super.key, required this.mazeHeight, required this.mazeWidth, required this.edgeRadius });
-
-    final double mazeHeight;
-    final double mazeWidth;
-    final double edgeRadius;
+    const RimContainer({super.key});
 
     @override
     Widget build(BuildContext context){
         return Container(
-            height: mazeHeight ,
-            width: mazeWidth  ,
+            height: config.mazeHeight ,
+            width: config.mazeWidth,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(edgeRadius),
+                borderRadius: BorderRadius.circular(config.edgeRadius),
                 gradient: LinearGradient(
                     colors: <Color>[
                         Colors.grey.shade600,
@@ -39,17 +36,13 @@ class RimContainer extends StatelessWidget{
 }
 
 class RimContainerCutout extends StatelessWidget{
-  const RimContainerCutout({super.key, required this.mazeHeight, required this.mazeWidth, required this.rimOffSet});
-
-  final double mazeHeight;
-  final double mazeWidth;
-  final double rimOffSet;
+  const RimContainerCutout({super.key});
 
   @override
   Widget build(BuildContext context){
     return Container(
-        height: mazeHeight - rimOffSet,
-        width: mazeWidth - rimOffSet,
+        height: config.rimContainerCutOutHeight,
+        width: config.rimContainerCutOutWidth,
         decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.8),
             borderRadius: BorderRadius.circular(3),
@@ -66,20 +59,3 @@ class RimContainerCutout extends StatelessWidget{
   }
 }
 
-// class BodyClipper extends CustomClipper<Path>{
-//
-//     @override
-//     Path getClip(Size size){
-//       double edgeOffSet = 2;
-//       final path = Path();
-//       return path;
-//
-//     }
-//   @override
-//   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-//     return false;
-//   }
-//
-//
-//
-// }
