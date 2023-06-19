@@ -9,6 +9,8 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_confi
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Refactor down cards and clean up design
 //TODO: Bug with higher number of buttons making outliers un-clickable - due to the offset maybe ?
+//TODO: Connect up the update from the maps tab - updating the main map UI
+//TODO: Refactor/clea up the map selection file
 
 // TODO: Do we refactor to use x , y location over states
 

@@ -8,17 +8,16 @@ double edgeRadius = 20;
 // working at 30
 double rimOffSet = 30;
 
-
 // Used in multiple tile files
 int mapSize = 4;
 int mapSizeX = 4;
-int mapSizeY = 5;
+int mapSizeY = 4;
 int mapSizeStates = mapSize * mapSize;
 
 double tileGridWidth = mazeWidth - (edgeRadius * 2);
 double tileGridHeight = mazeHeight - (edgeRadius * 2);
-double tileHeight = tileGridWidth / mapSize;
-double tileWidth = tileGridHeight / mapSize;
+double tileHeight = tileGridWidth / mapSizeY;
+double tileWidth = tileGridHeight / mapSizeX;
 
 //Used in rim_painter -> RimContainerCutout
 double rimContainerCutOutHeight = tileGridHeight + 10;

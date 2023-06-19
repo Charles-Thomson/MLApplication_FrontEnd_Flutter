@@ -47,37 +47,51 @@ class MapSettingsButtonPopOut extends StatefulWidget{
 }
 
 class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
-  late String? currentSelectedStateValue;
-  late String? currentSelectedMazeSizeValue;
+  late int? currentSelectedStateValueX;
+  late int? currentSelectedStateValueY;
+
+  late double? currentSelectedMazeValueX;
+  late double? currentSelectedMazeValueY;
+
   final String configKey = "";
-  final List<String> numberOfStateOptions = ["Select number of states","3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"];
-  final List<String> mazSizeOptions = ["Select a Maze size","100x100", "200x200", "300x300", "400x400", "500x500", "600x600"];
+  final List<int> numberOfStateOptions = [3, 4, 5, 6, 7, 8, 9, 10];
+  final List<double> mazeSizeOptions = [100, 150, 200, 250, 300, 350];
 
 
-  double tileGridHeight = 100;
-  double tileGridWidth = 100;
+  late double tileGridHeight;
+  late double tileGridWidth;
+  late int numberOfStatesX;
+  late int numberOfStatesY;
+
+
+
   int mapDimensionAsStates = 4;
 
-  @override
-  void initState(){
-    super.initState();
-    currentSelectedStateValue = numberOfStateOptions[0];
-    currentSelectedMazeSizeValue = mazSizeOptions[0];
 
-  }
-
-  void changeMapSize(){
-
+  void updateMazeSizeX(double value){
     setState(() {
-      tileGridWidth = 300;
-      tileGridHeight = 300;
-      mapDimensionAsStates = 7;
+      tileGridHeight = value;
     });
   }
 
   @override
+  void initState(){
+    super.initState();
+    currentSelectedStateValueY = 4;
+    currentSelectedStateValueX = 4;
+
+    currentSelectedMazeValueY = 200;
+    currentSelectedMazeValueX = 200;
+
+    tileGridHeight = 200;
+    tileGridWidth = 200;
+
+    numberOfStatesX = 4;
+    numberOfStatesY = 4;
+  }
+  @override
   Widget build(BuildContext context) {
-    int  totalMapStates = mapDimensionAsStates * mapDimensionAsStates;
+    int  totalMapStates = numberOfStatesX * numberOfStatesY;
     List<Widget> mapRepresentation = List.generate(totalMapStates.toInt(), (index){
       return Container(
         decoration:  BoxDecoration(
@@ -149,7 +163,7 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                 width: tileGridWidth,
                                 child: GridView.count(
                                   padding: EdgeInsets.zero,
-                                    crossAxisCount: mapDimensionAsStates,
+                                    crossAxisCount: numberOfStatesX,
                                   crossAxisSpacing: 2,
                                   mainAxisSpacing: 2,
                                   children: mapRepresentation
@@ -157,68 +171,146 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                               ),
                             ),
                           ),
-                              SizedBox(
-                                height: 70,
-                                width: 200,
-                                child: InputDecorator(
-                                  decoration: InputDecoration(
-                                    labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                    errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                    hintText: 'Testing hint text',
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                  isEmpty: currentSelectedStateValue == '',
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      value: currentSelectedStateValue,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          currentSelectedStateValue = newValue;
-                                        });
-                                      },
-                                      isDense: true,
-                                      items: numberOfStateOptions.map((String value){
-                                        return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value));
-                                      }).toList(),
-                                    ),
-                                  ),
-                                  ),
-                              ),
-
-                              SizedBox(
-                                height: 100,
-                                width: 200,
-                                child: InputDecorator(
-                                  decoration: InputDecoration(
-
-                                      labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                      errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                      hintText: 'Testing hint text',
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                  isEmpty: currentSelectedMazeSizeValue == '',
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      value: currentSelectedMazeSizeValue,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          currentSelectedMazeSizeValue = newValue;
-                                        });
-                                      },
-                                      isDense: true,
-                                      items: mazSizeOptions.map((String value){
-                                        return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value));
-                                      }).toList(),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                const Text("No* of States: "),
+                                SizedBox(
+                                  height: 60,
+                                  width: 70,
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        hintText: 'Testing hint text',
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                    isEmpty: currentSelectedStateValueX == 0,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<int>(
+                                        isExpanded: true,
+                                        value: currentSelectedStateValueX,
+                                        onChanged: (int? newValue) {
+                                          setState(() {
+                                            currentSelectedStateValueX = newValue;
+                                            numberOfStatesX = newValue!;
+                                          });
+                                        },
+                                        isDense: true,
+                                        items: numberOfStateOptions.map((int value){
+                                          return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text(value.toString()));
+                                        }).toList(),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 60,
+                                  width: 70,
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
 
-                              // ElevatedButton(onPressed: () {changeMapSize();} , child: const Text("Change size"))
+                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        hintText: 'Testing hint text',
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                    isEmpty: currentSelectedStateValueY == 0,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<int>(
+                                        isExpanded: true,
+                                        value: currentSelectedStateValueY,
+                                        onChanged: (int? newValue) {
+                                          setState(() {
+                                            currentSelectedStateValueY = newValue;
+                                            numberOfStatesY = newValue!;
+
+                                          });
+                                        },
+                                        isDense: true,
+                                        items: numberOfStateOptions.map((int value){
+                                          return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text(value.toString()));
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+
+                              ]),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    const Text("Maze Size : "),
+                                    SizedBox(
+                                      height: 60,
+                                      width: 80,
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+                                            labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            hintText: 'Testing hint text',
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                        isEmpty: currentSelectedMazeValueX == 0,
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<double>(
+                                            isExpanded: true,
+                                            value: currentSelectedMazeValueX,
+                                            onChanged: (double? newValue) {
+                                              setState(() {
+                                                currentSelectedMazeValueX = newValue;
+                                                tileGridHeight = newValue!;
+                                              });
+                                            },
+                                            isDense: true,
+                                            items: mazeSizeOptions.map((double value){
+                                              return DropdownMenuItem<double>(
+                                                  value: value,
+                                                  child: Text(value.toString()));
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 60,
+                                      width: 80,
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+
+                                            labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            hintText: 'Testing hint text',
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                        isEmpty: currentSelectedMazeValueY == 0,
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<double>(
+                                            isExpanded: true,
+                                            value: currentSelectedMazeValueY,
+                                            onChanged: (double? newValue) {
+                                              setState(() {
+                                                currentSelectedMazeValueY = newValue;
+                                                tileGridWidth = newValue!;
+                                              });
+                                            },
+                                            isDense: true,
+                                            items: mazeSizeOptions.map((double value){
+                                              return DropdownMenuItem<double>(
+                                                  value: value,
+                                                  child: Text(value.toString()));
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+
+                               Padding(
+                                 padding: const EdgeInsets.all(10.0),
+                                 child: ElevatedButton(onPressed: () {} , child: const Text("Submit")),
+                               )
                         ])
                     ),
                   )

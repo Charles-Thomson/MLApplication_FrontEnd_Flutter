@@ -29,24 +29,24 @@ class BodyPainter extends CustomPainter {
     double distance = 30;
     final bodyPath = Path()
       ..addRRect(RRect.fromRectAndRadius(
-          Rect.fromLTWH(0, 0, size.width, size.height),
+          Rect.fromLTWH(0, 0, config.mazeWidth, config.mazeHeight),
           Radius.circular(radiosOffset))
       )
 
       ..addRRect(RRect.fromRectAndRadius(
-          Rect.fromLTWH(distance, distance, size.width, size.height),
+          Rect.fromLTWH(distance, distance, config.mazeWidth, config.mazeHeight),
           Radius.circular(radiosOffset))
       )
-      ..moveTo(size.width - borderRadiusOffset, borderRadiusOffset)
+      ..moveTo(config.mazeWidth - borderRadiusOffset, borderRadiusOffset)
       ..lineTo(
-        size.width + distance - borderRadiusOffset,
+        config.mazeWidth + distance - borderRadiusOffset,
         distance + borderRadiusOffset,
       )
       ..lineTo(
       distance + borderRadiusOffset,
-      size.height + distance - borderRadiusOffset,
+        config.mazeHeight + distance - borderRadiusOffset,
       )
-      ..lineTo(borderRadiusOffset, size.height - borderRadiusOffset);
+      ..lineTo(borderRadiusOffset, config.mazeHeight - borderRadiusOffset);
 
     canvas.drawShadow(
       bodyPath,

@@ -12,7 +12,7 @@ class TileGrid extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
-    List <Widget>tileList = List.generate(mapSize * mapSize,
+    List <Widget>tileList = List.generate(config.mapSizeX * config.mapSizeY,
             (index){
           return NewCompleteTile(
             // These values correspond to the receiving func(val, val)
