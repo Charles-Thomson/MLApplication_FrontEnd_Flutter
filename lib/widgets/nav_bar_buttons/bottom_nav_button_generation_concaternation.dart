@@ -101,7 +101,7 @@ class GenerationPopOutTile extends StatelessWidget {
                         SizedBox(
                             height: 100,
                             width: 300,
-                            child: DropDownMenu(updateConfigData, menuItems, configKey)
+                            child: CustomDropDownMenu(updateConfigData, menuItems, configKey)
                         )
                       ]
                   )

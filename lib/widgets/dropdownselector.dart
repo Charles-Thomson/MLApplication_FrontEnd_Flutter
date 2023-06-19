@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 
-class DropDownMenu extends StatefulWidget{
-  const DropDownMenu(this.updateConfigData, this.menuItems, this.configKey, {super.key});
+class CustomDropDownMenu extends StatefulWidget{
+  const CustomDropDownMenu(this.updateConfigData, this.menuItems, this.configKey, {super.key});
 
   final Function(String, String) updateConfigData;
   final List<String> menuItems;
   final String configKey;
 
   @override
-  State<DropDownMenu> createState() => _DropDownMenu();
+  State<CustomDropDownMenu> createState() => _CustomDropDownMenu();
 }
 
-class _DropDownMenu extends State<DropDownMenu>{
+class _CustomDropDownMenu extends State<CustomDropDownMenu>{
   get selectorTitleName => widget.configKey;
   late String? currentSelectedValue;
 

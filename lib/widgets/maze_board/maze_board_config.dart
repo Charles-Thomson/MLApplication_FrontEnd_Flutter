@@ -11,6 +11,8 @@ double rimOffSet = 30;
 
 // Used in multiple tile files
 int mapSize = 4;
+int mapSizeX = 4;
+int mapSizeY = 5;
 int mapSizeStates = mapSize * mapSize;
 
 double tileGridWidth = mazeWidth - (edgeRadius * 2);

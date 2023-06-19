@@ -99,7 +99,7 @@ class ActivationPopOutTile extends StatelessWidget {
                           SizedBox(
                               height: 70,
                               width: 300,
-                              child: DropDownMenu(updateConfigData, hiddenMenuItems, hiddenConfigKey)
+                              child: CustomDropDownMenu(updateConfigData, hiddenMenuItems, hiddenConfigKey)
                           ),
                           const SizedBox(
                             height: 5
@@ -107,7 +107,7 @@ class ActivationPopOutTile extends StatelessWidget {
                           SizedBox(
                               height: 70,
                               width: 300,
-                              child: DropDownMenu(updateConfigData, outputMenuItems, outputConfigKey)
+                              child: CustomDropDownMenu(updateConfigData, outputMenuItems, outputConfigKey)
                           )
                         ]
                     )

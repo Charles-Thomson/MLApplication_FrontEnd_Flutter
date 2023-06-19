@@ -31,7 +31,7 @@ class TileGrid extends StatelessWidget{
       height: config.tileGridHeight,
       width: config.tileGridWidth,
       child: GridView.count(
-          crossAxisCount: mapSize,
+          crossAxisCount: config.mapSizeY, // WORING FROM HERE !!
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           children: tileList

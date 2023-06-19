@@ -57,6 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
   FloatingActionButtonLocation endDocked = FloatingActionButtonLocation.endDocked;
   FloatingActionButtonLocation dockedLocation = FloatingActionButtonLocation.startDocked;
 
+  // Will be used to update the size of the map when selected in mapHero
+  void updateMapSize(){
+
+  }
+
 
   void floatingActionButtonHandling(){
     setState(() {
