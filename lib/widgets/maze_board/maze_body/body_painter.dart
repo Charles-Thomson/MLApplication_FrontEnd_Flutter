@@ -58,7 +58,7 @@ class BodyPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(BodyPainter oldDelegate) => false;
+  bool shouldRepaint(BodyPainter oldDelegate) => true;
   @override
-  bool shouldRebuildSemantics(BodyPainter oldDelegate) => false;
+  bool shouldRebuildSemantics(BodyPainter oldDelegate) => true;
 }

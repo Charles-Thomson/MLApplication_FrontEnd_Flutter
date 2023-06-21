@@ -9,10 +9,15 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_confi
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Refactor down cards and clean up design
 //TODO: Bug with higher number of buttons making outliers un-clickable - due to the offset maybe ?
-//TODO: Connect up the update from the maps tab - updating the main map UI
 //TODO: Refactor/clea up the map selection file
 
+//TODO: Maze map selection requires x tp be greater then y to see y selection
+
 // TODO: Do we refactor to use x , y location over states
+
+
+// TODO TODAY:
+// Refactor to take tile size as apposed to maze size then make the map fit
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -24,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List tileData = List.generate(maze_config.mapSizeStates, (index) => 0); // +1 as it's a loop
+  List tileData = List.generate(maze_config.totalMazeStates, (index) => 0); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {
     'WEIGHT_INITIALIZATION_HEURISTIC': "",
@@ -58,12 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
   FloatingActionButtonLocation frontDocked = FloatingActionButtonLocation.startDocked;
   FloatingActionButtonLocation endDocked = FloatingActionButtonLocation.endDocked;
   FloatingActionButtonLocation dockedLocation = FloatingActionButtonLocation.startDocked;
-
-  // Will be used to update the size of the map when selected in mapHero
-  void updateMapSize(){
-
-  }
-
 
   void floatingActionButtonHandling(){
     setState(() {
@@ -136,15 +135,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+  void updateMazeMap(Map<String, String> newMapData){
+    maze_config.updateInConfig(newMapData);
+    print("Map update received");
+    print(newMapData);
+
+    // call for a general reset
+    setState(() {
+    });
+    print("Post set State");
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: CustomBottomNavBar(dockedLocation, updateConfigData: (configKey, newValue){
+      // Callback for updating the maze in here
+      bottomNavigationBar: CustomBottomNavBar(dockedLocation,
+
+      updateConfigData: (configKey, newValue){
         updateConfigData(configKey, newValue);
+      },
+
+      updateMazeMap: (newMapData){
+        updateMazeMap(newMapData);
       }),
+
       floatingActionButton: FloatingActionButton(
         onPressed: testCallPayloadSetting,
         backgroundColor: Colors.blue,

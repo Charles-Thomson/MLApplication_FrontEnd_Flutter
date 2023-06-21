@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 class RimContainer extends StatelessWidget{
-    const RimContainer({super.key});
+  RimContainer({super.key});
 
     @override
     Widget build(BuildContext context){
         return Container(
-            height: config.mazeHeight ,
-            width: config.mazeWidth,
+            // height: config.mazeHeight ,
+            // width: config.mazeWidth ,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(config.edgeRadius),
                 gradient: LinearGradient(
@@ -36,7 +36,7 @@ class RimContainer extends StatelessWidget{
 }
 
 class RimContainerCutout extends StatelessWidget{
-  const RimContainerCutout({super.key});
+  RimContainerCutout({super.key});
 
   @override
   Widget build(BuildContext context){

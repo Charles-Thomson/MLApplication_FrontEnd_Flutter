@@ -26,13 +26,13 @@ class BuiltMaze extends StatelessWidget{
             size: Size(config.mazeHeight,config.mazeWidth),
             painter: BodyPainter()
           ),
-         const Positioned(
-             child: RimContainer()
+         Positioned(
+         child: RimContainer()
          ),
          Positioned(
             bottom: config.rimOffSet / 2,
             right: config.rimOffSet / 2,
-            child: const RimContainerCutout()
+            child: RimContainerCutout()
         ),
           Positioned(
             bottom: config.rimOffSet   ,

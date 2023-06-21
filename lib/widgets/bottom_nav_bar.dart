@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 
 
 class CustomBottomNavBar extends StatefulWidget{
-  const CustomBottomNavBar( this.dockedLocation, {super.key,required this.updateConfigData});
+  const CustomBottomNavBar( this.dockedLocation, {super.key,required this.updateConfigData,required this.updateMazeMap});
 
   final FloatingActionButtonLocation dockedLocation;
   final Function(String, String) updateConfigData;
+  final Function(Map<String, String>) updateMazeMap;
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBar();
@@ -28,8 +29,8 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
 
     List<Widget> builtNavBarItems =  [
       placeHolder,
-      MazeSettingsButton(updateConfigData: (configKey, newValue){
-        widget.updateConfigData(configKey, newValue);
+      MazeSettingsButton(updateMazeMap: (newMapData){
+        widget.updateMazeMap(newMapData);
       }),
       ParameterSettingsButton(updateConfigData: (configKey, newValue){
         widget.updateConfigData(configKey, newValue);
