@@ -49,44 +49,41 @@ class MapSettingsButtonPopOut extends StatefulWidget{
 
 class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
   final List<int> numberOfStateOptions = [3, 4, 5, 6, 7, 8, 9, 10];
-  final List<double> tileSizeOptions = [10, 15, 20, 25, 30, 35, 40];
+  final List<double> tileSizeOptions = [30, 35, 40, 45, 50, 55, 60];
 
-  late double tileHeight;
-  late double tileWidth;
+  late double tileSize;
   late int numberOfStatesX;
   late int numberOfStatesY;
   late double tileGridHeight;
   late double tileGridWidth;
+
   late Map<String, String > newMapData;
 
-
-
+  late List<Widget> mapRepresentation;
 
   @override
   void initState() {
     super.initState();
-    tileHeight = 15;
-    tileWidth = 15;
+    tileSize = maze_config.tileSize;
 
-    numberOfStatesX = maze_config.totalXStates;
-    numberOfStatesY = maze_config.totalYStates;
-
-    tileGridHeight = tileHeight * numberOfStatesY;
-    tileGridWidth = tileWidth * numberOfStatesX;
+    numberOfStatesY = maze_config.totalXStates;
+    numberOfStatesX = maze_config.totalYStates;
 
     newMapData = {
       "mapSizeX": "",
       "mazeSizeY": "",
-      "tileHeight": "",
-      "tileWidth": ""
+      "tileSize": "",
+
     };
+    tileGridHeight = (tileSize * numberOfStatesX) + 10;
+    tileGridWidth = (tileSize * numberOfStatesY) + 10;
+
   }
 
     void buildNewMapData(){
-      newMapData["mapSizeX"] = numberOfStatesX.toString();
-      newMapData["mapSizeY"] = numberOfStatesY.toString();
-      newMapData["tileHeight"] = tileHeight.toString();
-      newMapData["tileWidth"] = tileWidth.toString();
+      newMapData["mapSizeX"] = numberOfStatesY.toString();
+      newMapData["mapSizeY"] = numberOfStatesX.toString();
+      newMapData["tileSize"] = tileSize.toString();
     }
 
     void submitNewMapData(){
@@ -95,34 +92,27 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
       widget.updateMazeMap(newMapData);
     }
 
-  void updateGridHeight(double newValue){
+  void updateTileSize(double newValue){
     setState(() {
-      tileHeight = newValue;
-      tileGridHeight = tileHeight * numberOfStatesX;
+      tileSize = newValue;
     });
   }
-
-  void updateGridWidth(double newValue){
-    setState(() {
-      tileWidth = newValue;
-      tileGridWidth = tileWidth * numberOfStatesY;
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
+    tileGridHeight = (tileSize  + 10) * numberOfStatesY;
+    tileGridWidth = (tileSize + 10) * numberOfStatesX;
 
     int  totalMapStates = numberOfStatesX * numberOfStatesY;
-    List<Widget> mapRepresentation = List.generate(totalMapStates.toInt(), (index){
+    mapRepresentation = List.generate(totalMapStates.toInt(), (index){
       return Container(
-        // height: tileHeight,
-        // width: tileWidth,
+        height: tileSize,
+        width: tileSize,
         decoration:  BoxDecoration(
           color: Colors.blueGrey.withOpacity(0.4),
           border: Border.all(
-            width: 1,
-            color: Colors.black
+              width: 1,
+              color: Colors.black
           ),
           borderRadius: BorderRadius.circular(3),
         ),
@@ -186,9 +176,9 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                 height: tileGridHeight,
                                 width: tileGridWidth,
                                 child: GridView.count(
+                                  //childAspectRatio: (tileWidth/ tileHeight),
                                   padding: EdgeInsets.zero,
                                     crossAxisCount: numberOfStatesX,
-
                                   crossAxisSpacing: 2,
                                   mainAxisSpacing: 2,
                                   children: mapRepresentation
@@ -275,13 +265,13 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                             errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
 
                                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                        isEmpty: tileHeight == 0,
+                                        isEmpty: tileSize == 0,
                                         child: DropdownButtonHideUnderline(
                                           child: DropdownButton<double>(
                                             isExpanded: true,
-                                            value: tileHeight,
+                                            value: tileSize,
                                             onChanged: (double? newValue) {
-                                              updateGridHeight(newValue!);
+                                              updateTileSize(newValue!);
                                             },
                                             isDense: true,
                                             items: tileSizeOptions.map((double value){
@@ -293,33 +283,7 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 60,
-                                      width: 80,
-                                      child: InputDecorator(
-                                        decoration: InputDecoration(
 
-                                            labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                            errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                        isEmpty: tileWidth == 0,
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<double>(
-                                            isExpanded: true,
-                                            value: tileWidth,
-                                            onChanged: (double? newValue) {
-                                              updateGridWidth(newValue!);
-                                            },
-                                            isDense: true,
-                                            items: tileSizeOptions.map((double value){
-                                              return DropdownMenuItem<double>(
-                                                  value: value,
-                                                  child: Text(value.toString()));
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ]),
 
                                Padding(

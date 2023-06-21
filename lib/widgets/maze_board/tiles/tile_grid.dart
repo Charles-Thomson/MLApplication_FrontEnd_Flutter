@@ -28,8 +28,9 @@ class TileGrid extends StatelessWidget{
     );
 
     return SizedBox(
-      height: config.tileGridHeight,
-      width: config.tileGridWidth,
+      // this size subtraction is needed - addition somewhere ....
+      height: config.tileGridHeight - 2,
+      width: config.tileGridWidth - 2,
       child: GridView.count(
           crossAxisCount: config.totalYStates, // WORING FROM HERE !!
           mainAxisSpacing: 2,

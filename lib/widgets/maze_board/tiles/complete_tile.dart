@@ -12,8 +12,8 @@ class NewCompleteTile extends StatefulWidget{
     });
 
   final int Function(int, int) updateTileDataCallBack;
-  final double tileHeight = maze_config.tileHeight;
-  final double tileWidth = maze_config.tileWidth;
+  final double tileSize = maze_config.tileSize;
+
   final int tileIndex;
 
 @override
@@ -45,12 +45,12 @@ class _NewCompleteTile extends State<NewCompleteTile>{
     return Transform.translate(
       offset: Offset(tileOffSet, tileOffSet),
       child: SizedBox(
-          height: widget.tileHeight,
-          width: widget.tileWidth,
+          height: widget.tileSize,
+          width: widget.tileSize,
           child: Stack(
               children: [
           CustomPaint(
-          size: Size(widget.tileHeight, widget.tileWidth),
+          size: Size(widget.tileSize, widget.tileSize),
           painter: TilePainter(tileState: tileStateValue, depth: depth)
           ),
                 TileTop(

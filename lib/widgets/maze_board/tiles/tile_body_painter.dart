@@ -26,7 +26,6 @@ class TilePainter extends CustomPainter{
     double radiosOffset = edgeRadius;
     double borderRadiusOffset =
         (radiosOffset * math.sqrt(2) - radiosOffset) / math.sqrt(2);
-    //double distance = 10;
     final tilePath = Path()
       ..addRRect(RRect.fromRectAndRadius(
           Rect.fromLTWH(0, 0, size.width, size.height),

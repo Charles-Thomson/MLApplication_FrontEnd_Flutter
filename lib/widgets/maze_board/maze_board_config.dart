@@ -1,22 +1,22 @@
 
 // testing
-double tileHeight = 40;
-double tileWidth = 40;
+double tileSize = 40;
+
 
 int totalXStates = 4;
-int totalYStates = 5;
+int totalYStates = 6;
 int totalMazeStates = totalXStates * totalYStates;
 
-double tileGridHeight = tileHeight * totalXStates;
-double tileGridWidth  = tileWidth * totalYStates;
+double tileGridHeight = tileSize  * totalXStates ;
+double tileGridWidth  = tileSize  * totalYStates ;
 
 double edgeRadius = 20;
 // working at 30
 double rimOffSet = 30;
 
 // Used in built_maze
-double mazeHeight = tileGridHeight + (edgeRadius * 2);
-double mazeWidth = tileGridWidth + (edgeRadius * 2);
+double mazeHeight = tileGridHeight + (edgeRadius * 2) ;
+double mazeWidth = tileGridWidth + (edgeRadius * 2) ;
 
 //Used in rim_painter -> RimContainerCutout
 double rimContainerCutOutHeight = tileGridHeight + 10;
@@ -26,22 +26,19 @@ double rimContainerCutOutWidth = tileGridWidth + 10;
 double animationGridHeight = tileGridHeight;
 double animationGridWidth = tileGridWidth;
 
-double agentDrawHeight = tileHeight;
-double agentDrawWidth = tileWidth;
+double agentDrawHeight = tileSize;
+double agentDrawWidth = tileSize;
 
 void updateInConfig(Map<String, String> updateData){
-  print("Config update Called");
   totalXStates = int.parse(updateData["mapSizeX"]!);
   totalYStates = int.parse(updateData["mapSizeY"]!);
+  tileSize  = double.parse(updateData["tileSize"]!);
 
-  tileHeight = double.parse(updateData["tileHeight"]!);
-  tileWidth  = double.parse(updateData["tileWidth"]!);
-
-  tileGridHeight = tileHeight * totalXStates;
-  tileGridWidth  = tileWidth * totalYStates;
+  tileGridHeight = tileSize * totalXStates;
+  tileGridWidth  = tileSize * totalYStates;
 
   mazeHeight = tileGridHeight + (edgeRadius * 2);
-  mazeWidth = mazeWidth + (edgeRadius * 2);
+  mazeWidth = tileGridWidth + (edgeRadius * 2);
 
   rimContainerCutOutHeight = tileGridHeight + 10;
   rimContainerCutOutWidth = tileGridWidth + 10;
@@ -49,8 +46,8 @@ void updateInConfig(Map<String, String> updateData){
   animationGridHeight = tileGridHeight;
   animationGridWidth = tileGridWidth;
 
-  agentDrawHeight = tileHeight;
-  agentDrawWidth = tileWidth;
+  agentDrawHeight = tileSize;
+  agentDrawWidth = tileSize;
 }
 
 
