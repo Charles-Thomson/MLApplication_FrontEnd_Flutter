@@ -32,8 +32,8 @@ class _TileTop extends State<TileTop>{
           },
 
         child: Container(
-            height: maze_config.tileHeight,
-            width: maze_config.tileWidth,
+            height: maze_config.tileSize,
+            width: maze_config.tileSize,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 gradient: RadialGradient(
