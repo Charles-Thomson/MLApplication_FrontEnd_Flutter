@@ -7,11 +7,14 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 
 class BuiltMaze extends StatelessWidget{
-  const BuiltMaze({super.key, required this.updateTileDataCallBack});
+  const BuiltMaze({super.key, required this.updateTileDataCallBack, required this.animationVisible, required this.agentAnimationLocation});
 
   final int Function(int, int) updateTileDataCallBack;
+  final bool animationVisible;
+  final int agentAnimationLocation;
 
-  final bool animationVisible = false;
+
+
   @override
   Widget build(BuildContext context){
     return Transform.rotate(
@@ -46,7 +49,7 @@ class BuiltMaze extends StatelessWidget{
               ),
                Visibility(
                 visible: animationVisible,
-                  child:  const AgentAnimation()),
+                  child: AgentAnimation(agentAnimationLocation: agentAnimationLocation)),
               ]
             )
           )]

@@ -3,7 +3,10 @@ import 'package:ann_app/widgets/agent/agent_body.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 
 class AgentAnimation extends StatefulWidget{
-  const AgentAnimation({super.key});
+  AgentAnimation({super.key,required this.agentAnimationLocation});
+
+
+  final int agentAnimationLocation;
 
   @override
   State<AgentAnimation> createState() => _AgentAnimation();
@@ -11,55 +14,61 @@ class AgentAnimation extends StatefulWidget{
 }
 
 class _AgentAnimation extends State<AgentAnimation>{
-  // will need to be passed
-  final int rows = 4;
-  final int cols = 4;
 
-  // will need to be passed
-  final double mazeX = maze_config.animationGridHeight;
-  final double mazeY = maze_config.animationGridWidth;
+  final int totalXStates = maze_config.totalYStates;
+  final int totalYStates = maze_config.totalXStates;
 
-  final List<int> agentPath = [0, 1, 2, 3, 5,15];
 
-  double currentX = 0;
-  double currentY = 0;
+  final double animationGridWidth = maze_config.tileGridHeight;
+  final double animationGridHeight = maze_config.tileGridWidth;
 
-  double xStep = 0 ;
-  double yStep = 0 ;
-  
-  void setStepDistance(){
-    xStep = mazeX / cols;
-    yStep = mazeY / rows;
+  late double currentX;
+  late double currentY;
+
+  late double xStepDistance = 0 ;
+  late double yStepDistance = 0 ;
+
+  @override
+  void initState(){
+    super.initState();
+    xStepDistance = animationGridHeight / totalXStates;
+    yStepDistance = animationGridWidth / totalYStates;
+
   }
 
   List<double> calculateNewLocation(int state){
-    int xGridLocation = (state / cols).floor();
-    int yGridLocation = state.remainder(cols);
+    print("State received in calculate new location $state");
+    int xGridLocation = (state / totalXStates).floor();
+    int yGridLocation = state.remainder(totalXStates);
 
-    double newXLocation = xGridLocation * xStep;
-    double newYLocation = yGridLocation * yStep;
+    double newXLocation = xGridLocation * xStepDistance;
+    double newYLocation = yGridLocation * yStepDistance;
     
     return [newXLocation, newYLocation];
   }
 
-  Future<void> runAnimation() async {
-    for(int state in agentPath){
-      await Future.delayed(const Duration(seconds: 2), (){
-        List<double> newLocation = calculateNewLocation(state);
-        double newLocationX = newLocation[1];
-        double newLocationY = newLocation[0];
-        setState(() {
-          currentY = newLocationY;
-          currentX = newLocationX;
-        });
-      }
-      );
-    }
-  }
+  // Future<void> runAnimation() async {
+  //   List<int> agentPath = widget.animationPath;
+  //   for(int state in agentPath){
+  //     print(state);
+  //     await Future.delayed(const Duration(seconds: 2), (){
+  //       List<double> newLocation = calculateNewLocation(state);
+  //       double newLocationX = newLocation[1];
+  //       double newLocationY = newLocation[0];
+  //       setState(() {
+  //         currentY = newLocationY;
+  //         currentX = newLocationX;
+  //       });
+  //     }
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context){
-    setStepDistance();
+    List<double> newLocation = calculateNewLocation(widget.agentAnimationLocation);
+    currentX = newLocation[1];
+    currentY = newLocation[0];
     return Column(
       children: [
         Stack(children: [
@@ -79,8 +88,6 @@ class _AgentAnimation extends State<AgentAnimation>{
           )
         ]
         ),
-        // ElevatedButton(onPressed: () {runAnimation();},
-        //     child: const Text("Start Animation"))
       ],
     );
   }

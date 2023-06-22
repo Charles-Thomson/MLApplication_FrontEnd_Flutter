@@ -4,6 +4,7 @@ import 'package:ann_app/widgets/maze_board/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
+import 'package:ann_app/widgets/custom_floating_button.dart';
 
 //TODO: Work out bug with the rendering on the button press to open Hero
 //TODO: Refactor layouts to use Flexible ?
@@ -14,10 +15,13 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_confi
 //TODO: Maze map selection requires x tp be greater then y to see y selection
 
 // TODO: Do we refactor to use x , y location over states
+// TODO: Go through and clean up file names, class names ect ect -> CLEAN UP GENERALLY
 
 
 // TODO TODAY:
-// Refactor to take tile size as apposed to maze size then make the map fit
+// Start building the custom floating action button
+// Add dialog to the button click to check if defaults are to be used
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -60,18 +64,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return returnVal;
   }
 
-  FloatingActionButtonLocation frontDocked = FloatingActionButtonLocation.startDocked;
+  FloatingActionButtonLocation startDocked = FloatingActionButtonLocation.startDocked;
+  FloatingActionButtonLocation centerDocked = FloatingActionButtonLocation.centerDocked;
   FloatingActionButtonLocation endDocked = FloatingActionButtonLocation.endDocked;
+
   FloatingActionButtonLocation dockedLocation = FloatingActionButtonLocation.startDocked;
 
   void floatingActionButtonHandling(){
     setState(() {
-      if(dockedLocation == endDocked){
-        dockedLocation = frontDocked;
-        // print("Tile data requested $tileData");
-      }else if(dockedLocation == frontDocked) {
+      if(dockedLocation == startDocked) {
+        dockedLocation = centerDocked;
+      }else if(dockedLocation == centerDocked){
         dockedLocation = endDocked;
-        // print("Tile data requested $tileData");
+      }else if(dockedLocation == endDocked){
+        dockedLocation = startDocked;
       }
     });
   }
@@ -145,8 +151,38 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     print("Post set State");
 
+  }
+
+  int agentAnimationLocation = 0;
+
+  // just needs to pass one int at a time (the next location as state)
+  Future<void> runAnimation(List<int> animationPath) async {
+    for(int newState in animationPath){
+      print(newState);
+      await Future.delayed(const Duration(seconds: 2), (){
+        setState(() {
+          agentAnimationLocation = newState;
+        });
+      }
+      );
+    }
 
   }
+
+  // will take a list<int> animationPath from the return call
+  void testAnimation(){
+    setState(() {
+      animationVisible = true;
+      animationPath = [6,7,8,9,10];
+      //startAnimation = true;
+    });
+    floatingActionButtonHandling();
+    //runAnimation(animationPath);
+  }
+
+  List<int> animationPath = [];
+  bool animationVisible = false;
+  bool startAnimation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +201,14 @@ class _MyHomePageState extends State<MyHomePage> {
         updateMazeMap(newMapData);
       }),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: testCallPayloadSetting,
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.start_outlined)
-        ,),
-      floatingActionButtonLocation: dockedLocation,
+      floatingActionButton: const CustomFloatingButton(),
+        floatingActionButtonLocation: dockedLocation,
+      // FloatingActionButton(
+      //   onPressed: testAnimation,
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.start_outlined)
+      //   ,),
+      // floatingActionButtonLocation: dockedLocation,
 
       body: Column(
         children:  [
@@ -182,7 +220,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 updateTileDataCallBack: (index, tileState){
                   int newTileState = updateTileListData(index, tileState);
                   return newTileState;
-                  }
+                  },
+                animationVisible: animationVisible,
+                agentAnimationLocation: agentAnimationLocation,
                 )
               ),
           const SizedBox(
