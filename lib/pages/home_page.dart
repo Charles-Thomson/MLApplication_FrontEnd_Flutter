@@ -10,7 +10,7 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Refactor down cards and clean up design
 //TODO: Bug with higher number of buttons making outliers un-clickable - due to the offset maybe ?
-//TODO: Refactor/clea up the map selection file
+//TODO: Refactor/clean up the map selection file
 
 //TODO: Maze map selection requires x tp be greater then y to see y selection
 
@@ -18,9 +18,11 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 // TODO: Go through and clean up file names, class names ect ect -> CLEAN UP GENERALLY
 
 
-// TODO TODAY:
-// Start building the custom floating action button
-// Add dialog to the button click to check if defaults are to be used
+// TODO TODAY/NEXT:
+// Finish up the updating Floating action button
+// Implement the 2nd set of nav bar items for when the Action button moves i.e generation to run for animation
+// Implement Final Stage of Action Button with the reset
+
 
 
 class MyHomePage extends StatefulWidget {
@@ -52,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateConfigData(String configKey, String newValue){
     configData[configKey] = newValue;
+    updateLoadingValue();
   }
 
   int updateTileListData(int index, var tileState){
@@ -180,12 +183,27 @@ class _MyHomePageState extends State<MyHomePage> {
     //runAnimation(animationPath);
   }
 
+  void updateLoadingValue(){
+    double holdingValue = 0.0;
+    for(var value in configData.values){
+      if(value != ""){
+        holdingValue += (1 / 12);
+      }
+    }
+    setState(() {
+      loadingValue = holdingValue;
+    });
+
+  }
+
   List<int> animationPath = [];
   bool animationVisible = false;
   bool startAnimation = false;
+  double loadingValue = 0.0;
 
   @override
   Widget build(BuildContext context) {
+    print(loadingValue);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -201,10 +219,11 @@ class _MyHomePageState extends State<MyHomePage> {
         updateMazeMap(newMapData);
       }),
 
-      floatingActionButton: const CustomFloatingButton(),
+      floatingActionButton:
+      CustomFloatingButton(loadingValue: loadingValue),
         floatingActionButtonLocation: dockedLocation,
       // FloatingActionButton(
-      //   onPressed: testAnimation,
+      //   onPressed: updateLoadingValue,
       //   backgroundColor: Colors.blue,
       //   child: const Icon(Icons.start_outlined)
       //   ,),
