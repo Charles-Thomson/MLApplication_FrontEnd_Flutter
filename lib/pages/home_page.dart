@@ -17,11 +17,13 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 // TODO: Do we refactor to use x , y location over states
 // TODO: Go through and clean up file names, class names ect ect -> CLEAN UP GENERALLY
 
+// TODO: Consider refactoring parameter selection and function selection into on pop-out
+
 
 // TODO TODAY/NEXT:
-// Finish up the updating Floating action button
-// Implement the 2nd set of nav bar items for when the Action button moves i.e generation to run for animation
-// Implement Final Stage of Action Button with the reset
+// Decide on ad define a colour theme
+// Implement the colour theme
+
 
 
 
@@ -73,11 +75,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   FloatingActionButtonLocation dockedLocation = FloatingActionButtonLocation.startDocked;
 
-  void floatingActionButtonHandling(){
+  void floatingActionButtonLocationHandling(){
     setState(() {
       if(dockedLocation == startDocked) {
-        dockedLocation = centerDocked;
-      }else if(dockedLocation == centerDocked){
         dockedLocation = endDocked;
       }else if(dockedLocation == endDocked){
         dockedLocation = startDocked;
@@ -179,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
       animationPath = [6,7,8,9,10];
       //startAnimation = true;
     });
-    floatingActionButtonHandling();
+    floatingActionButtonLocationHandling();
     //runAnimation(animationPath);
   }
 
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
     double holdingValue = 0.0;
     for(var value in configData.values){
       if(value != ""){
-        holdingValue += (1 / 12);
+        holdingValue += (1 / 9);
       }
     }
     setState(() {
@@ -220,7 +220,10 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
 
       floatingActionButton:
-      CustomFloatingButton(loadingValue: loadingValue),
+      CustomFloatingButton(
+          loadingValue: loadingValue,
+          floatingActionButtonLocationHandling: floatingActionButtonLocationHandling
+      ),
         floatingActionButtonLocation: dockedLocation,
       // FloatingActionButton(
       //   onPressed: updateLoadingValue,

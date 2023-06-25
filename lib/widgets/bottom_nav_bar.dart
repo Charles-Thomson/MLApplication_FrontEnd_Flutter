@@ -1,6 +1,15 @@
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
 import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
 import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
+
+import 'package:ann_app/widgets/generation_data_widgets/generation_data_nav_button.dart';
+import 'package:ann_app/widgets/animation_selection_nav_bar_button.dart';
+
+
+
+
+
+
 import 'package:flutter/material.dart';
 
 
@@ -18,29 +27,41 @@ class CustomBottomNavBar extends StatefulWidget{
 
 class _CustomBottomNavBar extends State<CustomBottomNavBar>{
   final NotchedShape? thisShape = const CircularNotchedRectangle();
-
   get dockedLocation => widget.dockedLocation;
+
+  Widget placeHolder = Opacity(opacity: 0.0,
+      child: IconButton(onPressed: () {},
+          icon: const Icon(Icons.abc)));
+
+  List<Widget> buildButtonSet(){
+   switch(dockedLocation){
+     case FloatingActionButtonLocation.startDocked:
+       return [
+         placeHolder,
+         MazeSettingsButton(updateMazeMap: (newMapData){
+           widget.updateMazeMap(newMapData);
+         }),
+         ParameterSettingsButton(updateConfigData: (configKey, newValue){
+           widget.updateConfigData(configKey, newValue);
+         }),
+         FunctionSettingsButton(updateConfigData: (configKey, newValue){
+           widget.updateConfigData(configKey, newValue);
+         }),
+
+       ];
+     case FloatingActionButtonLocation.endDocked:
+       return [
+         const GenerationDataButton(),
+         const AnimationSelectionButton(),
+         placeHolder,
+       ];
+   }
+    return [];
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget placeHolder = Opacity(opacity: 0.0,
-        child: IconButton(onPressed: () {},
-            icon: const Icon(Icons.abc)));
-
-    List<Widget> builtNavBarItems =  [
-      placeHolder,
-      MazeSettingsButton(updateMazeMap: (newMapData){
-        widget.updateMazeMap(newMapData);
-      }),
-      ParameterSettingsButton(updateConfigData: (configKey, newValue){
-        widget.updateConfigData(configKey, newValue);
-      }),
-      FunctionSettingsButton(updateConfigData: (configKey, newValue){
-       widget.updateConfigData(configKey, newValue);
-      }),
-
-    ];
-
+    List<Widget> currentNavBarButtonSet = buildButtonSet();
     return BottomAppBar(
       height: 60,
       shape: const CircularNotchedRectangle(),
@@ -48,7 +69,7 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children:  [
-          ...builtNavBarItems
+          ...currentNavBarButtonSet
           //HeuristicSelectionButton()
         ]
       )

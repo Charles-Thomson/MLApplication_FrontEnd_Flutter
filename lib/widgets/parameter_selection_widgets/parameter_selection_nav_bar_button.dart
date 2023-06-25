@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/nav_bar_buttons/hero_route.dart';
+import 'package:ann_app/widgets/hero_route.dart';
 
 const String _parameterpopouttag = "parameter-pop-out";
 
