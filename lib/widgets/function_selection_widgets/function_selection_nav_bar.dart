@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ann_app/widgets/function_selection_widgets/scrollable_selection.dart';
 
 class FunctionSelectionNavBar extends StatelessWidget{
   const FunctionSelectionNavBar({super.key, required this.changeVisableCardCallBack});

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/hero_route.dart';
 
@@ -66,6 +68,7 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
     List<TextEditingController> textControllers = [
       maxGenerationSizeController,
       startingFitnessThresholdController,
@@ -96,29 +99,29 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
 
     return Center(
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 50, 20, 10),
+          padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
           child: Hero(
               tag: _parameterpopouttag,
               child: Container(
-                  height: 600,
-                  width: 400,
+                  // height: 660,
+                  // width: 440,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(width: 0),
                     gradient: LinearGradient(
                       colors: [
-                        Colors.blueGrey.shade700,
-                        Colors.blueGrey.shade500,
-                        Colors.blueGrey.shade300,
-                        Colors.blueGrey.shade300,
-                        Colors.blueGrey.shade400,
-                        Colors.blueGrey.shade700,
+                        themePrimary.shade700,
+                        themePrimary.shade500,
+                        themePrimary.shade300,
+                        themePrimary.shade300,
+                        themePrimary.shade400,
+                        themePrimary.shade700,
                       ],
                       stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
-                    color: Colors.grey.withOpacity(0.6),
+                    color: themePrimary.withOpacity(0.6),
                     boxShadow: [BoxShadow(
                         color: Colors.grey.withOpacity(0.6),
                         blurRadius: 1,
@@ -128,68 +131,71 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
                   ),
 
                   child: Center(child:
-                  Container(
-                      height: 560,
-                      width: 340,
-                      color: Colors.white.withOpacity(0.7),
-                      child:
-                      Column(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                          children:    [
-                            SizedBox(
-                                height: 40,
-                                child: Material(
-                                  color: Colors.white.withOpacity(0),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                        style: TextStyle(fontSize: 20)
-                                        ,"PARAMETER SELECTION "),
-                                  ),
-                                )
-                            ),
-                            Material(
-                              color: Colors.transparent,
-                              child: Center(
-                                child: Form(
-                                  key: _formKey,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                                    child: Column(
-                                      children: 
-                                      [
-                                        ...builtTextFormFields,
-                                      ]
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        // height: 560,
+                        // width: 340,
+                        color: themePrimary.withOpacity(0.4),
+                        child:
+                        Column(
+                          //mainAxisAlignment: MainAxisAlignment.center,
+                            children:    [
+                              SizedBox(
+                                  height: 40,
+                                  child: Material(
+                                    color: Colors.white.withOpacity(0),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                          style: TextStyle(fontSize: 20)
+                                          ,"PARAMETER SELECTION "),
                                     ),
                                   )
+                              ),
+                              Material(
+                                color: Colors.transparent,
+                                child: Center(
+                                  child: Form(
+                                    key: _formKey,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                      child: Column(
+                                        children:
+                                        [
+                                          ...builtTextFormFields,
+                                        ]
+                                      ),
+                                    )
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            Center(
-                                child: ElevatedButton(onPressed: (){
-                                  if(_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      const SnackBar(
-                                          content: Text("DOING WORK")),
-                                    );
-                                    // lazy but works - may find better solution
-                                    updateConfigData("MAX_GENERATION_SIZE",maxGenerationSizeController.text);
-                                    updateConfigData("STARTING_FITNESS_THRESHOLD",startingFitnessThresholdController.text);
-                                    updateConfigData("DESIRED_FIT_GENERATION_SIZE",desiredFitGenerationSizeController.text);
-                                    updateConfigData("MAX_EPISODE_DURATION",maxEpisodeDurationController.text);
-                                    updateConfigData("NUMBER_OF_GENERATIONS",numberOfGenerationsController.text);
+                              Center(
+                                  child: ElevatedButton(onPressed: (){
+                                    if(_formKey.currentState!.validate()) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text("DOING WORK")),
+                                      );
+                                      // lazy but works - may find better solution
+                                      updateConfigData("MAX_GENERATION_SIZE",maxGenerationSizeController.text);
+                                      updateConfigData("STARTING_FITNESS_THRESHOLD",startingFitnessThresholdController.text);
+                                      updateConfigData("DESIRED_FIT_GENERATION_SIZE",desiredFitGenerationSizeController.text);
+                                      updateConfigData("MAX_EPISODE_DURATION",maxEpisodeDurationController.text);
+                                      updateConfigData("NUMBER_OF_GENERATIONS",numberOfGenerationsController.text);
 
-                                  }
-                                },
-                                    child: const Text("Submit ")
-                                )
-                            )
+                                    }
+                                  },
+                                      child: const Text("Submit ")
+                                  )
+                              )
 
 
-                          ]
-                      )
+                            ]
+                        )
+                    ),
                   )
                   ))
           )
