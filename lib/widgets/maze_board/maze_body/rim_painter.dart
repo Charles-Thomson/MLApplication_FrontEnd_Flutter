@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
+import 'package:ann_app/colors.dart';
 
 class RimContainer extends StatelessWidget{
   RimContainer({super.key});
 
     @override
     Widget build(BuildContext context){
+      MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
         return Container(
             // height: config.mazeHeight ,
             // width: config.mazeWidth ,
@@ -13,10 +15,10 @@ class RimContainer extends StatelessWidget{
                 borderRadius: BorderRadius.circular(config.edgeRadius),
                 gradient: LinearGradient(
                     colors: <Color>[
-                        Colors.grey.shade600,
-                        Colors.grey.shade500,
-                        Colors.grey.shade300,
-                        Colors.grey.shade500
+                      themePrimary.shade700,
+                      themePrimary.shade500,
+                      themePrimary.shade300,
+                      themePrimary.shade600
                     ],
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,

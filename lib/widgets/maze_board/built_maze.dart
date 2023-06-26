@@ -27,7 +27,7 @@ class BuiltMaze extends StatelessWidget{
 
           CustomPaint(
             size: Size(config.mazeHeight,config.mazeWidth),
-            painter: BodyPainter()
+            painter: BodyPainter(context: context)
           ),
          Positioned(
          child: RimContainer()

@@ -18,13 +18,12 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 // TODO: Go through and clean up file names, class names ect ect -> CLEAN UP GENERALLY
 
 // TODO: Consider refactoring parameter selection and function selection into on pop-out
+// TODO: The shading on the map isn't accurate when the map size changes
 
 
 // TODO TODAY/NEXT:
-// Decide on ad define a colour theme
+// Decide on and define a colour theme
 // Implement the colour theme
-
-
 
 
 class MyHomePage extends StatefulWidget {
@@ -37,6 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  // TODO: THIS ISN'T REBUILDING TO CORRECT SIZE ON THE NEW MAZE
   List tileData = List.generate(maze_config.totalMazeStates, (index) => 0); // +1 as it's a loop
   get stringCurrentTileData => tileData.join(",");
   Map<String, String> configData = {

@@ -1,3 +1,4 @@
+import 'package:ann_app/pages/home_page.dart';
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
 import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
 import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
@@ -5,13 +6,7 @@ import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_butto
 import 'package:ann_app/widgets/generation_data_widgets/generation_data_nav_button.dart';
 import 'package:ann_app/widgets/animation_selection_nav_bar_button.dart';
 
-
-
-
-
-
 import 'package:flutter/material.dart';
-
 
 
 class CustomBottomNavBar extends StatefulWidget{
@@ -65,7 +60,7 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
     return BottomAppBar(
       height: 60,
       shape: const CircularNotchedRectangle(),
-      color: Colors.blue,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children:  [

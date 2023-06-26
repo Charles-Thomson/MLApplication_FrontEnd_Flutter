@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
+import 'package:ann_app/colors.dart';
 
 class TilePainter extends CustomPainter{
   TilePainter({required this.tileState, required this.depth});

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/pages/home_page.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:ann_app/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +20,11 @@ class MyApp extends StatelessWidget {
 
       title: 'Test data',
       theme: ThemeData(
+        primaryColor: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
 
-        primarySwatch: Colors.red,
+        brightness: Brightness.light,
+        textTheme: GoogleFonts.aBeeZeeTextTheme()
       ),
       home: const MyHomePage(title: 'ANN_App_0.3'),
     );

@@ -13,16 +13,33 @@ class CustomFloatingButton extends StatefulWidget{
 
 class _CustomFloatingButton extends State<CustomFloatingButton>{
 
-  Color buttonColor = Colors.white;
+  late Color buttonColor;
+  late Color iconColor;
+  late Color progressIndicatorColor;
 
-  void checkBttnColor(){
+  @override
+  void initState(){
+    super.initState();
+    buttonColor = Colors.white;
+    progressIndicatorColor = Colors.blue;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    iconColor = Theme.of(context).primaryColor;
+  }
+
+  void checkCurrentElementColors(){
     if(widget.loadingValue > 0.9){
-      buttonColor = Colors.blue.withOpacity(0.5);
+        buttonColor = Theme.of(context).primaryColor;
+        iconColor = Colors.white;
+        progressIndicatorColor = Theme.of(context).primaryColor;
     }
   }
   @override
   Widget build(BuildContext context){
-    checkBttnColor();
+    checkCurrentElementColors();
     return FloatingActionButton(
         backgroundColor: buttonColor,
         onPressed: () {widget.floatingActionButtonLocationHandling();},
@@ -34,15 +51,15 @@ class _CustomFloatingButton extends State<CustomFloatingButton>{
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: CircularProgressIndicator(
-                    color: Colors.blue,
+                    color: progressIndicatorColor,
                     value: widget.loadingValue
                 ),
               ),
             ),
-            const Center(
+             Center(
                child: Icon(
                       Icons.start,
-                 color: Colors.blue,
+                 color: iconColor
 
                ),
              )

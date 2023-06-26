@@ -2,24 +2,26 @@ import'dart:ui' as ui;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
+import 'package:ann_app/colors.dart';
 
 class BodyPainter extends CustomPainter {
-  BodyPainter();
-
+  BodyPainter({required this.context});
   final bodyPaint = Paint();
+  final BuildContext context;
 
   @override
   void paint(Canvas canvas, Size size) {
+    MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
     bodyPaint.shader = ui.Gradient.linear(
       const Offset(0, 20),
       const Offset(20, 0),
       [
-        Colors.grey.shade700,
-        Colors.grey.shade500,
-        Colors.grey.shade300,
-        Colors.grey.shade100,
-        Colors.grey.shade200,
-        Colors.grey.shade700,
+        themePrimary.shade600,
+        themePrimary.shade500,
+        themePrimary.shade300,
+        themePrimary.shade100,
+        themePrimary.shade200,
+        themePrimary.shade500,
       ],
       [0.01, 0.2, 0.49, 0.52, 0.6, 1],
     );
