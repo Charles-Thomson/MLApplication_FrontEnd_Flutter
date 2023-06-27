@@ -9,6 +9,7 @@ import 'package:ann_app/widgets/function_selection_widgets/selection_cards/activ
 import 'package:ann_app/widgets/function_selection_widgets/selection_cards/weight_heuristic_selection_card.dart';
 import 'package:ann_app/widgets/function_selection_widgets/selection_cards/genertion_concatenation_selection_card.dart';
 import 'package:ann_app/widgets/function_selection_widgets/selection_cards/landing_card.dart';
+import 'package:ann_app/widgets/function_selection_widgets/bottom_notch_clipper.dart';
 
 
 const String _functionspopouttag = "functions-pop-out";
@@ -32,11 +33,14 @@ class FunctionSettingsButton extends StatelessWidget{
           child: Hero(
               tag: _functionspopouttag,
               child: Material(
+                  color: Colors.transparent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                   child:  Icon(
                       Icons.functions,
                       size: 40,
-                      color: Theme.of(context).primaryColor
+                      color: Theme.of(context).primaryColor,
+
+
                   )
               )
           ),
@@ -82,89 +86,40 @@ class _FunctionSettingsButtonPopOut extends State<FunctionSettingsButtonPopOut>{
           padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
           child: Hero(
               tag: _functionspopouttag,
-              child: Container(
-                  // height: 600,
-                  // width: 400,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(width: 0),
-                    gradient: LinearGradient(
-                      colors: [
-                        themePrimary.shade700,
-                        themePrimary.shade500,
-                        themePrimary.shade300,
-                        themePrimary.shade300,
-                        themePrimary.shade400,
-                        themePrimary.shade700,
-                      ],
-                      stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    color: themePrimary.withOpacity(0.6),
-                    boxShadow: [BoxShadow(
-                        color: Colors.grey.withOpacity(0.6),
-                        blurRadius: 1,
-                        offset: const Offset(1, 1),
-                        blurStyle: BlurStyle.solid
-                    )],
-                  ),
+              child: ClipPath(
+                clipper: BottomNotchClipper(),
+                child: Container(
 
-                  child: ScrollAbleFunctionSelection(updateConfigData: updateConfigData,)))));
-    //               Center(child:
-    //               Padding(
-    //                 padding: const EdgeInsets.all(8.0),
-    //                 child: Container(
-    //                     // height: 560,
-    //                     // width: 340,
-    //                     color: themePrimary.withOpacity(0.4),
-    //                     child:
-    //
-    //                     Column(
-    //                         //mainAxisAlignment: MainAxisAlignment.center,
-    //                         children:    [
-    //                            Flexible(
-    //                              flex: 1,
-    //                              child: SizedBox(
-    //                                 height: 30,
-    //                                 child: Material(
-    //                                   color: Colors.white.withOpacity(0),
-    //                                   child: const Text(
-    //                                       style: TextStyle(fontSize: 20)
-    //                                       ,"PROCESS SELECTION "),
-    //                                 )
-    //                           ),
-    //                            ),
-    //                           // place holder for the tile to be shown
-    //                            Flexible(
-    //                              flex: 12,
-    //                              child: SizedBox(
-    //                               height: 440,
-    //                               width: 320,
-    //                               child: Center(
-    //                                   child: currentCard
-    //                               )
-    //                           ),
-    //                            ),
-    //                           // cal back of a set state to the new shown tile
-    //                           Flexible(
-    //                             flex:2,
-    //                             child: SizedBox(
-    //                               height: 90,
-    //                               child: FunctionSelectionNavBar(
-    //                                   changeVisableCardCallBack: (newCard){
-    //                                 callbackUpdateCard(newCard);
-    //                               }),
-    //                             ),
-    //                           ),
-    //                         ]
-    //                     )
-    //                 ),
-    //               )
-    //               ))
-    //       )
-    //   ),
-    // );
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(6),
+                    //   border: Border.all(width: 0),
+                    //   gradient: LinearGradient(
+                    //     colors: [
+                    //       themePrimary.shade700,
+                    //       themePrimary.shade500,
+                    //       themePrimary.shade300,
+                    //       themePrimary.shade300,
+                    //       themePrimary.shade400,
+                    //       themePrimary.shade700,
+                    //     ],
+                    //     stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
+                    //     begin: Alignment.centerLeft,
+                    //     end: Alignment.centerRight,
+                    //   ),
+                    //   color: themePrimary.withOpacity(0.6),
+                    //   boxShadow: [BoxShadow(
+                    //       color: Colors.grey.withOpacity(0.6),
+                    //       blurRadius: 1,
+                    //       offset: const Offset(1, 1),
+                    //       blurStyle: BlurStyle.solid
+                    //   )],
+                    // ),
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: ScrollAbleFunctionSelection(updateConfigData: updateConfigData,),
+                    )),
+              ))));
   }
 }
 

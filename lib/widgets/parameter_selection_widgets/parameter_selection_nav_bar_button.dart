@@ -24,6 +24,7 @@ class ParameterSettingsButton extends StatelessWidget{
           child: Hero(
               tag: _parameterpopouttag,
               child: Material(
+                  color: Colors.transparent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                   child:  Icon(
                       Icons.data_object,

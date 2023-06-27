@@ -1,4 +1,4 @@
-import 'package:ann_app/pages/home_page.dart';
+
 import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
 import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
 import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
@@ -32,10 +32,12 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
    switch(dockedLocation){
      case FloatingActionButtonLocation.startDocked:
        return [
-         placeHolder,
+
          MazeSettingsButton(updateMazeMap: (newMapData){
            widget.updateMazeMap(newMapData);
          }),
+         placeHolder,
+         placeHolder,
          ParameterSettingsButton(updateConfigData: (configKey, newValue){
            widget.updateConfigData(configKey, newValue);
          }),
@@ -60,7 +62,7 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
     return BottomAppBar(
       height: 60,
       shape: const CircularNotchedRectangle(),
-      color: Colors.white,
+      color: Colors.blueGrey.shade100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children:  [

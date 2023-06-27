@@ -23,7 +23,7 @@ class MazeSettingsButton extends StatelessWidget{
           child: Hero(
               tag: _mappopouttag,
               child: Material(
-
+                  color: Colors.transparent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                   child:  Icon(
                       Icons.map_outlined,

@@ -10,20 +10,18 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Refactor down cards and clean up design
 //TODO: Bug with higher number of buttons making outliers un-clickable - due to the offset maybe ?
-//TODO: Refactor/clean up the map selection file
 
 //TODO: Maze map selection requires x tp be greater then y to see y selection
-
 // TODO: Do we refactor to use x , y location over states
-// TODO: Go through and clean up file names, class names ect ect -> CLEAN UP GENERALLY
+
 
 // TODO: Consider refactoring parameter selection and function selection into on pop-out
 // TODO: The shading on the map isn't accurate when the map size changes
 
 
 // TODO TODAY/NEXT:
-// Decide on and define a colour theme
-// Implement the colour theme
+// Finish UI design Elements -> Working on the custom clipping currently
+
 
 
 class MyHomePage extends StatefulWidget {
@@ -56,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateConfigData(String configKey, String newValue){
     configData[configKey] = newValue;
+    print(configData);
     updateLoadingValue();
   }
 
@@ -220,17 +219,17 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
 
       floatingActionButton:
-      CustomFloatingButton(
-          loadingValue: loadingValue,
-          floatingActionButtonLocationHandling: floatingActionButtonLocationHandling
-      ),
-        floatingActionButtonLocation: dockedLocation,
-      // FloatingActionButton(
-      //   onPressed: updateLoadingValue,
-      //   backgroundColor: Colors.blue,
-      //   child: const Icon(Icons.start_outlined)
-      //   ,),
-      // floatingActionButtonLocation: dockedLocation,
+      // CustomFloatingButton(
+      //     loadingValue: loadingValue,
+      //     floatingActionButtonLocationHandling: floatingActionButtonLocationHandling
+      // ),
+      //   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      FloatingActionButton(
+        onPressed: updateLoadingValue,
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.start_outlined)
+        ,),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       body: Column(
         children:  [
