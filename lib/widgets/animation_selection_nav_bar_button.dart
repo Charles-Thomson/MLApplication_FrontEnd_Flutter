@@ -20,12 +20,12 @@ class AnimationSelectionButton extends StatelessWidget{
           child: Hero(
               tag: _animationselectionpopouttag,
               child: Material(
-                  color: Colors.blue,
+                  color: Colors.transparent,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                  child: const Icon(
+                  child: Icon(
                       Icons.animation_sharp,
                       size: 40,
-                      color: Colors.white
+                      color: Theme.of(context).primaryColor
                   )
               )
           ),

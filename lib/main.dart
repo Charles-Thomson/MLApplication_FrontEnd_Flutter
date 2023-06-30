@@ -24,8 +24,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
 
         brightness: Brightness.light,
-        textTheme: GoogleFonts.aBeeZeeTextTheme()
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
+          displayMedium: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          displaySmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+
+        ),
+
       ),
+
+
       home: const MyHomePage(title: 'ANN_App_0.3'),
     );
   }

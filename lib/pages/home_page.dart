@@ -20,8 +20,10 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 
 
 // TODO TODAY/NEXT:
-// Finish UI design Elements -> Working on the custom clipping currently
-
+// Connect up the animation selection 
+// Connect up the API call 
+// Connect the returned data from the api to the Animation
+// the viewable area of the built maze does need some work
 
 
 class MyHomePage extends StatefulWidget {
@@ -219,36 +221,40 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
 
       floatingActionButton:
-      // CustomFloatingButton(
-      //     loadingValue: loadingValue,
-      //     floatingActionButtonLocationHandling: floatingActionButtonLocationHandling
-      // ),
-      //   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      FloatingActionButton(
-        onPressed: updateLoadingValue,
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.start_outlined)
-        ,),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      CustomFloatingButton(
+          loadingValue: loadingValue,
+          floatingActionButtonLocationHandling: floatingActionButtonLocationHandling
+      ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // FloatingActionButton(
+      //   onPressed: updateLoadingValue,
+      //   backgroundColor: Colors.blue,
+      //   child: const Icon(Icons.start_outlined)
+      //   ,),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       body: Column(
         children:  [
-          const SizedBox(height: 100),
+
           Stack(
             children: [
-            Center(
-              child: BuiltMaze(
-                updateTileDataCallBack: (index, tileState){
-                  int newTileState = updateTileListData(index, tileState);
-                  return newTileState;
-                  },
-                animationVisible: animationVisible,
-                agentAnimationLocation: agentAnimationLocation,
+
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: BuiltMaze(
+                    updateTileDataCallBack: (index, tileState){
+                      int newTileState = updateTileListData(index, tileState);
+                      return newTileState;
+                      },
+                    animationVisible: animationVisible,
+                    agentAnimationLocation: agentAnimationLocation,
+                    ),
                 )
-              ),
-          const SizedBox(
-            height: 100
-          ),
+                ),
+            ),
+
 
           ]
          ),

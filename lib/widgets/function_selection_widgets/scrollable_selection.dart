@@ -20,7 +20,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
     Widget build(BuildContext context){
 
 
-    MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -37,7 +37,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
                 (BuildContext context, int index){
               var data = dataSet[index.toString()];
               List<String> menuItems = data!["dropDownMenuItems"]!.split(",");
-              String configKey = data!["configKey"]!;
+              String configKey = data["configKey"]!;
               return Card(
                 color: Colors.blueGrey.withOpacity(0.9),
                 elevation: 5,
@@ -46,7 +46,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
                   children:[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(data!["title"]!, style:  TextStyle(
+                      child: Text(data["title"]!, style:  TextStyle(
                         backgroundColor: Colors.blueGrey.withOpacity(0),
                         fontSize: 18
                       ),),
@@ -59,7 +59,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(data!["associatedText"]!)
+                      child: Text(data["associatedText"]!)
                     )
 
                   ]
