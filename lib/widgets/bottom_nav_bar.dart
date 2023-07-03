@@ -4,7 +4,7 @@ import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_
 import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
 
 import 'package:ann_app/widgets/generation_data_widgets/generation_data_nav_button.dart';
-import 'package:ann_app/widgets/animation_selection_nav_bar_button.dart';
+import 'package:ann_app/widgets/full_data_nav_bar/full_data_nav_bar.dart';
 
 import 'package:flutter/material.dart';
 
@@ -49,7 +49,7 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
      case FloatingActionButtonLocation.endDocked:
        return [
          const GenerationDataButton(),
-         const AnimationSelectionButton(),
+         const FullDataButton(),
          placeHolder,
        ];
    }

@@ -20,10 +20,12 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 
 
 // TODO TODAY/NEXT:
-// Connect up the animation selection 
-// Connect up the API call 
-// Connect the returned data from the api to the Animation
-// the viewable area of the built maze does need some work
+// Make data passable to the graph generation
+// Finish Generation data pop out
+// -> Chips to show which generation is selected
+
+// Connect up the button to the API
+// Then Clean UP everything before moving to back end
 
 
 class MyHomePage extends StatefulWidget {
@@ -235,27 +237,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
       body: Column(
         children:  [
-
+          const SizedBox(
+              height: 100
+          ),
           Stack(
             children: [
 
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: BuiltMaze(
-                    updateTileDataCallBack: (index, tileState){
-                      int newTileState = updateTileListData(index, tileState);
-                      return newTileState;
-                      },
-                    animationVisible: animationVisible,
-                    agentAnimationLocation: agentAnimationLocation,
-                    ),
-                )
-                ),
+
+            Center(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: BuiltMaze(
+                      updateTileDataCallBack: (index, tileState){
+                        int newTileState = updateTileListData(index, tileState);
+                        return newTileState;
+                        },
+                      animationVisible: animationVisible,
+                      agentAnimationLocation: agentAnimationLocation,
+                      ),
+                  )
+                  ),
+              ),
             ),
-
-
           ]
          ),
   ]

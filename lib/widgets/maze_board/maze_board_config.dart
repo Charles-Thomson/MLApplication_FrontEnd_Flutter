@@ -3,8 +3,8 @@
 double tileSize = 40;
 
 
-int totalXStates = 10;
-int totalYStates = 10;
+int totalXStates = 6;
+int totalYStates = 6;
 int totalMazeStates = totalXStates * totalYStates;
 
 double tileGridHeight = tileSize  * totalXStates ;

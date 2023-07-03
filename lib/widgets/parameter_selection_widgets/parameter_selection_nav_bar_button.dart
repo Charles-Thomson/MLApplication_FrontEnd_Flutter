@@ -104,8 +104,6 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
           child: Hero(
               tag: _parameterpopouttag,
               child: Container(
-                  // height: 660,
-                  // width: 440,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(width: 0),
@@ -135,8 +133,7 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        // height: 560,
-                        // width: 340,
+
                         color: themePrimary.withOpacity(0.4),
                         child:
                         Column(
