@@ -1,9 +1,11 @@
 
-import 'dart:convert';
-
+import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/hero_route.dart';
 import 'package:ann_app/widgets/full_data_nav_bar/full_data_graphs.dart';
+
+import 'graph_test_data.dart';
 
 const String _fulldatapopouttag = "animation-selection-pop-out";
 
@@ -47,64 +49,16 @@ class FullDataPopOut extends StatefulWidget{
 }
 
 class _FullDataPopOut extends State<FullDataPopOut>{
+  List<int> selectedValue = [];
+  var testData = jsonGraphTestData;
 
-  var testData = {
-    "number_of_generations": "3",
-    "max_steps": "10",
-    "max_fitness": "10.0",
-    "payloadData": {
-    "gen_0": {
-      "total_steps": "10",
-      "total_fitness": "10.0",
-      "fitness_by_step":
-      [0.0,
-        1.2,
-        3.4,
-        6.6,
-        6.8,
-        7.5,
-        8.0,
-        9.5,
-        10]
-    },
-      "gen_1": {
-        "total_steps": "10",
-        "total_fitness": "10.0",
-        "fitness_by_step":
-        [0.1,
-          1.2,
-          3.4,
-          6.6,
-          6.8,
-          7.5,
-          8.0,
-          9.5,
-          10]
-      },
-      "gen_2": {
-        "total_steps": "10",
-        "total_fitness": "10.0",
-        "fitness_by_step":
-        [0.2,
-          1.2,
-          3.4,
-          6.6,
-          6.8,
-          7.5,
-          8.0,
-          9.5,
-          10]
-      }
-    },
-  };
-
-
-
-
+  double get getMaxX => getMaxXValue(testData);
+  double get getMaxY => getMaxYValue(testData);
+  int get numberOfGenerations => getNumberOfGenerations(testData);
+  List<LineChartBarData> get getSelectedLineBarsData => generateLineChartBarData(testData, selectedValue);
 
   @override
   Widget build(BuildContext context) {
-    var thisData = json.encode(testData);
     return Center(
       child: Padding(
           padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
@@ -136,40 +90,52 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                   ),
 
                   child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child:
-                    Column(
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                        children:    [
-                          SizedBox(
-                              height: 40,
-                              child: Material(
-                                color: Colors.white.withOpacity(0),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                      style: TextStyle(fontSize: 20)
-                                      ,"Full Generation Data"),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                          children:    [
+                            const SizedBox(
+                                height: 40,
+                            ),
+
+                             Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
+                              child: SizedBox(
+                                height: 400,
+                                width: 400,
+                                // -> xAxis, yAxis, Selected Data
+                                child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: getSelectedLineBarsData),
                                 ),
-                              )
-                          ),
+                            ),
+                             Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Wrap(
+                                 spacing: 5,
+                                 direction: Axis.horizontal,
+                                 children: List<Widget>.generate(numberOfGenerations,(int index){
+                                   return ChoiceChip(
+                                      backgroundColor: Colors.blue,
+                                       selectedColor: Colors.red,
+                                       label: Text("Generation $index"),
+                                       avatar: CircleAvatar(
+                                           child: Icon(selectedValue.contains(index) ? Icons.check : Icons.circle)
+                                       ),
+                                       selected: selectedValue.contains(index),
+                                       onSelected: (bool selected){
+                                         setState(() {
+                                           selectedValue.contains(index) ? selectedValue.remove(index) : selectedValue.add(index);
 
-                           Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
-                            child: SizedBox(
-                              height: 400,
-                              width: 400,
-                              // Want to pass in:
-                              // Axis Sizes
-                              // Then full data
-                              child: CustomLineChart(dataSet: thisData),
+                                         });
+                                       },
+                                   );
+                                 }
+                                 ).toList()
+                               ),
+                             )
 
-                              ),
-                          ),
-
-                        ]
-                    ),
+                          ]
+                      ),
                     ),
                   ))
           )

@@ -20,9 +20,11 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 
 
 // TODO TODAY/NEXT:
-// Make data passable to the graph generation
-// Finish Generation data pop out
-// -> Chips to show which generation is selected
+// Colour selection of chip and bar on graph need to be the same
+// Pull number of chips from num of generations ->
+// BUG not passing the last chips data
+
+
 
 // Connect up the button to the API
 // Then Clean UP everything before moving to back end
