@@ -2,7 +2,6 @@ import'dart:ui' as ui;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
-import 'package:ann_app/colors.dart';
 
 class BodyPainter extends CustomPainter {
   BodyPainter({required this.context});

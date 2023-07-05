@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/hero_route.dart';
 import 'package:ann_app/widgets/generation_data_widgets/custom_generation_data_card.dart';
 
+import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
+import 'package:ann_app/widgets/full_data_nav_bar/graph_test_data.dart';
+
 const String _generationdatapopouttag = "generation-data-pop-out";
 
 class GenerationDataButton extends StatelessWidget{
-  const GenerationDataButton({super.key});
+  const GenerationDataButton({super.key, required this.runAnimationCallBack});
+  final Function(List<int>) runAnimationCallBack;
   @override
   Widget build(BuildContext context){
     return  Padding(padding: const EdgeInsets.all(2),
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-              return const GenerationDataPopOut();
+              return GenerationDataPopOut(
+                runAnimationCallBack: (animationPath){
+                runAnimationCallBack(animationPath);
+              },);
             }
             )
             );
@@ -36,7 +43,9 @@ class GenerationDataButton extends StatelessWidget{
 }
 
 class GenerationDataPopOut extends StatefulWidget{
-  const GenerationDataPopOut({super.key});
+  const GenerationDataPopOut({super.key, required this.runAnimationCallBack});
+
+  final Function(List<int>) runAnimationCallBack;
 
   @override
   State<GenerationDataPopOut> createState() => _GenerationDataPopOut();
@@ -44,6 +53,10 @@ class GenerationDataPopOut extends StatefulWidget{
 }
 
 class _GenerationDataPopOut extends State<GenerationDataPopOut>{
+  var testData = jsonGraphTestData;
+  generationData(generationNumber) => getGenerationData(testData, generationNumber);
+  int get numberOfGenerations => getNumberOfGenerations(testData);
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +90,15 @@ class _GenerationDataPopOut extends State<GenerationDataPopOut>{
                                 slivers: [
                                   SliverList(
                                       delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-                                        return GenerationDataCard(index: index) ;
+                                        return GenerationDataCard(
+                                          index: index,
+                                          generationData: generationData(index),
+                                          runAnimationCallBack: (animationPath){
+                                            widget.runAnimationCallBack(animationPath);
+
+                                        },) ;
                                       },
-                                      childCount: 5
+                                      childCount: numberOfGenerations
                                       )
 
                                   )

@@ -10,11 +10,14 @@ import 'package:flutter/material.dart';
 
 
 class CustomBottomNavBar extends StatefulWidget{
-  const CustomBottomNavBar( this.dockedLocation, {super.key,required this.updateConfigData,required this.updateMazeMap});
+  const CustomBottomNavBar({super.key,required this.buttonState,required this.updateConfigData,required this.updateMazeMap, required this.runAnimationCallBack});
 
-  final FloatingActionButtonLocation dockedLocation;
+
   final Function(String, String) updateConfigData;
   final Function(Map<String, String>) updateMazeMap;
+  final int buttonState;
+
+  final Function(List<int>) runAnimationCallBack;
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBar();
@@ -22,15 +25,15 @@ class CustomBottomNavBar extends StatefulWidget{
 
 class _CustomBottomNavBar extends State<CustomBottomNavBar>{
   final NotchedShape? thisShape = const CircularNotchedRectangle();
-  get dockedLocation => widget.dockedLocation;
+
 
   Widget placeHolder = Opacity(opacity: 0.0,
       child: IconButton(onPressed: () {},
           icon: const Icon(Icons.abc)));
 
   List<Widget> buildButtonSet(){
-   switch(dockedLocation){
-     case FloatingActionButtonLocation.startDocked:
+   switch(widget.buttonState){
+     case 0:
        return [
 
          MazeSettingsButton(updateMazeMap: (newMapData){
@@ -46,9 +49,13 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
          }),
 
        ];
-     case FloatingActionButtonLocation.endDocked:
+     case 1:
        return [
-         const GenerationDataButton(),
+         GenerationDataButton(runAnimationCallBack: (animationPath){
+           widget.runAnimationCallBack(animationPath);
+         }
+
+         ),
          const FullDataButton(),
          placeHolder,
        ];

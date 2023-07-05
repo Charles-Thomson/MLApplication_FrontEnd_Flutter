@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GenerationDataCard extends StatefulWidget{
-  const GenerationDataCard({super.key, required this.index});
+  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack});
   final int index;
+  final Map generationData;
+  final Function(List<int>) runAnimationCallBack;
   @override
   State<GenerationDataCard> createState() => _GenerationDataCard();
 
@@ -12,8 +14,19 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   int? selectedValue = 0;
   get cardIndex => widget.index;
 
+  get shortestPath => widget.generationData["shortest_path"];
+  get longestPath => widget.generationData["longest_path"];
+  get lowestFitness => widget.generationData["lowest_fitness"];
+  get highestFitness => widget.generationData["total_fitness"];
+  get animationPath => widget.generationData["path"];
+  get thisAnimationPath => animationPath.map((item) => item.toInt()).cast<int>().toList();
+
+
+
+
   @override
   Widget build(BuildContext context){
+
     return Card( // turning into a custom card
         color: Theme.of(context).primaryColor.withOpacity(0.2),
         elevation: 0,
@@ -57,12 +70,12 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                           const Text("Fitness", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text("Highest: ",
-                                  style: TextStyle(fontSize: 14),
+                              children:  [
+                                Text("Highest: $highestFitness",
+                                  style: const TextStyle(fontSize: 14),
                                 ),
-                                Text("Lowest: ",
-                                  style: TextStyle(fontSize: 14),
+                                Text("Lowest: $lowestFitness",
+                                  style: const TextStyle(fontSize: 14),
                                 )
 
                               ])
@@ -76,10 +89,10 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                         children:  [
                           const Text("Path",
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                          Column(children: const <Widget>[
-                            Text("Shortest path:  ", style: TextStyle(fontSize: 14),),
+                          Column(children:  <Widget>[
+                            Text("Shortest path:  $shortestPath", style: const TextStyle(fontSize: 14),),
 
-                            Text("Longest path:  ", style: TextStyle(fontSize: 14),)
+                            Text("Longest path:  $longestPath", style: const TextStyle(fontSize: 14),)
 
                           ]),
                         ],
@@ -126,7 +139,11 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(onPressed: () {print("SYSTEM - ANIMATION: Card $cardIndex - animation $selectedValue");}, child: const Text("Run Selected Animation")),
+                      ElevatedButton(onPressed: () {
+                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $animationPath");
+                        widget.runAnimationCallBack(thisAnimationPath);
+
+                        }, child: const Text("Run Selected Animation")),
                     ],
                   ),
                 )

@@ -11,7 +11,7 @@ List<LineChartBarData> generateLineChartBarData(var dataSet, List<int> selectedG
   var payloadData = data["payloadData"];
   List<LineChartBarData> builtLineBarChatData = [];
 
-  for(int i = 0; i < numberOfGenerations; i++){
+  for(int i = 0; i < numberOfGenerations ; i++){
     List<dynamic> thisPlotPoints = payloadData["gen_$i"]["fitness_by_step"];
     List<FlSpot> newSpotPoints = buildFLSpotPoints(thisPlotPoints);
     LineChartBarData newLineBarChartData = buildLineBarChartData(newSpotPoints);
@@ -20,13 +20,19 @@ List<LineChartBarData> generateLineChartBarData(var dataSet, List<int> selectedG
   List<LineChartBarData> selectedBuiltLineBarChatData = [];
 
   // Add the selected ges to the return list
-  for(int x = 0; x < selectedGenerations.length + 1; x++){
-    if(selectedGenerations.contains(x)){
-      selectedBuiltLineBarChatData.add(builtLineBarChatData[x]);
-    }
+  for(var x in selectedGenerations){
+    selectedBuiltLineBarChatData.add(builtLineBarChatData[x]);
+
   }
-  //print(selectedBuiltLineBarChatData);
+
   return selectedBuiltLineBarChatData;
+}
+
+getGenerationData(dataSet, generationNumber){
+  var data = json.decode(dataSet);
+  var payloadData = data["payloadData"];
+  var generationData = payloadData["gen_$generationNumber"];
+  return generationData;
 }
 
 double getMaxXValue(dataSet){

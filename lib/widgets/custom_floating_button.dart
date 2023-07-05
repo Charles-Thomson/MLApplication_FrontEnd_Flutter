@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomFloatingButton extends StatefulWidget{
-  const CustomFloatingButton({super.key, required this.loadingValue, required this.floatingActionButtonLocationHandling});
+  const CustomFloatingButton({super.key, required this.loadingValue, required this.updateFloatingActionButtonStateCallBack});
 
   final double loadingValue;
-  final Function floatingActionButtonLocationHandling;
-
+  final Function() updateFloatingActionButtonStateCallBack;
 
   @override
   State<CustomFloatingButton> createState() => _CustomFloatingButton();
@@ -42,7 +41,7 @@ class _CustomFloatingButton extends State<CustomFloatingButton>{
     checkCurrentElementColors();
     return FloatingActionButton(
         backgroundColor: buttonColor,
-        onPressed: () {widget.floatingActionButtonLocationHandling();},
+        onPressed: () {widget.updateFloatingActionButtonStateCallBack();},
       child: Center(
         child: Stack(
           children: <Widget>[

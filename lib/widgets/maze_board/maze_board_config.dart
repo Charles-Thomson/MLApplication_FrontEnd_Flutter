@@ -1,12 +1,9 @@
 
-// testing
-double tileSize = 40;
-
-
 int totalXStates = 6;
 int totalYStates = 6;
 int totalMazeStates = totalXStates * totalYStates;
 
+double tileSize = 40;
 double tileGridHeight = tileSize  * totalXStates ;
 double tileGridWidth  = tileSize  * totalYStates ;
 
@@ -33,6 +30,7 @@ void updateInConfig(Map<String, String> updateData){
   totalXStates = int.parse(updateData["mapSizeX"]!);
   totalYStates = int.parse(updateData["mapSizeY"]!);
   tileSize  = double.parse(updateData["tileSize"]!);
+  totalMazeStates = totalXStates * totalYStates;
 
   tileGridHeight = tileSize * totalXStates;
   tileGridWidth  = tileSize * totalYStates;

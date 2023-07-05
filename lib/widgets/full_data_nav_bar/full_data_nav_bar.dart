@@ -127,6 +127,7 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                                            selectedValue.contains(index) ? selectedValue.remove(index) : selectedValue.add(index);
 
                                          });
+                                         //print(selectedValue);
                                        },
                                    );
                                  }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
-import 'package:ann_app/colors.dart';
 
 class RimContainer extends StatelessWidget{
   RimContainer({super.key});
