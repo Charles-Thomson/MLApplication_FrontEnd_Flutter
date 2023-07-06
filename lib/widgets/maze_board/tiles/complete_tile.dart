@@ -9,9 +9,11 @@ class NewCompleteTile extends StatefulWidget{
    NewCompleteTile({super.key,
     required this.updateTileDataCallBack,
     required this.tileIndex,
+     required this.tileStateValue,
     });
 
   final int Function(int, int) updateTileDataCallBack;
+  final int tileStateValue;
   final double tileSize = maze_config.tileSize;
 
   final int tileIndex;
@@ -21,7 +23,15 @@ class NewCompleteTile extends StatefulWidget{
 }
 
 class _NewCompleteTile extends State<NewCompleteTile>{
-  tile_config.Tile currentTileConfig = tile_config.OpenTile();
+
+  late tile_config.Tile currentTileConfig;
+
+  @override
+  void initState(){
+    super.initState();
+    currentTileConfig = tileConfigs[widget.tileStateValue]; // working to fix this
+  }
+
   List<tile_config.Tile> tileConfigs = [
     tile_config.OpenTile(), // Padding at the start due to open tile = 1 on backend.
     tile_config.StartTile(),
@@ -30,7 +40,9 @@ class _NewCompleteTile extends State<NewCompleteTile>{
 
   @override
   Widget build(BuildContext context){
-    int tileStateValue = 0;
+
+    int tileStateValue = widget.tileStateValue;
+
     double tileOffSet = currentTileConfig.getTileOffSet;
     double depth = currentTileConfig.getDepth;
     Color primaryColor = currentTileConfig.getPrimaryColor;
@@ -62,6 +74,7 @@ class _NewCompleteTile extends State<NewCompleteTile>{
 
                   tileIndex: widget.tileIndex,
                   primaryColor: primaryColor,
+                  tileState: tileStateValue,
                 )
               ]
           )

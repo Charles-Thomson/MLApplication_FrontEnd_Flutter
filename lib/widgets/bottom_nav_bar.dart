@@ -39,8 +39,6 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
          MazeSettingsButton(updateMazeMap: (newMapData){
            widget.updateMazeMap(newMapData);
          }),
-         placeHolder,
-         placeHolder,
          ParameterSettingsButton(updateConfigData: (configKey, newValue){
            widget.updateConfigData(configKey, newValue);
          }),
@@ -53,11 +51,8 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
        return [
          GenerationDataButton(runAnimationCallBack: (animationPath){
            widget.runAnimationCallBack(animationPath);
-         }
-
-         ),
+         }),
          const FullDataButton(),
-         placeHolder,
        ];
    }
     return [];

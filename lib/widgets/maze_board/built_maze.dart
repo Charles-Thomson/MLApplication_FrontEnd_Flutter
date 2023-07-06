@@ -7,11 +7,12 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 
 class BuiltMaze extends StatelessWidget{
-  const BuiltMaze({super.key, required this.updateTileDataCallBack, required this.animationVisible, required this.agentAnimationLocation});
+  const BuiltMaze({super.key, required this.updateTileDataCallBack, required this.animationVisible, required this.agentAnimationLocation, required this.tileData});
 
   final int Function(int, int) updateTileDataCallBack;
   final bool animationVisible;
   final int agentAnimationLocation;
+  final List<int> tileData;
 
 
 
@@ -42,10 +43,12 @@ class BuiltMaze extends StatelessWidget{
             right: config.rimOffSet ,
             child: Stack( children: [
               TileGrid(
+                // push the current Tile data in here
               updateTileDataCallBack: (index, tileState){
               int newTileState = updateTileDataCallBack(index, tileState);
                 return newTileState;
-                }
+                },
+                tileData: tileData
               ),
                Visibility(
                 visible: animationVisible,

@@ -3,7 +3,7 @@ import 'package:ann_app/widgets/maze_board/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 import 'package:ann_app/widgets/custom_floating_button.dart';
-import 'package:ann_app/API/app_config_data_payload.dart';
+import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 
 //TODO: Refactor layouts to use Flexible ?
 //TODO: Consider refactoring parameter selection and function selection into on pop-out
@@ -16,10 +16,8 @@ import 'package:ann_app/API/app_config_data_payload.dart';
 
 
 // TODO TODAY/NEXT:
-// Add the reset button to floation action button
-
-// CLEAN UP ->
-// Move all the elements out of home page
+// The API submission/ any setState call is clearing the Map
+// Add the reset button to floating action button
 
 // Move all the Json data handling to the top of the widget tree and pass down ?
 // Connect up the button to the API
@@ -37,46 +35,43 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   double loadingValue = 0.0;
-  int floatingActionButtonState = 0;
+  int floatingABState = 0;
   int currentAnimationLocation = 0;
   bool animationVisible = false;
-
-  void resetAll(){
-    setState(() {
-      loadingValue = 0.0;
-      floatingActionButtonState = 0;
-      currentAnimationLocation = 0;
-      animationVisible = false;
-      List.generate(maze_config.totalMazeStates, (index) => 0);
-    });
-    // need to reset the API data
-    // need to reset the maze_config data
-
-  }
-
-
-
-  List tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
+  List<int> tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
   get stringCurrentTileData => tileData.join(",");
 
-  void updateConfigDataPayload(String configKey, String newValue) => configData[configKey] = newValue;
+  void rebuildTileData() => tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
-  void updateFloatingActionButtonStateCallBack() => setState(() {
-    floatingActionButtonState == 0 ?
-    floatingActionButtonState = 1 : floatingActionButtonState = 0;
-  });
+  int updateTileData(int index, var tileState) => tileData[index] >= 3 ? tileData[index] = 0 : tileData[index] += 1;
 
-  void updateMazeMap(Map<String, String> newMapData){
-    maze_config.updateInConfig(newMapData);
+  void updateFABStateCallBack() => setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;});
+
+  void resetAll(){
+    print("SYSTEM -> RESET ALL CALLED");
+    maze_config.updateInConfig(); // resets the maze_config to defaults
+    api_payload.resetConfigDataPayload(); // resets the api payload
     setState(() {
-      tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
+      loadingValue = 0.0;
+      floatingABState = 0;
+      currentAnimationLocation = 0;
+      animationVisible = false;
+      rebuildTileData();
     });
   }
 
+  void updateMazeMapSize(Map<String, String> newMapData){
+    maze_config.updateInConfig(updateData: newMapData);
+    setState(() {
+      rebuildTileData();
+    });
+  }
+
+
   void updateLoadingValue() {
     double newLoadingValue = 0.0;
-    for (var value in configData.values) {
+    for (var value in api_payload.configData.values) {
       value == "" ? null : newLoadingValue += (1 / 9);
     }
     setState(() {
@@ -87,16 +82,15 @@ class _MyHomePageState extends State<MyHomePage> {
   // no guard for multiple start tiles
   void setMapData(){
     int mapDimensions = maze_config.totalXStates * maze_config.totalYStates;
-    configData["ENV_MAP_DIMENSIONS"] = mapDimensions.toString();
+    api_payload.configData["ENV_MAP_DIMENSIONS"] = mapDimensions.toString();
     int startLocationValue = 1;
     int startLocationIndex = tileData.indexOf(startLocationValue);
     tileData[startLocationIndex] = 0;
-    configData["ENVIRONMENT_START_STATE"] = startLocationIndex.toString();
-    configData["ENV_MAP"] = stringCurrentTileData;
+    api_payload.configData["ENVIRONMENT_START_STATE"] = startLocationIndex.toString();
+    api_payload.configData["ENV_MAP"] = stringCurrentTileData;
   }
 
-  int updateTileListData(int index, var tileState) =>
-      tileData[index] >= 3 ? tileData[index] = 0 : tileData[index] += 1;
+
 
   Future<void> runAnimationCallBack(List<int> animationPath) async {
     for(int newLocation in animationPath){
@@ -110,6 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void placeHolderAPICallBack(){
+    // Make a pop out to confirm the submission
+    // Add in some form of future builder with a loading widget
+    // Loading based on the progress of the back end ?
+    print("SYSTEM -> API call back made");
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,27 +121,34 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       bottomNavigationBar: CustomBottomNavBar(
-        buttonState: floatingActionButtonState,
+        buttonState: floatingABState,
 
       runAnimationCallBack: (animationPath){
         runAnimationCallBack(animationPath);
       },
 
       updateConfigData: (configKey, newValue){
-        updateConfigDataPayload(configKey, newValue);
+        api_payload.updateConfigDataPayload(configKey, newValue);
         updateLoadingValue();
       },
 
       updateMazeMap: (newMapData){
-        updateMazeMap(newMapData);
+        updateMazeMapSize(newMapData);
       }),
 
       floatingActionButton:
           CustomFloatingButton(
+              floatingActionButtonState: floatingABState,
               loadingValue: loadingValue,
+
               updateFloatingActionButtonStateCallBack: (){
-                updateFloatingActionButtonStateCallBack();
-              }
+                updateFABStateCallBack();
+              },
+              apiSubmissionCallBack: (){
+              placeHolderAPICallBack(); },
+
+              resetAllCallBack: (){
+                resetAll();}
            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
@@ -156,11 +166,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: SingleChildScrollView(
                     child: BuiltMaze(
                       updateTileDataCallBack: (index, tileState){
-                        int newTileState = updateTileListData(index, tileState);
+                        int newTileState = updateTileData(index, tileState);
                         return newTileState;
                         },
                       animationVisible: animationVisible,
                       agentAnimationLocation: currentAnimationLocation,
+                      tileData: tileData,
                       ),
                   )
                   ),

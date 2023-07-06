@@ -26,9 +26,37 @@ double animationGridWidth = tileGridWidth;
 double agentDrawHeight = tileSize;
 double agentDrawWidth = tileSize;
 
-void updateInConfig(Map<String, String> updateData){
-  totalXStates = int.parse(updateData["mapSizeX"]!);
-  totalYStates = int.parse(updateData["mapSizeY"]!);
+void restMazeConfig(){
+  totalXStates = 5;
+  totalYStates = 5;
+  tileSize  = 40;
+  totalMazeStates = totalXStates * totalYStates;
+
+  tileGridHeight = tileSize * totalXStates;
+  tileGridWidth  = tileSize * totalYStates;
+
+  mazeHeight = tileGridHeight + (edgeRadius * 2);
+  mazeWidth = tileGridWidth + (edgeRadius * 2);
+
+  rimContainerCutOutHeight = tileGridHeight + 10;
+  rimContainerCutOutWidth = tileGridWidth + 10;
+
+  animationGridHeight = tileGridHeight;
+  animationGridWidth = tileGridWidth;
+
+  agentDrawHeight = tileSize;
+  agentDrawWidth = tileSize;
+}
+
+const Map<String, String> resetConfigData = {
+"mazeSizeX": "6",
+"mazeSizeY": "6",
+"tileSize": "40",
+};
+
+void updateInConfig({Map<String, String> updateData = resetConfigData}){
+  totalXStates = int.parse(updateData["mazeSizeX"]!);
+  totalYStates = int.parse(updateData["mazeSizeY"]!);
   tileSize  = double.parse(updateData["tileSize"]!);
   totalMazeStates = totalXStates * totalYStates;
 

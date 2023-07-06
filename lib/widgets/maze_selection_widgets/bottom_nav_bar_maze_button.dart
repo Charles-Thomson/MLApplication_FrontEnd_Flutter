@@ -71,24 +71,23 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
     numberOfStatesX = maze_config.totalYStates;
 
     newMapData = {
-      "mapSizeX": "",
+      "mazeSizeX": "",
       "mazeSizeY": "",
       "tileSize": "",
-
     };
     tileGridHeight = (tileSize * numberOfStatesX) + 10;
     tileGridWidth = (tileSize * numberOfStatesY) + 10;
 
   }
 
+
     void buildNewMapData(){
-      newMapData["mapSizeX"] = numberOfStatesY.toString();
-      newMapData["mapSizeY"] = numberOfStatesX.toString();
+      newMapData["mazeSizeX"] = numberOfStatesY.toString();
+      newMapData["mazeSizeY"] = numberOfStatesX.toString();
       newMapData["tileSize"] = tileSize.toString();
     }
 
     void submitNewMapData(){
-      print("Map update Called");
       buildNewMapData();
       widget.updateMazeMap(newMapData);
     }

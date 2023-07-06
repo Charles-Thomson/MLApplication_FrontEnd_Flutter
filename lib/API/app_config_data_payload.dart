@@ -12,3 +12,8 @@ Map<String, String> configData = {
   "ENV_MAP_DIMENSIONS": "",
   "ENVIRONMENT_START_STATE": "",
 };
+
+void updateConfigDataPayload(String configKey, String newValue) => configData[configKey] = newValue;
+
+void resetConfigDataPayload() => configData.updateAll((key, value) => value = "");
+

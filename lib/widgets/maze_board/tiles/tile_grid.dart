@@ -4,18 +4,16 @@ import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 
 class TileGrid extends StatelessWidget{
-  TileGrid({super.key, required this.updateTileDataCallBack});
+  const TileGrid({super.key, required this.updateTileDataCallBack, required this.tileData});
 
   final Function(int,int) updateTileDataCallBack;
-  //final int mapSize = config.mapSize;
+  final List<int> tileData;
 
   @override
   Widget build(BuildContext context){
-
-    List <Widget>tileList = List.generate(config.totalXStates * config.totalYStates,
+    List <Widget>tileList = List.generate(tileData.length,
             (index){
           return NewCompleteTile(
-            // These values correspond to the receiving func(val, val)
             key: UniqueKey(),
 
             updateTileDataCallBack: (index, tileState) {
@@ -23,6 +21,7 @@ class TileGrid extends StatelessWidget{
               return newTileState;
             },
             tileIndex: index,
+            tileStateValue: tileData[index],
           );
         }
     );
@@ -32,7 +31,7 @@ class TileGrid extends StatelessWidget{
       height: config.tileGridHeight - 2,
       width: config.tileGridWidth - 2,
       child: GridView.count(
-          crossAxisCount: config.totalYStates, // WORING FROM HERE !!
+          crossAxisCount: config.totalYStates,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           children: tileList
