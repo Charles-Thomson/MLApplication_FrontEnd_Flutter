@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/function_selection_widgets/card_data.dart';
-
 import 'package:ann_app/widgets/dropdownselector.dart';
+
 class ScrollAbleFunctionSelection extends StatefulWidget{
   const ScrollAbleFunctionSelection({super.key, required this.updateConfigData});
   final Function(String, String) updateConfigData;
@@ -19,13 +19,10 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
   @override
     Widget build(BuildContext context){
 
-
-
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           centerTitle: true,
-
           title: const Text("Function Selection", style: TextStyle(fontSize: 24),),
           backgroundColor: Theme.of(context).primaryColor,
           floating: true,
@@ -38,6 +35,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
               var data = dataSet[index.toString()];
               List<String> menuItems = data!["dropDownMenuItems"]!.split(",");
               String configKey = data["configKey"]!;
+
               return Card(
                 color: Colors.blueGrey.withOpacity(0.9),
                 elevation: 5,
@@ -54,7 +52,10 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CustomDropDownMenu(updateConfigData, menuItems, configKey),
+                      child: SizedBox(
+                          width: 300,
+                          height: 100,
+                          child: CustomDropDownMenu(updateConfigData, menuItems, configKey)),
                     ),
 
                     Padding(

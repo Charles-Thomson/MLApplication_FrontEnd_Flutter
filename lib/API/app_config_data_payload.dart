@@ -13,7 +13,12 @@ Map<String, String> configData = {
   "ENVIRONMENT_START_STATE": "",
 };
 
-void updateConfigDataPayload(String configKey, String newValue) => configData[configKey] = newValue;
+void updateConfigDataPayload(String configKey, String newValue){
+  configData[configKey] = newValue;
+  print([configKey, newValue]);
+  //print(configData);
+}
+//=> configData[configKey] = newValue;
 
 void resetConfigDataPayload() => configData.updateAll((key, value) => value = "");
 

@@ -66,26 +66,13 @@ class _FunctionSettingsButtonPopOut extends State<FunctionSettingsButtonPopOut>{
   @override
   Widget build(BuildContext context) {
     MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
-    // var availableCards = {
-    //   "ActivationFunction": ActivationCard(updateConfigData: updateConfigData),
-    //   "WeightHeuristic":  WeightCard(updateConfigData: updateConfigData),
-    //   "GenerationConcatenation": ConcatenationCard(updateConfigData: updateConfigData)
-    // };
-    //
-    // void callbackUpdateCard(String newCard){
-    //   Widget newSelectedCard = availableCards[newCard] as Widget;
-    //   setState(() {
-    //     currentCard = newSelectedCard;
-    //   });
-    // }
-
     return Center(
       child: Padding(
           padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
           child: Hero(
               tag: _functionspopouttag,
               child: Padding(
-                padding: const EdgeInsets.all(2.0),
+                padding: const EdgeInsets.all(8.0),
                 child: ScrollAbleFunctionSelection(updateConfigData: updateConfigData,),
               ))));
   }

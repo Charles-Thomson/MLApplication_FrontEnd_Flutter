@@ -52,7 +52,6 @@ class _CustomFloatingButton extends State<CustomFloatingButton>{
       actions: [
         TextButton(onPressed: (){
           Navigator.pop(context, 'Cancel');
-          print("Closing alert");
         },
             child: const Text("Close")),
 
@@ -60,7 +59,6 @@ class _CustomFloatingButton extends State<CustomFloatingButton>{
           widget.updateFloatingActionButtonStateCallBack();
           widget.apiSubmissionCallBack();
           Navigator.pop(context, 'OK');
-          print("Start");
           },
             child: const Text("Accept"))
       ],
@@ -73,13 +71,12 @@ class _CustomFloatingButton extends State<CustomFloatingButton>{
       actions: [
         TextButton(onPressed: (){
           Navigator.pop(context, 'Cancel');
-          print("Closing alert");
         },
             child: const Text("Close")),
         TextButton(onPressed: (){
           widget.resetAllCallBack();
           Navigator.pop(context, 'OK');
-          print("Reset Environment");},
+          },
             child: const Text("Accept"))
       ],
     );

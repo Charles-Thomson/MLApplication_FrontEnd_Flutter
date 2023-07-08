@@ -19,7 +19,6 @@ class MazeSettingsButton extends StatelessWidget{
             )
             );
           },
-
           child: Hero(
               tag: _mappopouttag,
               child: Material(
@@ -120,14 +119,15 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
       );
     });
 
-    return Center(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(10, 100, 10, 60),
+        child: SingleChildScrollView(
           child: Hero(
               tag: _mappopouttag,
               child: Container(
-                  height: 660,
-                  width: 440,
+                height: 650,
+                width: 200,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(width: 0),
@@ -148,36 +148,34 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                     boxShadow: [BoxShadow(
                         color: Colors.grey.withOpacity(0.6),
                         blurRadius: 1,
-                        offset: const Offset(1, 1),
+                        //offset: const Offset(1, 1),
                         blurStyle: BlurStyle.solid
                     )],
                   ),
                 child: Center(
-                  child:Material(
-                    color: Colors.white.withOpacity(0.2),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 570,
-                        width: 340,
-
-                          child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                            const Text("Map Selection",
-                                style: TextStyle(fontSize: 20)
-                            ),
-                            const SizedBox(
-                              height: 20
-                            ),
-                            Container(
-                              height: 300,
-                              width: 300,
+                  child:Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      color: Colors.white.withOpacity(0.2),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                          const Text("Map Selection",
+                              style: TextStyle(fontSize: 20)
+                          ),
+                          const SizedBox(
+                            height: 20
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
                               color: Colors.blue.withOpacity(0.2),
                               child: Center(
                                 child: SizedBox(
-                                  height: tileGridHeight,
-                                  width: tileGridWidth,
+                                  height: tileGridHeight ,
+                                  width: tileGridWidth ,
                                   child: GridView.count(
                                     //childAspectRatio: (tileWidth/ tileHeight),
                                     padding: EdgeInsets.zero,
@@ -189,118 +187,121 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                 ),
                               ),
                             ),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                  const Text("No* of States: "),
-                                  SizedBox(
-                                    height: 60,
-                                    width: 70,
-                                    child: InputDecorator(
-                                      decoration: InputDecoration(
-                                          labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                          errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                          hintText: 'Testing hint text',
-                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                      isEmpty: numberOfStatesY == 0,
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<int>(
-                                          isExpanded: true,
-                                          value: numberOfStatesY,
-                                          onChanged: (int? newValue) {
-                                            setState(() {
-                                              numberOfStatesY = newValue!;
-                                            });
-                                          },
-                                          isDense: true,
-                                          items: numberOfStateOptions.map((int value){
-                                            return DropdownMenuItem<int>(
-                                                value: value,
-                                                child: Text(value.toString()));
-                                          }).toList(),
-                                        ),
+                          ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                const Text("No* of States: "),
+                                SizedBox(
+                                  height: 60,
+                                  width: 70,
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        hintText: 'Testing hint text',
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                    isEmpty: numberOfStatesY == 0,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<int>(
+                                        isExpanded: true,
+                                        value: numberOfStatesY,
+                                        onChanged: (int? newValue) {
+                                          setState(() {
+                                            numberOfStatesY = newValue!;
+                                          });
+                                        },
+                                        isDense: true,
+                                        items: numberOfStateOptions.map((int value){
+                                          return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text(value.toString()));
+                                        }).toList(),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 60,
-                                    width: 70,
-                                    child: InputDecorator(
-                                      decoration: InputDecoration(
+                                ),
+                                SizedBox(
+                                  height: 60,
+                                  width: 70,
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
 
-                                          labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                          errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                          hintText: 'Testing hint text',
-                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                      isEmpty: numberOfStatesX == 0,
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton<int>(
-                                          isExpanded: true,
-                                          value: numberOfStatesX,
-                                          onChanged: (int? newValue) {
-                                            setState(() {
-                                              numberOfStatesX = newValue!;
-                                            });
-                                          },
-                                          isDense: true,
-                                          items: numberOfStateOptions.map((int value){
-                                            return DropdownMenuItem<int>(
-                                                value: value,
-                                                child: Text(value.toString()));
-                                          }).toList(),
-                                        ),
+                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                        hintText: 'Testing hint text',
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                    isEmpty: numberOfStatesX == 0,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<int>(
+                                        isExpanded: true,
+                                        value: numberOfStatesX,
+                                        onChanged: (int? newValue) {
+                                          setState(() {
+                                            numberOfStatesX = newValue!;
+                                          });
+                                        },
+                                        isDense: true,
+                                        items: numberOfStateOptions.map((int value){
+                                          return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text(value.toString()));
+                                        }).toList(),
                                       ),
                                     ),
                                   ),
+                                ),
 
 
-                                ]),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: <Widget>[
-                                      const Text("Tile Size : "),
-                                      SizedBox(
-                                        height: 60,
-                                        width: 80,
-                                        child: InputDecorator(
-                                          decoration: InputDecoration(
-                                              labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                              errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                              ]),
 
-                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                          isEmpty: tileSize == 0,
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton<double>(
-                                              isExpanded: true,
-                                              value: tileSize,
-                                              onChanged: (double? newValue) {
-                                                updateTileSize(newValue!);
-                                              },
-                                              isDense: true,
-                                              items: tileSizeOptions.map((double value){
-                                                return DropdownMenuItem<double>(
-                                                    value: value,
-                                                    child: Text(value.toString()));
-                                              }).toList(),
-                                            ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    const Text("Tile Size : "),
+                                    SizedBox(
+                                      height: 60,
+                                      width: 80,
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+                                            labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                        isEmpty: tileSize == 0,
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<double>(
+                                            isExpanded: true,
+                                            value: tileSize,
+                                            onChanged: (double? newValue) {
+                                              updateTileSize(newValue!);
+                                            },
+                                            isDense: true,
+                                            items: tileSizeOptions.map((double value){
+                                              return DropdownMenuItem<double>(
+                                                  value: value,
+                                                  child: Text(value.toString()));
+                                            }).toList(),
                                           ),
                                         ),
                                       ),
+                                    ),
 
-                                    ]),
+                                  ]),
 
-                                 Padding(
-                                   padding: const EdgeInsets.all(10.0),
-                                   child: ElevatedButton(onPressed: () {submitNewMapData();} , child: const Text("Submit")),
-                                 )
-                          ])
+                               Padding(
+                                 padding: const EdgeInsets.all(10.0),
+                                 child: ElevatedButton(onPressed: () {submitNewMapData();} , child: const Text("Submit")),
+                               )
+                        ]),
                       ),
                     ),
                   )
                 )
           )
-      ),
-    ));
+    ),
+        ),
+    );
   }
 }
 
