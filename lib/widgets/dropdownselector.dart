@@ -25,27 +25,26 @@ class _CustomDropDownMenu extends State<CustomDropDownMenu>{
 
   @override
   Widget build(BuildContext context){
-    return Column( children: [
-      Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Material(
-              color: Colors.blueGrey.withOpacity(0),
-              child: Text(
-                  style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white
-                  ),
-                  "Select a $selectorTitleName"),
-            ),
-          ]
-      ),
+    return Expanded(
+      child: Column( children: [
+        Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Material(
+                color: Colors.blueGrey.withOpacity(0),
+                child: Text(
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white
+                    ),
+                    "Select a $selectorTitleName"),
+              ),
+            ]
+        ),
 
-      Material(
-        color: Colors.blueGrey.withOpacity(0),
-        child:  SizedBox(
-          height: 55,
-          child: InputDecorator(
+        Material(
+          color: Colors.blueGrey.withOpacity(0),
+          child:  InputDecorator(
               decoration: InputDecoration(
                   labelStyle:  TextStyle( color: Colors.redAccent, fontSize: 16, backgroundColor: Colors.blueGrey.withOpacity(0)),
                   errorStyle:  TextStyle( color: Colors.redAccent, fontSize: 16, backgroundColor: Colors.blueGrey.withOpacity(0)),
@@ -74,9 +73,9 @@ class _CustomDropDownMenu extends State<CustomDropDownMenu>{
                   )
               )
           ),
-        ),
-      )
-    ]
+        )
+      ]
+      ),
     );
   }
 

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+import 'package:ann_app/API/app_config_data_payload.dart';
 String url = '';
 String map = '';
 
@@ -6,36 +9,51 @@ String data = '';
 String finalData = '';
 List tagsJson = [];
 
-void testApiCall() async {
-  //var testQuery = "TestQuery";
-  //String url = "";
+
+// Payload back needs to be ->
+// Each generation:
+// Highest + lowest Fitness
+// Longest + Shortest path
+// Best Path as fitness by step
+
+
+Future<List> testApiCall() async {
+  Map configData = getCurrentConfigData;
   try{
-    //var payload = {};
-    // setMapData(); <- need to attch to the call for the button before this is called
-    // print(configData); // test
+    var payload = {};
+    payload['payloadBody'] = getTestConfigData;
+    //print("SYSTEM -> PAYLOAD: ");
+    //print(payload);
 
-    // payload['payloadBody'] = configData;
-    // String encodedPayload = json.encode(payload);
-    // url = "http://10.0.2.2:5000/PAYLOAD?query=$encodedPayload";
-    // data = await pass-map(url);
-    // print(data);
-    // print("SYSTEM -> Data Passed to backend");
+    String encodedPayload = json.encode(payload);
+    url = "http://10.0.2.2:5000/TESTPAYLOAD?query=$encodedPayload";
+    data = await passPayload(url);
 
-    // String tileDataString = tileData.join(',');
-    // url = "http://10.0.2.2:5000/run_map?query=$tileDataString";
-    // data = await pass-map(url);
-    // tagsJson = jsonDecode(data)['output'];
-    // final-data = tagsJson.toString();
-    // print("in the call");
-    // print(final-data);
+    // Works as a return
+    Map tagsJson = jsonDecode(data);
+    print(tagsJson["HIGHEST_FITNESS"]);
+    print(tagsJson["HIGHEST_FITNESS_PATH"]);
+    print(tagsJson["LOWEST_FITNESS"]);
+    print(tagsJson["LOWEST_FITNESS_PATH"]);
+
+    double highestFitness = double.parse(tagsJson["HIGHEST_FITNESS"].toString());
+    List highestFitnessPath = json.decode(tagsJson["HIGHEST_FITNESS_PATH"].toString());
+    double lowestFitness = double.parse(tagsJson["LOWEST_FITNESS"].toString());
+    List lowestFitnessPath = json.decode(tagsJson["LOWEST_FITNESS_PATH"].toString());
+
+    List returnData = [highestFitness,highestFitnessPath,lowestFitness,lowestFitnessPath];
+    //print(returnData);
+
+    return returnData;
 
   }catch(e){
-    // print("In the catch");
+    print("In the catch");
+    return [];
   }
 
 }
 
-passMap(String url) async {
+passPayload(String url) async {
   http.Response response = await http.get(Uri.parse(url));
   return response.body;
 }

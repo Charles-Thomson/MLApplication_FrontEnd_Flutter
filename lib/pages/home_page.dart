@@ -1,3 +1,4 @@
+import 'package:ann_app/API/api_calls.dart' as api_calls;
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/built_maze.dart';
 import 'package:ann_app/widgets/bottom_nav_bar.dart';
@@ -13,15 +14,16 @@ import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 //BUG: Work out bug with the rendering on the button press to open Hero
 //BUG: The shading on the map isn't accurate when the map size changes
 //BUG: Values arnt being saved in the function selection drop down for the UI
+//BUG: Guard handling for the Map data
 
 
 // TODO TODAY/NEXT:
-// The API submission/ any setState call is clearing the Map
-// Add the reset button to floating action button
 
-// Move all the Json data handling to the top of the widget tree and pass down ?
-// Connect up the button to the API
-// Then Clean UP everything before moving to back end
+// Chips arnt connected up on the animation selection
+// API return data work
+// Guards on the passing to backend
+
+// General clean up
 
 
 class MyHomePage extends StatefulWidget {
@@ -38,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int floatingABState = 0;
   int currentAnimationLocation = 0;
   bool animationVisible = false;
+  List animationData = [];
   List<int> tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
   get stringCurrentTileData => tileData.join(",");
@@ -104,10 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void placeHolderAPICallBack(){
-    // Make a pop out to confirm the submission
-    // Add in some form of future builder with a loading widget
-    // Loading based on the progress of the back end ?
+  void placeHolderAPICallBack() async {
+     // setMapData(); <- removed while testing
+    //api_payload.printCurrentConfig();
+    List data = await api_calls.testApiCall();
+    setState(() {
+      animationData = data;
+    });
+
     print("SYSTEM -> API call back made");
 
   }
@@ -134,7 +141,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
       updateMazeMap: (newMapData){
         updateMazeMapSize(newMapData);
-      }),
+      },
+      animationData: animationData,
+
+      ),
+
+
 
       floatingActionButton:
           CustomFloatingButton(

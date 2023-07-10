@@ -1,14 +1,7 @@
-import 'package:ann_app/widgets/function_selection_widgets/scrollable_selection.dart';
 import 'package:flutter/material.dart';
-
 import 'package:ann_app/widgets/hero_route.dart';
-
-import 'package:ann_app/widgets/function_selection_widgets/selection_cards/activation_function_selection_card.dart';
-import 'package:ann_app/widgets/function_selection_widgets/selection_cards/weight_heuristic_selection_card.dart';
-import 'package:ann_app/widgets/function_selection_widgets/selection_cards/genertion_concatenation_selection_card.dart';
 import 'package:ann_app/widgets/function_selection_widgets/selection_cards/landing_card.dart';
-import 'package:ann_app/widgets/function_selection_widgets/bottom_notch_clipper.dart';
-
+import 'package:ann_app/widgets/function_selection_widgets/scrollable_selection.dart';
 
 const String _functionspopouttag = "functions-pop-out";
 
@@ -38,7 +31,6 @@ class FunctionSettingsButton extends StatelessWidget{
                       size: 40,
                       color: Theme.of(context).primaryColor,
 
-
                   )
               )
           ),
@@ -51,8 +43,6 @@ class FunctionSettingsButtonPopOut extends StatefulWidget{
   const FunctionSettingsButtonPopOut({super.key, required this.updateConfigData});
 
   final Function(String, String) updateConfigData;
-
-
 
   @override
   State<FunctionSettingsButtonPopOut> createState() => _FunctionSettingsButtonPopOut();

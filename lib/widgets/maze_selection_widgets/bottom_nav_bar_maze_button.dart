@@ -118,8 +118,7 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
         ),
       );
     });
-
-
+    
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 100, 10, 60),
         child: SingleChildScrollView(
@@ -155,130 +154,99 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                 child: Center(
                   child:Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Material(
-                      color: Colors.white.withOpacity(0.2),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                          const Text("Map Selection",
-                              style: TextStyle(fontSize: 20)
-                          ),
-                          const SizedBox(
-                            height: 20
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              color: Colors.blue.withOpacity(0.2),
-                              child: Center(
-                                child: SizedBox(
-                                  height: tileGridHeight ,
-                                  width: tileGridWidth ,
-                                  child: GridView.count(
-                                    //childAspectRatio: (tileWidth/ tileHeight),
-                                    padding: EdgeInsets.zero,
-                                      crossAxisCount: numberOfStatesX,
-                                    crossAxisSpacing: 2,
-                                    mainAxisSpacing: 2,
-                                    children: mapRepresentation
+                    child: SingleChildScrollView(
+                      child: Material(
+                        color: Colors.white.withOpacity(0.2),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                             const Text("Map Selection",
+                                style: TextStyle(fontSize: 20)
+                            ),
+                            const SizedBox(
+                              height: 20
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.blue.withOpacity(0.2),
+                                child: Center(
+                                  child: SizedBox(
+                                    height: tileGridHeight ,
+                                    width: tileGridWidth ,
+                                    child: GridView.count(
+                                      //childAspectRatio: (tileWidth/ tileHeight),
+                                      padding: EdgeInsets.zero,
+                                        crossAxisCount: numberOfStatesX,
+                                      crossAxisSpacing: 2,
+                                      mainAxisSpacing: 2,
+                                      children: mapRepresentation
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                const Text("No* of States: "),
-                                SizedBox(
-                                  height: 60,
-                                  width: 70,
-                                  child: InputDecorator(
-                                    decoration: InputDecoration(
-                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                        hintText: 'Testing hint text',
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                    isEmpty: numberOfStatesY == 0,
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<int>(
-                                        isExpanded: true,
-                                        value: numberOfStatesY,
-                                        onChanged: (int? newValue) {
-                                          setState(() {
-                                            numberOfStatesY = newValue!;
-                                          });
-                                        },
-                                        isDense: true,
-                                        items: numberOfStateOptions.map((int value){
-                                          return DropdownMenuItem<int>(
-                                              value: value,
-                                              child: Text(value.toString()));
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 60,
-                                  width: 70,
-                                  child: InputDecorator(
-                                    decoration: InputDecoration(
-
-                                        labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                        errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-                                        hintText: 'Testing hint text',
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                    isEmpty: numberOfStatesX == 0,
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<int>(
-                                        isExpanded: true,
-                                        value: numberOfStatesX,
-                                        onChanged: (int? newValue) {
-                                          setState(() {
-                                            numberOfStatesX = newValue!;
-                                          });
-                                        },
-                                        isDense: true,
-                                        items: numberOfStateOptions.map((int value){
-                                          return DropdownMenuItem<int>(
-                                              value: value,
-                                              child: Text(value.toString()));
-                                        }).toList(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-
-                              ]),
-
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    const Text("Tile Size : "),
-                                    SizedBox(
-                                      height: 60,
-                                      width: 80,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                    const Expanded(
+                                        flex: 2,
+                                        child:  Text("No* of States: ")),
+                                    Expanded(
+                                      flex: 3,
                                       child: InputDecorator(
                                         decoration: InputDecoration(
                                             labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
                                             errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
-
+                                            hintText: 'Testing hint text',
                                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                                        isEmpty: tileSize == 0,
+                                        isEmpty: numberOfStatesY == 0,
                                         child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<double>(
+                                          child: DropdownButton<int>(
                                             isExpanded: true,
-                                            value: tileSize,
-                                            onChanged: (double? newValue) {
-                                              updateTileSize(newValue!);
+                                            value: numberOfStatesY,
+                                            onChanged: (int? newValue) {
+                                              setState(() {
+                                                numberOfStatesY = newValue!;
+                                              });
                                             },
                                             isDense: true,
-                                            items: tileSizeOptions.map((double value){
-                                              return DropdownMenuItem<double>(
+                                            items: numberOfStateOptions.map((int value){
+                                              return DropdownMenuItem<int>(
+                                                  value: value,
+                                                  child: Text(value.toString()));
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const Expanded(
+                                        flex: 1,
+                                        child: SizedBox()),
+                                    Expanded(
+                                      flex: 3,
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+                                            labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                        isEmpty: numberOfStatesX == 0,
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<int>(
+                                            isExpanded: true,
+                                            value: numberOfStatesX,
+                                            onChanged: (int? newValue) {
+                                              setState(() {
+                                                numberOfStatesX = newValue!;
+                                              });
+                                            },
+                                            isDense: true,
+                                            items: numberOfStateOptions.map((int value){
+                                              return DropdownMenuItem<int>(
                                                   value: value,
                                                   child: Text(value.toString()));
                                             }).toList(),
@@ -287,13 +255,54 @@ class _MapSettingsButtonPopOut extends State<MapSettingsButtonPopOut>{
                                       ),
                                     ),
 
-                                  ]),
 
-                               Padding(
-                                 padding: const EdgeInsets.all(10.0),
-                                 child: ElevatedButton(onPressed: () {submitNewMapData();} , child: const Text("Submit")),
-                               )
-                        ]),
+                                  ]),
+                                ),
+                                const SizedBox(
+                                  height: 10
+                                ),
+
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      const Expanded(
+
+                                          child:  Text("Tile Size : ")),
+                                      Expanded(
+                                        flex: 2,
+                                        child: InputDecorator(
+                                          decoration: InputDecoration(
+                                              labelStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+                                              errorStyle: const TextStyle( color: Colors.redAccent, fontSize: 16),
+
+                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
+                                          isEmpty: tileSize == 0,
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton<double>(
+                                              isExpanded: true,
+                                              value: tileSize,
+                                              onChanged: (double? newValue) {
+                                                updateTileSize(newValue!);
+                                              },
+                                              isDense: true,
+                                              items: tileSizeOptions.map((double value){
+                                                return DropdownMenuItem<double>(
+                                                    value: value,
+                                                    child: Text(value.toString()));
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ]),
+
+                                 Padding(
+                                   padding: const EdgeInsets.all(10.0),
+                                   child: ElevatedButton(onPressed: () {submitNewMapData();} , child: const Text("Submit")),
+                                 )
+                          ]),
+                        ),
                       ),
                     ),
                   )

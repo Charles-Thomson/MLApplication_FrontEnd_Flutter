@@ -8,8 +8,9 @@ import 'package:ann_app/widgets/full_data_nav_bar/graph_test_data.dart';
 const String _generationdatapopouttag = "generation-data-pop-out";
 
 class GenerationDataButton extends StatelessWidget{
-  const GenerationDataButton({super.key, required this.runAnimationCallBack});
+  const GenerationDataButton({super.key, required this.runAnimationCallBack, required this.animationData});
   final Function(List<int>) runAnimationCallBack;
+  final List animationData;
   @override
   Widget build(BuildContext context){
     return  Padding(padding: const EdgeInsets.all(2),
@@ -17,6 +18,7 @@ class GenerationDataButton extends StatelessWidget{
           onTap: () {
             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
               return GenerationDataPopOut(
+                animationData: animationData,
                 runAnimationCallBack: (animationPath){
                 runAnimationCallBack(animationPath);
               },);
@@ -43,9 +45,10 @@ class GenerationDataButton extends StatelessWidget{
 }
 
 class GenerationDataPopOut extends StatefulWidget{
-  const GenerationDataPopOut({super.key, required this.runAnimationCallBack});
+  const GenerationDataPopOut({super.key, required this.runAnimationCallBack, required this.animationData});
 
   final Function(List<int>) runAnimationCallBack;
+  final List animationData;
 
   @override
   State<GenerationDataPopOut> createState() => _GenerationDataPopOut();
@@ -92,21 +95,16 @@ class _GenerationDataPopOut extends State<GenerationDataPopOut>{
                                       delegate: SliverChildBuilderDelegate((BuildContext context, int index){
                                         return GenerationDataCard(
                                           index: index,
+                                          animationData: widget.animationData,
                                           generationData: generationData(index),
                                           runAnimationCallBack: (animationPath){
                                             widget.runAnimationCallBack(animationPath);
-
                                         },) ;
                                       },
-                                      childCount: numberOfGenerations
+                                      childCount: 1 // currently hard coded
                                       )
-
                                   )
-
                                 ]
-
-
-
                           ),
                              ),
                            )

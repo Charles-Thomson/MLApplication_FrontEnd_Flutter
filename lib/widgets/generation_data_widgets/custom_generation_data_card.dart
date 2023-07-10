@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class GenerationDataCard extends StatefulWidget{
-  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack});
+  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack, required this.animationData});
   final int index;
   final Map generationData;
   final Function(List<int>) runAnimationCallBack;
+  final List animationData;
   @override
   State<GenerationDataCard> createState() => _GenerationDataCard();
 
@@ -14,14 +15,19 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   int? selectedValue = 0;
   get cardIndex => widget.index;
 
-  get shortestPath => widget.generationData["shortest_path"];
-  get longestPath => widget.generationData["longest_path"];
-  get lowestFitness => widget.generationData["lowest_fitness"];
-  get highestFitness => widget.generationData["total_fitness"];
-  get animationPath => widget.generationData["path"];
-  get thisAnimationPath => animationPath.map((item) => item.toInt()).cast<int>().toList();
+  get highestFitness => widget.animationData[0].toStringAsFixed(2);
+  get highestFitnessPath => widget.animationData[1];
+  get lowestFitness => widget.animationData[2].toStringAsFixed(2);
+  get lowestFitnessPath => widget.animationData[3];
 
+  get thisAnimationPath => widget.animationData[1].cast<int>(); // currently just showing highest fitness path
 
+  // get shortestPath => widget.generationData["shortest_path"];
+  // get longestPath => widget.generationData["longest_path"];
+  // get lowestFitness => widget.generationData["lowest_fitness"];
+  // get highestFitness => widget.generationData["total_fitness"];
+  // get animationPath => widget.generationData["path"];
+  // get thisAnimationPath => animationPath.map((item) => item.toInt()).cast<int>().toList();
 
 
   @override
@@ -89,10 +95,10 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                         children:  [
                           const Text("Path",
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                          Column(children:  <Widget>[
-                            Text("Shortest path:  $shortestPath", style: const TextStyle(fontSize: 14),),
+                          Column(children:  const <Widget>[
+                            Text("Shortest path:  holder", style: TextStyle(fontSize: 14),),
 
-                            Text("Longest path:  $longestPath", style: const TextStyle(fontSize: 14),)
+                            Text("Longest path:  holder", style: TextStyle(fontSize: 14),)
 
                           ]),
                         ],
@@ -140,7 +146,7 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(onPressed: () {
-                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $animationPath");
+                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $thisAnimationPath");
                         widget.runAnimationCallBack(thisAnimationPath);
 
                         }, child: const Text("Run Selected Animation")),

@@ -65,10 +65,9 @@ class _ParameterSettingsPopOut extends State<ParameterSettingsPopOut>{
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ScrollAbleParameterSelection(updateConfigData: updateConfigData),
-
                           ),
                         ),
-    )
+          )
     );
   }
 }
