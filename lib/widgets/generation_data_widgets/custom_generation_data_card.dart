@@ -29,16 +29,16 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   // get animationPath => widget.generationData["path"];
   // get thisAnimationPath => animationPath.map((item) => item.toInt()).cast<int>().toList();
 
+  List<String> chipTitles = ["Shortest", "Longest","Fittest", "Un-Fittest"];
+
 
   @override
   Widget build(BuildContext context){
-
-    return Card( // turning into a custom card
+    return Card(
         color: Theme.of(context).primaryColor.withOpacity(0.2),
         elevation: 0,
         child: SizedBox(
           width: 300,
-          height: 180,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,16 +48,21 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Generation $cardIndex",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24
-                          )
+                      Expanded(
+                        child: Text("Generation $cardIndex",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24
+                            )
+                        ),
                       ),
-                      const Text("Successful: true",
-                        style: TextStyle(
-                            fontSize: 14
+
+                      const Expanded(
+                        child:  Text("Successful: true",
+                          style: TextStyle(
+                              fontSize: 14
+                          ),
                         ),
                       )
                     ],
@@ -73,18 +78,24 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Fitness", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:  [
-                                Text("Highest: $highestFitness",
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                                Text("Lowest: $lowestFitness",
-                                  style: const TextStyle(fontSize: 14),
-                                )
+                          const Expanded(child: Text("Fitness", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                          Expanded(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children:  [
+                                  Expanded(
+                                    child: Text("Highest: $highestFitness",
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text("Lowest: $lowestFitness",
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  )
 
-                              ])
+                                ]),
+                          )
                         ],
                       ),
                     ),
@@ -93,14 +104,18 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:  [
-                          const Text("Path",
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                          Column(children:  const <Widget>[
-                            Text("Shortest path:  holder", style: TextStyle(fontSize: 14),),
+                          const Expanded(
+                            child:  Text("Path",
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                          ),
+                          Expanded(
+                            child: Column(children:  const <Widget>[
+                              Expanded(child: Text("Shortest path:  holder", style: TextStyle(fontSize: 14),)),
 
-                            Text("Longest path:  holder", style: TextStyle(fontSize: 14),)
+                              Expanded(child: Text("Longest path:  holder", style: TextStyle(fontSize: 14),))
 
-                          ]),
+                            ]),
+                          ),
                         ],
                       ),
                     ),
@@ -111,31 +126,32 @@ class _GenerationDataCard extends State<GenerationDataCard>{
 
                 const Expanded(
                   flex:1,
-                    child: Text("Select An Animation", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                    child: Text("Select A Path", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
 
                 Expanded(
                   flex: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:  [
-                      Wrap(
-                          spacing: 5,
-                          children: List<Widget>.generate(3, (int index){
-                            return ChoiceChip(
-                              label: Text("Item $index"),
-                              avatar: CircleAvatar(
-                                  child: Icon(selectedValue == index ? Icons.check : Icons.circle)
-                              ),
-                              selected: selectedValue == index,
-                              onSelected: (bool selected){
-                                setState(() {
-                                  selectedValue = selected ? index : null;
-                                });
-
-                              },
-                            );
-                          }
-                          ).toList()
+                      Expanded(
+                        child: Wrap(
+                            spacing: 5,
+                            children: List<Widget>.generate(chipTitles.length, (int index){
+                              return ChoiceChip(
+                                label: Text(chipTitles[index]),
+                                avatar: CircleAvatar(
+                                    child: Icon(selectedValue == index ? Icons.check : Icons.circle)
+                                ),
+                                selected: selectedValue == index,
+                                onSelected: (bool selected){
+                                  setState(() {
+                                    selectedValue = selected ? index : null;
+                                  });
+                                },
+                              );
+                            }
+                            ).toList()
+                        ),
                       )
                     ],
                   ),
@@ -145,6 +161,7 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      
                       ElevatedButton(onPressed: () {
                         print("SYSTEM - ANIMATION: Card $cardIndex - Path: $thisAnimationPath");
                         widget.runAnimationCallBack(thisAnimationPath);
@@ -157,6 +174,5 @@ class _GenerationDataCard extends State<GenerationDataCard>{
           ),
         )
     );
-
   }
 }

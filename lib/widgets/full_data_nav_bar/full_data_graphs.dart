@@ -122,7 +122,6 @@ Widget leftTitleWidgets (double value, TitleMeta meta){
 
   @override
   Widget build(BuildContext context){
-
     return  Material(
       color: Colors.transparent,
       child: LineChart(

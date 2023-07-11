@@ -31,10 +31,10 @@ Future<List> testApiCall() async {
 
     // Works as a return
     Map tagsJson = jsonDecode(data);
-    print(tagsJson["HIGHEST_FITNESS"]);
-    print(tagsJson["HIGHEST_FITNESS_PATH"]);
-    print(tagsJson["LOWEST_FITNESS"]);
-    print(tagsJson["LOWEST_FITNESS_PATH"]);
+    // print(tagsJson["HIGHEST_FITNESS"]);
+    // print(tagsJson["HIGHEST_FITNESS_PATH"]);
+    // print(tagsJson["LOWEST_FITNESS"]);
+    // print(tagsJson["LOWEST_FITNESS_PATH"]);
 
     double highestFitness = double.parse(tagsJson["HIGHEST_FITNESS"].toString());
     List highestFitnessPath = json.decode(tagsJson["HIGHEST_FITNESS_PATH"].toString());

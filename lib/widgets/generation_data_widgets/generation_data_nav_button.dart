@@ -63,56 +63,56 @@ class _GenerationDataPopOut extends State<GenerationDataPopOut>{
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 70),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Hero(
-                tag: _generationdatapopouttag,
-                child: Container(
-                    color: Colors.transparent,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 400, 0, 60),
+      child: SingleChildScrollView(
+        child:
+          Hero(
+              tag: _generationdatapopouttag,
+              child: SizedBox(
+                height: 380,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                    children:    [
+                        const SizedBox(
+                         height: 30,
+                         child: Material(
+                             color: Colors.transparent,
 
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                        children:    [
-                           const SizedBox(
-                             height: 30,
-                             child: Material(
-                                 color: Colors.transparent,
-                                 child: Text("Scroll to see each generation", style: TextStyle(fontSize: 18),))
+                             child:  Text("Scroll to see each generation", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),))
+                       ),
+                       Expanded(
+                         child: Padding(
+                           padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                           child: SizedBox(
+                             height: 240,
+                             width: MediaQuery.of(context).size.height,
+                             child: CustomScrollView(
+                               scrollDirection: Axis.horizontal,
+                              slivers: [
+                                SliverList(
+                                    delegate: SliverChildBuilderDelegate((BuildContext context, int index){
+                                      return GenerationDataCard(
+                                        index: index,
+                                        animationData: widget.animationData,
+                                        generationData: generationData(index),
+                                        runAnimationCallBack: (animationPath){
+                                          widget.runAnimationCallBack(animationPath);
+                                      },) ;
+                                    },
+                                    childCount: 1 // currently hard coded
+                                    )
+                                )
+                              ]
+                      ),
                            ),
-                           Padding(
-                             padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                             child: SizedBox(
-                               height: 240,
-                               width: MediaQuery.of(context).size.height,
-                               child: CustomScrollView(
-                                 scrollDirection: Axis.horizontal,
-                                slivers: [
-                                  SliverList(
-                                      delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-                                        return GenerationDataCard(
-                                          index: index,
-                                          animationData: widget.animationData,
-                                          generationData: generationData(index),
-                                          runAnimationCallBack: (animationPath){
-                                            widget.runAnimationCallBack(animationPath);
-                                        },) ;
-                                      },
-                                      childCount: 1 // currently hard coded
-                                      )
-                                  )
-                                ]
-                          ),
-                             ),
-                           )
-                        ]
-                    ))
-            ),
-          ],
-        ),
+                         ),
+                       )
+                    ]
+                ),
+              )
+          ),
+
       ),
     );
   }

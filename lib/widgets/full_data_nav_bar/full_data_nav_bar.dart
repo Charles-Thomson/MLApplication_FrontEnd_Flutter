@@ -60,55 +60,51 @@ class _FullDataPopOut extends State<FullDataPopOut>{
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
-          child: Hero(
-              tag: _fulldatapopouttag,
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.blueGrey.shade700,
-                        Colors.blueGrey.shade500,
-                        Colors.blueGrey.shade300,
-                        Colors.blueGrey.shade300,
-                        Colors.blueGrey.shade400,
-                        Colors.blueGrey.shade700,
-                      ],
-                      stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    color: Colors.grey.withOpacity(0.8),
-                    boxShadow: [BoxShadow(
-                        color: Colors.grey.withOpacity(0.6),
-                        blurRadius: 1,
-                        offset: const Offset(1, 1),
-                        blurStyle: BlurStyle.solid
-                    )],
+      child: SingleChildScrollView(
+        child: Hero(
+            tag: _fulldatapopouttag,
+            child: Container(
+              height: 650,
+                width: 400,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blueGrey.shade700,
+                      Colors.blueGrey.shade500,
+                      Colors.blueGrey.shade300,
+                      Colors.blueGrey.shade300,
+                      Colors.blueGrey.shade400,
+                      Colors.blueGrey.shade700,
+                    ],
+                    stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
+                  color: Colors.grey.withOpacity(0.8),
+                  boxShadow: [BoxShadow(
+                      color: Colors.grey.withOpacity(0.6),
+                      blurRadius: 1,
+                      offset: const Offset(1, 1),
+                      blurStyle: BlurStyle.solid
+                  )],
+                ),
 
-                  child: Center(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                          children:    [
-                            const SizedBox(
-                                height: 40,
-                            ),
-
-                             Padding(
+                child: Center(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Column(
+                        children:    [
+                           Expanded(
+                             flex: 4,
+                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
-                              child: SizedBox(
-                                height: 400,
-                                width: 400,
-                                // -> xAxis, yAxis, Selected Data
-                                child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: getSelectedLineBarsData),
-                                ),
-                            ),
-                             Padding(
+                              child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: getSelectedLineBarsData),
+                          ),
+                           ),
+                           Expanded(
+                             flex: 1,
+                             child: Padding(
                                padding: const EdgeInsets.all(8.0),
                                child: Wrap(
                                  spacing: 5,
@@ -125,21 +121,20 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                                        onSelected: (bool selected){
                                          setState(() {
                                            selectedValue.contains(index) ? selectedValue.remove(index) : selectedValue.add(index);
-
                                          });
-                                         //print(selectedValue);
                                        },
                                    );
                                  }
                                  ).toList()
                                ),
-                             )
+                             ),
+                           )
 
-                          ]
-                      ),
+                        ]
                     ),
-                  ))
-          )
+                  ),
+                ))
+        ),
       ),
     );
   }
