@@ -31,6 +31,8 @@ Future<List> testApiCall() async {
 
     // Works as a return
     Map tagsJson = jsonDecode(data);
+    print(tagsJson["LOWEST_FITNESS_BY_STEP"]);
+    print(tagsJson["HIGHEST_FITNESS_BY_STEP"]);
     // print(tagsJson["HIGHEST_FITNESS"]);
     // print(tagsJson["HIGHEST_FITNESS_PATH"]);
     // print(tagsJson["LOWEST_FITNESS"]);
@@ -38,11 +40,14 @@ Future<List> testApiCall() async {
 
     double highestFitness = double.parse(tagsJson["HIGHEST_FITNESS"].toString());
     List highestFitnessPath = json.decode(tagsJson["HIGHEST_FITNESS_PATH"].toString());
+    List highestFitnessByStep = json.decode(tagsJson["HIGHEST_FITNESS_BY_STEP"].toString());
+
     double lowestFitness = double.parse(tagsJson["LOWEST_FITNESS"].toString());
     List lowestFitnessPath = json.decode(tagsJson["LOWEST_FITNESS_PATH"].toString());
+    List lowestFitnessByStep = json.decode(tagsJson["LOWEST_FITNESS_BY_STEP"].toString());
 
-    List returnData = [highestFitness,highestFitnessPath,lowestFitness,lowestFitnessPath];
-    //print(returnData);
+    List returnData = [highestFitness,highestFitnessPath,highestFitnessByStep,lowestFitness,lowestFitnessPath, lowestFitnessByStep];
+    print(returnData);
 
     return returnData;
 
