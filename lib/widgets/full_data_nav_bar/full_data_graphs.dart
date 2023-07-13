@@ -85,12 +85,13 @@ class CustomLineChart extends StatelessWidget{
     getTitlesWidget: leftTitleWidgets,
     showTitles: true,
     interval: 1,
-    reservedSize: 35,
+    reservedSize: 40,
+
   );
 
   SideTitles get bottomTitles => SideTitles(
     showTitles: true,
-    reservedSize: 28,
+    reservedSize: 35,
     interval: 1,
     getTitlesWidget: bottomTitleWidgets,
   );
@@ -107,6 +108,7 @@ Widget bottomTitleWidgets (double value, TitleMeta meta){
   }
 
 Widget leftTitleWidgets (double value, TitleMeta meta){
+
   const style = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 16,
@@ -114,11 +116,8 @@ Widget leftTitleWidgets (double value, TitleMeta meta){
   return Text(value.toString(), style: style, textAlign: TextAlign.center);
 }
 
-
-  // Depricated depending on Title tile of topTile
+  // Deprecated depending on Title tile of topTile
   Widget topTitleWidgets(double value, TitleMeta meta) => const Text("");
-
-
 
   @override
   Widget build(BuildContext context){
@@ -132,10 +131,9 @@ Widget leftTitleWidgets (double value, TitleMeta meta){
             gridData: gridData,
             borderData: borderData,
             lineBarsData: lineChartPlots,
-
             minX: 0,
-            maxX: maxXAxis,
-            maxY: maxYAxis,
+            maxX: maxXAxis + 1,
+            maxY: maxYAxis + 1,
             minY: 0,
       )
 

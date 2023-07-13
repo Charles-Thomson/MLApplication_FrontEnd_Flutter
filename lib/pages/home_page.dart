@@ -18,25 +18,11 @@ import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 
 
 // TODO TODAY/NEXT:
-// Back End
-// Add the tracking of fitness by step:
-// Brain Instance
-// DB
-// Agent
-// Add defaults to the config if no value passed ?
-// return data:
-// Add the fitness_by_step to the return data payload
+// Work on the guards aroud passing data to the API :
+// Default values based and a check to see which of the config file isnt set
+// Map must be set:
+// With start + at least one goal tile
 
-// Redesign payload:
-// Needs to cover every generation
-// Separate each gen into lowest/highest fitness ?
-
-//Front End
-// Returned Data package handling: <- here
-// pass the JSON down to the graph level and handle there ?
-// ^^ split data when needed at each level - allows for naming
-// Getting the data and plotting on graphs
-// Connect chips to show relevant animations/graphs
 
 
 class MyHomePage extends StatefulWidget {

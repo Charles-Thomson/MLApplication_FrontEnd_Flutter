@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/hero_route.dart';
 import 'package:ann_app/widgets/generation_data_widgets/custom_generation_data_card.dart';
 
-import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
-import 'package:ann_app/widgets/full_data_nav_bar/graph_test_data.dart';
-
 const String _generationdatapopouttag = "generation-data-pop-out";
 
 class GenerationDataButton extends StatelessWidget{
@@ -22,8 +19,8 @@ class GenerationDataButton extends StatelessWidget{
                 runAnimationCallBack: (animationPath){
                 runAnimationCallBack(animationPath);
               },);
-            }
-            )
+                }
+              )
             );
           },
 
@@ -56,13 +53,11 @@ class GenerationDataPopOut extends StatefulWidget{
 }
 
 class _GenerationDataPopOut extends State<GenerationDataPopOut>{
-  var testData = jsonGraphTestData;
-  generationData(generationNumber) => getGenerationData(testData, generationNumber);
-  int get numberOfGenerations => getNumberOfGenerations(testData);
-
 
   @override
   Widget build(BuildContext context) {
+
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 400, 0, 60),
       child: SingleChildScrollView(
@@ -95,12 +90,11 @@ class _GenerationDataPopOut extends State<GenerationDataPopOut>{
                                       return GenerationDataCard(
                                         index: index,
                                         payloadData: widget.payloadData[index],
-                                        generationData: generationData(index),
                                         runAnimationCallBack: (animationPath){
                                           widget.runAnimationCallBack(animationPath);
                                       },) ;
                                     },
-                                    childCount: 1 // currently hard coded
+                                    childCount: 4
                                     )
                                 )
                               ]

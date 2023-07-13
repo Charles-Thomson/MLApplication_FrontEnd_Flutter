@@ -1,11 +1,12 @@
 
+import 'dart:math';
+
 import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/hero_route.dart';
 import 'package:ann_app/widgets/full_data_nav_bar/full_data_graphs.dart';
-
-import 'graph_test_data.dart';
 
 const String _fulldatapopouttag = "animation-selection-pop-out";
 
@@ -19,7 +20,7 @@ class FullDataButton extends StatelessWidget{
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-              return const FullDataPopOut();
+              return FullDataPopOut(payloadData: payloadData);
             }
             )
             );
@@ -43,8 +44,8 @@ class FullDataButton extends StatelessWidget{
 }
 
 class FullDataPopOut extends StatefulWidget{
-  const FullDataPopOut({super.key});
-
+  const FullDataPopOut({super.key, required this.payloadData});
+  final List<List> payloadData;
   @override
   State<FullDataPopOut> createState() => _FullDataPopOut();
 
@@ -52,15 +53,66 @@ class FullDataPopOut extends StatefulWidget{
 
 class _FullDataPopOut extends State<FullDataPopOut>{
   List<int> selectedValue = [];
-  var testData = jsonGraphTestData;
 
-  double get getMaxX => getMaxXValue(testData);
-  double get getMaxY => getMaxYValue(testData);
-  int get numberOfGenerations => getNumberOfGenerations(testData);
-  List<LineChartBarData> get getSelectedLineBarsData => generateLineChartBarData(testData, selectedValue);
+  double get getMaxX => getMaxXAxisValue(widget.payloadData);
+  double get getMaxY => getMaxYAxisValue(widget.payloadData);
+  int get numberOfGenerations => widget.payloadData.length;
+
+  late List<List> barChartDataWithColor;
+
+  @override
+  void initState(){
+    super.initState();
+    barChartDataWithColor = buildChartDataWithColor();
+
+  }
+
+  // Breaking the payload into fitness by step and assigning a color for the graph
+  List<List> buildChartDataWithColor(){
+    List<List> builtElements = [];
+    for(List instance in widget.payloadData){
+      List instanceData = [];
+      List data = instance[2];
+      Color selectedColor = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+
+      instanceData.add(data);
+      instanceData.add(selectedColor);
+
+      builtElements.add(instanceData);
+    }
+
+    return builtElements;
+  }
+
+  // Pass all the fitness by step w/ assigned colour to the graph builder, builder handles which are to be built base on selected values
+  List<LineChartBarData> get buildSelectedLineCharts => generateSelectedLineChartData(barChartDataWithColor, selectedValue);
+
+  // Highest number of steps
+   getMaxXAxisValue(List<List> payloadData){
+    double highestSteps = 0.0;
+    for(List instance in payloadData){
+      if(instance[1].length.toDouble() > highestSteps){
+        int val = instance[1].length;
+        highestSteps = val.toDouble();
+      }
+    }
+    return highestSteps;
+  }
+
+  // Highest Fitness value
+  double getMaxYAxisValue(payloadData){
+    double highestFitness = 0.0;
+    for(List instance in payloadData){
+      if(instance[0] > highestFitness){
+        highestFitness = instance[0];
+      }
+    }
+    return double.parse(highestFitness.toStringAsExponential(0));
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Center(
       child: SingleChildScrollView(
         child: Hero(
@@ -101,7 +153,7 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                              flex: 4,
                              child: Padding(
                               padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
-                              child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: getSelectedLineBarsData),
+                              child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: buildSelectedLineCharts),
                           ),
                            ),
                            Expanded(
@@ -111,10 +163,10 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                                child: Wrap(
                                  spacing: 5,
                                  direction: Axis.horizontal,
-                                 children: List<Widget>.generate(numberOfGenerations,(int index){
+                                 children: List<Widget>.generate(barChartDataWithColor.length,(int index){
                                    return ChoiceChip(
-                                      backgroundColor: Colors.blue,
-                                       selectedColor: Colors.red,
+                                      backgroundColor: barChartDataWithColor[index][1],
+                                       selectedColor: barChartDataWithColor[index][1],
                                        label: Text("Generation $index"),
                                        avatar: CircleAvatar(
                                            child: Icon(selectedValue.contains(index) ? Icons.check : Icons.circle)

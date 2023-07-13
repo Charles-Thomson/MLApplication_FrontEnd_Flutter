@@ -1,65 +1,28 @@
-import 'dart:convert';
-import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-List<LineChartBarData> generateLineChartBarData(var dataSet, List<int> selectedGenerations){
-  var data = json.decode(dataSet);
 
-  int numberOfGenerations = int.parse(data["number_of_generations"]);
+List<LineChartBarData> generateSelectedLineChartData(List<List> barChartDataWithColor, List<int> selectedValues){
 
-  var payloadData = data["payloadData"];
   List<LineChartBarData> builtLineBarChatData = [];
 
-  for(int i = 0; i < numberOfGenerations ; i++){
-    List<dynamic> thisPlotPoints = payloadData["gen_$i"]["fitness_by_step"];
+  for(int value in selectedValues){
+    List<dynamic> thisData = barChartDataWithColor[value];
+    List<dynamic> thisPlotPoints = thisData[0];
     List<FlSpot> newSpotPoints = buildFLSpotPoints(thisPlotPoints);
-    LineChartBarData newLineBarChartData = buildLineBarChartData(newSpotPoints);
+    LineChartBarData newLineBarChartData = buildLineBarChartData(newSpotPoints, thisData[1]);
     builtLineBarChatData.add(newLineBarChartData);
   }
-  List<LineChartBarData> selectedBuiltLineBarChatData = [];
-
-  // Add the selected ges to the return list
-  for(var x in selectedGenerations){
-    selectedBuiltLineBarChatData.add(builtLineBarChatData[x]);
-
-  }
-
-  return selectedBuiltLineBarChatData;
-}
-
-getGenerationData(dataSet, generationNumber){
-  var data = json.decode(dataSet);
-  var payloadData = data["payloadData"];
-  var generationData = payloadData["gen_$generationNumber"];
-  return generationData;
-}
-
-double getMaxXValue(dataSet){
-  var data = json.decode(dataSet);
-  double maxSteps = double.parse(data["max_steps"]);
-  return maxSteps;
-}
-
-double getMaxYValue(dataSet){
-  var data = json.decode(dataSet);
-  double maxFitness = double.parse(data["max_fitness"]);
-  return maxFitness;
-}
-
-int getNumberOfGenerations(dataSet){
-  var data = json.decode(dataSet);
-  int numberOfGenerations = int.parse(data["number_of_generations"]);
-  return numberOfGenerations;
-
+  return builtLineBarChatData;
 }
 
 // Building the full LineBarChartData Element
-LineChartBarData buildLineBarChartData(List<FlSpot> newSpotPoints){
+LineChartBarData buildLineBarChartData(List<FlSpot> newSpotPoints, Color selectedColor){
   LineChartBarData newLineChartBarData = LineChartBarData(
       curveSmoothness: 0.0,
       isCurved: true,
-      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      color: selectedColor,
       barWidth: 4,
       isStrokeCapRound: true,
       dotData:  FlDotData(show: false),

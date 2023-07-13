@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class GenerationDataCard extends StatefulWidget{
-  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack, required this.payloadData});
+  const GenerationDataCard({super.key, required this.index, required this.runAnimationCallBack, required this.payloadData});
   final int index;
-  final Map generationData;
+
   final Function(List<int>) runAnimationCallBack;
   final List payloadData;
   @override
@@ -13,30 +13,28 @@ class GenerationDataCard extends StatefulWidget{
 
 class _GenerationDataCard extends State<GenerationDataCard>{
   int? selectedValue = 0;
+  late List<int> selectedAnimationPath;
+  late List<List> animationPaths;
   get cardIndex => widget.index;
 
   get highestFitness => widget.payloadData[0].toStringAsFixed(2);
-  get highestFitnessPath => widget.payloadData[1];
-  get lowestFitness => widget.payloadData[2].toStringAsFixed(2);
-  get lowestFitnessPath => widget.payloadData[3];
+  get highestFitnessPath => widget.payloadData[1].cast<int>();
+  get lowestFitness => widget.payloadData[3].toStringAsFixed(2);
+  get lowestFitnessPath => widget.payloadData[4];
 
-  get thisAnimationPath => widget.payloadData[1].cast<int>(); // currently just showing highest fitness path
-
-  // get shortestPath => widget.generationData["shortest_path"];
-  // get longestPath => widget.generationData["longest_path"];
-  // get lowestFitness => widget.generationData["lowest_fitness"];
-  // get highestFitness => widget.generationData["total_fitness"];
-  // get animationPath => widget.generationData["path"];
-  // get thisAnimationPath => animationPath.map((item) => item.toInt()).cast<int>().toList();
-
-  List<String> chipTitles = ["Shortest", "Longest","Fittest", "Un-Fittest"];
-
+  List<String> chipTitles = ["Fittest"]; // add additional chips here
+  @override
+  void initState(){
+    super.initState();
+    selectedAnimationPath = highestFitnessPath; // Hard coding a default
+    animationPaths = [highestFitnessPath];
+  }
 
   @override
   Widget build(BuildContext context){
+    List animationPaths = [highestFitnessPath];
     return Card(
         color: Theme.of(context).primaryColor.withOpacity(0.2),
-        elevation: 0,
         child: SizedBox(
           width: 300,
           child: Column(
@@ -146,6 +144,7 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                                 onSelected: (bool selected){
                                   setState(() {
                                     selectedValue = selected ? index : null;
+                                    selectedAnimationPath = animationPaths[index];
                                   });
                                 },
                               );
@@ -161,11 +160,9 @@ class _GenerationDataCard extends State<GenerationDataCard>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      
                       ElevatedButton(onPressed: () {
-                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $thisAnimationPath");
-                        widget.runAnimationCallBack(thisAnimationPath);
-
+                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $selectedAnimationPath");
+                        widget.runAnimationCallBack(selectedAnimationPath);
                         }, child: const Text("Run Selected Animation")),
                     ],
                   ),
