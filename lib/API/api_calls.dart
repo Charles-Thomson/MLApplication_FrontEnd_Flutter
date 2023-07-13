@@ -9,21 +9,11 @@ String data = '';
 String finalData = '';
 List tagsJson = [];
 
-
-// Payload back needs to be ->
-// Each generation:
-// Highest + lowest Fitness
-// Longest + Shortest path
-// Best Path as fitness by step
-
-
-Future<List> testApiCall() async {
-  Map configData = getCurrentConfigData;
+Future<List<List>> testApiCall() async {
+  //Map configData = getCurrentConfigData;
   try{
     var payload = {};
     payload['payloadBody'] = getTestConfigData;
-    //print("SYSTEM -> PAYLOAD: ");
-    //print(payload);
 
     String encodedPayload = json.encode(payload);
     url = "http://10.0.2.2:5000/TESTPAYLOAD?query=$encodedPayload";
@@ -31,30 +21,36 @@ Future<List> testApiCall() async {
 
     // Works as a return
     Map tagsJson = jsonDecode(data);
-    print(tagsJson["LOWEST_FITNESS_BY_STEP"]);
-    print(tagsJson["HIGHEST_FITNESS_BY_STEP"]);
-    // print(tagsJson["HIGHEST_FITNESS"]);
-    // print(tagsJson["HIGHEST_FITNESS_PATH"]);
-    // print(tagsJson["LOWEST_FITNESS"]);
-    // print(tagsJson["LOWEST_FITNESS_PATH"]);
+    print("JSON DECODED");
+    List<List> formattedData = formatPayloadData(tagsJson);
 
-    double highestFitness = double.parse(tagsJson["HIGHEST_FITNESS"].toString());
-    List highestFitnessPath = json.decode(tagsJson["HIGHEST_FITNESS_PATH"].toString());
-    List highestFitnessByStep = json.decode(tagsJson["HIGHEST_FITNESS_BY_STEP"].toString());
-
-    double lowestFitness = double.parse(tagsJson["LOWEST_FITNESS"].toString());
-    List lowestFitnessPath = json.decode(tagsJson["LOWEST_FITNESS_PATH"].toString());
-    List lowestFitnessByStep = json.decode(tagsJson["LOWEST_FITNESS_BY_STEP"].toString());
-
-    List returnData = [highestFitness,highestFitnessPath,highestFitnessByStep,lowestFitness,lowestFitnessPath, lowestFitnessByStep];
-    print(returnData);
-
-    return returnData;
+    return formattedData;
 
   }catch(e){
     print("In the catch");
     return [];
   }
+
+}
+
+List<List> formatPayloadData(Map payloadData){
+  print("In format payload");
+  List<List> formattedData = [];
+  for (var key in payloadData.keys){
+    Map thisData = payloadData[key];
+
+    double highestFitness = double.parse(thisData["HIGHEST_FITNESS"].toString());
+    List highestFitnessPath = json.decode(thisData["HIGHEST_FITNESS_PATH"].toString());
+    List highestFitnessByStep = json.decode(thisData["HIGHEST_FITNESS_BY_STEP"].toString());
+
+    double lowestFitness = double.parse(thisData["LOWEST_FITNESS"].toString());
+    List lowestFitnessPath = json.decode(thisData["LOWEST_FITNESS_PATH"].toString());
+    List lowestFitnessByStep = json.decode(thisData["LOWEST_FITNESS_BY_STEP"].toString());
+
+    List returnData = [highestFitness,highestFitnessPath,highestFitnessByStep,lowestFitness,lowestFitnessPath, lowestFitnessByStep];
+    formattedData.add(returnData);
+  }
+  return formattedData;
 
 }
 

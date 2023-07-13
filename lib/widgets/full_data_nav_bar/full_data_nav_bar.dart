@@ -10,7 +10,9 @@ import 'graph_test_data.dart';
 const String _fulldatapopouttag = "animation-selection-pop-out";
 
 class FullDataButton extends StatelessWidget{
-  const FullDataButton({super.key});
+  const FullDataButton({super.key, required this.payloadData});
+  final List<List> payloadData;
+
   @override
   Widget build(BuildContext context){
     return  Padding(padding: const EdgeInsets.all(2),

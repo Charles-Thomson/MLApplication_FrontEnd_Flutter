@@ -10,15 +10,17 @@ import 'package:flutter/material.dart';
 
 
 class CustomBottomNavBar extends StatefulWidget{
-  const CustomBottomNavBar({super.key,required this.buttonState,required this.updateConfigData,required this.updateMazeMap, required this.runAnimationCallBack, required this.animationData});
+  const CustomBottomNavBar({super.key,required this.buttonState,required this.updateConfigData,required this.updateMazeMap, required this.runAnimationCallBack, required this.payloadData});
 
 
   final Function(String, String) updateConfigData;
   final Function(Map<String, String>) updateMazeMap;
-  final int buttonState;
-  final List animationData;
-
   final Function(List<int>) runAnimationCallBack;
+
+  final int buttonState;
+  final List<List> payloadData;
+
+
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBar();
@@ -53,9 +55,11 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
          GenerationDataButton(runAnimationCallBack: (animationPath){
            widget.runAnimationCallBack(animationPath);
          },
-         animationData: widget.animationData
+         payloadData: widget.payloadData
          ),
-         const FullDataButton(),
+         FullDataButton(
+             payloadData: widget.payloadData
+         ),
        ];
    }
     return [];

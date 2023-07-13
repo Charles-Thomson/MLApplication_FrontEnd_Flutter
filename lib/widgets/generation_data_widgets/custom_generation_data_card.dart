@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class GenerationDataCard extends StatefulWidget{
-  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack, required this.animationData});
+  const GenerationDataCard({super.key, required this.index, required this.generationData, required this.runAnimationCallBack, required this.payloadData});
   final int index;
   final Map generationData;
   final Function(List<int>) runAnimationCallBack;
-  final List animationData;
+  final List payloadData;
   @override
   State<GenerationDataCard> createState() => _GenerationDataCard();
 
@@ -15,12 +15,12 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   int? selectedValue = 0;
   get cardIndex => widget.index;
 
-  get highestFitness => widget.animationData[0].toStringAsFixed(2);
-  get highestFitnessPath => widget.animationData[1];
-  get lowestFitness => widget.animationData[2].toStringAsFixed(2);
-  get lowestFitnessPath => widget.animationData[3];
+  get highestFitness => widget.payloadData[0].toStringAsFixed(2);
+  get highestFitnessPath => widget.payloadData[1];
+  get lowestFitness => widget.payloadData[2].toStringAsFixed(2);
+  get lowestFitnessPath => widget.payloadData[3];
 
-  get thisAnimationPath => widget.animationData[1].cast<int>(); // currently just showing highest fitness path
+  get thisAnimationPath => widget.payloadData[1].cast<int>(); // currently just showing highest fitness path
 
   // get shortestPath => widget.generationData["shortest_path"];
   // get longestPath => widget.generationData["longest_path"];

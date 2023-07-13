@@ -27,12 +27,14 @@ import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 // return data:
 // Add the fitness_by_step to the return data payload
 
-// Redesign payload: <- here
+// Redesign payload:
 // Needs to cover every generation
 // Separate each gen into lowest/highest fitness ?
 
 //Front End
-// Returned Data package handling:
+// Returned Data package handling: <- here
+// pass the JSON down to the graph level and handle there ?
+// ^^ split data when needed at each level - allows for naming
 // Getting the data and plotting on graphs
 // Connect chips to show relevant animations/graphs
 
@@ -52,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentAnimationLocation = 0;
   bool animationVisible = false;
   List animationData = [];
+
+  List<List> payloadData = [];
+
   List<int> tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
   get stringCurrentTileData => tileData.join(",");
@@ -121,11 +126,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void placeHolderAPICallBack() async {
      // setMapData(); <- removed while testing
     //api_payload.printCurrentConfig();
-    List data = await api_calls.testApiCall();
+    List<List> data = await api_calls.testApiCall();
     setState(() {
-      animationData = data;
+      payloadData = data;
     });
-
     print("SYSTEM -> API call back made");
 
   }
@@ -153,8 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
       updateMazeMap: (newMapData){
         updateMazeMapSize(newMapData);
       },
-      animationData: animationData,
 
+      payloadData: payloadData,
       ),
 
 
