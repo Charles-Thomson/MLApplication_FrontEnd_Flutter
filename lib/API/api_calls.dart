@@ -13,7 +13,7 @@ Future<List<List>> testApiCall() async {
   //Map configData = getCurrentConfigData;
   try{
     var payload = {};
-    payload['payloadBody'] = getTestConfigData;
+    payload['payloadBody'] = getCurrentConfigData;
 
     String encodedPayload = json.encode(payload);
     url = "http://10.0.2.2:5000/TESTPAYLOAD?query=$encodedPayload";

@@ -7,6 +7,7 @@ import 'package:ann_app/widgets/custom_floating_button.dart';
 import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 
 //TODO: Refactor layouts to use Flexible ?
+//TODO: Refactor size to use media query
 //TODO: Consider refactoring parameter selection and function selection into on pop-out
 //TODO: Color of bar graph lines needs to correspond to Chip
 
@@ -18,11 +19,12 @@ import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 
 
 // TODO TODAY/NEXT:
-// Work on the guards aroud passing data to the API :
-// Default values based and a check to see which of the config file isnt set
-// Map must be set:
-// With start + at least one goal tile
+// Testing and clean up needed
+// Need a future builder ? on waiting for the return payload
+// Need a clear of the back end DB'S on each run
+// Create a unified payload file ?
 
+// file clean up
 
 
 class MyHomePage extends StatefulWidget {
@@ -40,18 +42,29 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentAnimationLocation = 0;
   bool animationVisible = false;
   List animationData = [];
+  bool mapValid = false;
 
   List<List> payloadData = [];
 
   List<int> tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
-  get stringCurrentTileData => tileData.join(",");
-
   void rebuildTileData() => tileData = List.generate(maze_config.totalMazeStates, (index) => 0);
 
   int updateTileData(int index, var tileState) => tileData[index] >= 3 ? tileData[index] = 0 : tileData[index] += 1;
 
-  void updateFABStateCallBack() => setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;});
+  void updateFABState(){
+    print("In update FAB homepage");
+      setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;}
+      );
+  }
+
+
+  void updateFABStateCallBack(){
+    print("In update FAB");
+    if(mapValid == true){
+      setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;}
+    );}
+  }
 
   void resetAll(){
     print("SYSTEM -> RESET ALL CALLED");
@@ -84,19 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // no guard for multiple start tiles
-  void setMapData(){
-    int mapDimensions = maze_config.totalXStates * maze_config.totalYStates;
-    api_payload.configData["ENV_MAP_DIMENSIONS"] = mapDimensions.toString();
-    int startLocationValue = 1;
-    int startLocationIndex = tileData.indexOf(startLocationValue);
-    tileData[startLocationIndex] = 0;
-    api_payload.configData["ENVIRONMENT_START_STATE"] = startLocationIndex.toString();
-    api_payload.configData["ENV_MAP"] = stringCurrentTileData;
-  }
-
-
-
   Future<void> runAnimationCallBack(List<int> animationPath) async {
     for(int newLocation in animationPath){
       await Future.delayed(const Duration(seconds: 2), (){
@@ -110,13 +110,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void placeHolderAPICallBack() async {
-     // setMapData(); <- removed while testing
-    //api_payload.printCurrentConfig();
-    List<List> data = await api_calls.testApiCall();
-    setState(() {
-      payloadData = data;
-    });
-    print("SYSTEM -> API call back made");
+     bool mapValid = api_payload.validateAndSetMapData(tileData);
+
+     if(mapValid == true){
+       api_payload.printCurrentConfig();
+       List<List> data = await api_calls.testApiCall();
+       print("SYSTEM -> API call back made");
+       setState(() {
+         mapValid = true;
+         payloadData = data;
+       });
+       print(payloadData.length);
+       updateFABState();
+
+     } else {
+       print("Map is not valid");
+       setState(() {
+         mapValid = false;
+       });
+     }
+
+
 
   }
 

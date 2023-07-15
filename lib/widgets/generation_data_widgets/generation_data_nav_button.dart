@@ -94,7 +94,7 @@ class _GenerationDataPopOut extends State<GenerationDataPopOut>{
                                           widget.runAnimationCallBack(animationPath);
                                       },) ;
                                     },
-                                    childCount: 4
+                                    childCount: widget.payloadData.length
                                     )
                                 )
                               ]
