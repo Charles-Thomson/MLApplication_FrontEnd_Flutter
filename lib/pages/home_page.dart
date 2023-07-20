@@ -1,9 +1,9 @@
 import 'package:ann_app/API/api_calls.dart' as api_calls;
 import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/built_maze.dart';
-import 'package:ann_app/widgets/bottom_nav_bar.dart';
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
-import 'package:ann_app/widgets/custom_floating_button.dart';
+import 'package:ann_app/widgets/floating_action_button/custom_floating_button.dart';
 import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 
 //TODO: Refactor layouts to use Flexible ?

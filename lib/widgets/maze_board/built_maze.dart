@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ann_app/widgets/maze_board/maze_body/body_painter.dart';
 import 'package:ann_app/widgets/maze_board/tiles/tile_grid.dart';
 import 'package:ann_app/widgets/maze_board/maze_body/rim_painter.dart';
-import 'package:ann_app/widgets/agent/agent_animation.dart';
+import 'package:ann_app/widgets/animation//animation_main.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as config;
 
 

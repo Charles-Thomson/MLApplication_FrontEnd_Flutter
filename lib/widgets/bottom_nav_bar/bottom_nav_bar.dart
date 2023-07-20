@@ -1,13 +1,9 @@
-
-import 'package:ann_app/widgets/function_selection_widgets/bottom_nav_function_settings.dart';
-import 'package:ann_app/widgets/parameter_selection_widgets/parameter_selection_nav_bar_button.dart';
-import 'package:ann_app/widgets/maze_selection_widgets/bottom_nav_bar_maze_button.dart';
-
-import 'package:ann_app/widgets/generation_data_widgets/generation_data_nav_button.dart';
-import 'package:ann_app/widgets/full_data_nav_bar/full_data_nav_bar.dart';
-
 import 'package:flutter/material.dart';
-
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar_buttons/graph_ui_nav_button.dart';
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar_buttons/function_selection_ui_nav_button.dart';
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar_buttons/hyper_parameter_selection_ui_nav_button.dart';
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar_buttons/maze_configuration_ui_nav_button.dart';
+import 'package:ann_app/widgets/bottom_nav_bar/bottom_nav_bar_buttons/animation_selection_ui_nav_button.dart';
 
 class CustomBottomNavBar extends StatefulWidget{
   const CustomBottomNavBar({super.key,required this.buttonState,required this.updateConfigData,required this.updateMazeMap, required this.runAnimationCallBack, required this.payloadData});
@@ -39,25 +35,26 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
      case 0:
        return [
 
-         MazeSettingsButton(updateMazeMap: (newMapData){
+         MazeConfigurationUIButton(updateMazeMap: (newMapData){
            widget.updateMazeMap(newMapData);
          }),
-         ParameterSettingsButton(updateConfigData: (configKey, newValue){
+         HyperParameterSettingsUIButton(updateConfigData: (configKey, newValue){
            widget.updateConfigData(configKey, newValue);
          }),
-         FunctionSettingsButton(updateConfigData: (configKey, newValue){
+         FunctionSelectionUIButton(updateConfigData: (configKey, newValue){
            widget.updateConfigData(configKey, newValue);
          }),
 
        ];
      case 1:
        return [
-         GenerationDataButton(runAnimationCallBack: (animationPath){
+         AnimationSelectionUIButton(runAnimationCallBack: (animationPath){
            widget.runAnimationCallBack(animationPath);
          },
          payloadData: widget.payloadData
          ),
-         FullDataButton(
+
+         GraphUIButton(
              payloadData: widget.payloadData
          ),
        ];

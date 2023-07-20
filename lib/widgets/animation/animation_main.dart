@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/agent/agent_body.dart';
+import 'package:ann_app/widgets/animation/animation_assets//agent_body.dart';
 import 'package:ann_app/widgets/maze_board/maze_board_config.dart' as maze_config;
 
 class AgentAnimation extends StatefulWidget{
-  AgentAnimation({super.key,required this.agentAnimationLocation});
+  const AgentAnimation({super.key,required this.agentAnimationLocation});
 
 
   final int agentAnimationLocation;
@@ -37,7 +37,7 @@ class _AgentAnimation extends State<AgentAnimation>{
   }
 
   List<double> calculateNewLocation(int state){
-    print("State received in calculate new location $state");
+    //print("State received in calculate new location $state");
     int xGridLocation = (state / totalXStates).floor();
     int yGridLocation = state.remainder(totalXStates);
 
@@ -46,23 +46,6 @@ class _AgentAnimation extends State<AgentAnimation>{
     
     return [newXLocation, newYLocation];
   }
-
-  // Future<void> runAnimation() async {
-  //   List<int> agentPath = widget.animationPath;
-  //   for(int state in agentPath){
-  //     print(state);
-  //     await Future.delayed(const Duration(seconds: 2), (){
-  //       List<double> newLocation = calculateNewLocation(state);
-  //       double newLocationX = newLocation[1];
-  //       double newLocationY = newLocation[0];
-  //       setState(() {
-  //         currentY = newLocationY;
-  //         currentX = newLocationX;
-  //       });
-  //     }
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context){

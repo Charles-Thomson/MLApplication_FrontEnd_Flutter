@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/function_selection_widgets/card_data.dart';
-import 'package:ann_app/widgets/dropdownselector.dart';
+import 'package:ann_app/widgets/navigation_widgets/function_selection_custom_scrollable_card_data.dart';
+import 'package:ann_app/widgets/navigation_widgets/custom_drop_down_menu.dart';
 
 class ScrollAbleFunctionSelection extends StatefulWidget{
   const ScrollAbleFunctionSelection({super.key, required this.updateConfigData});

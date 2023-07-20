@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/parameter_selection_widgets//card_data.dart';
+import 'package:ann_app/widgets/navigation_widgets/hyper_parameter_selection_custom_scrollable_card_data.dart';
 
 class ScrollAbleParameterSelection extends StatefulWidget{
   const ScrollAbleParameterSelection({super.key, required this.updateConfigData});
@@ -15,14 +15,6 @@ class _ScrollAbleParameterSelection extends State<ScrollAbleParameterSelection>{
 
   Map dataSet = cardData;
 
-  // updateConfigData("MAX_GENERATION_SIZE",maxGenerationSizeController.text);
-  // updateConfigData("STARTING_FITNESS_THRESHOLD",startingFitnessThresholdController.text);
-  // updateConfigData("DESIRED_FIT_GENERATION_SIZE",desiredFitGenerationSizeController.text);
-  // updateConfigData("MAX_EPISODE_DURATION",maxEpisodeDurationController.text);
-  // updateConfigData("NUMBER_OF_GENERATIONS",numberOfGenerationsController.text);
-
-
-  // Move all into the card data ?
   final maxGenerationSizeController = TextEditingController();
   final startingFitnessThresholdController  = TextEditingController();
   final desiredFitGenerationSizeController = TextEditingController();
@@ -103,11 +95,6 @@ class _ScrollAbleParameterSelection extends State<ScrollAbleParameterSelection>{
           ),
         )
       ]
-
-
-
-
-
     );
 
   }

@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
 
 class CustomLineChart extends StatelessWidget{
   const CustomLineChart({super.key, required this.maxXAxis, required this.maxYAxis, required this.lineChartPlots});

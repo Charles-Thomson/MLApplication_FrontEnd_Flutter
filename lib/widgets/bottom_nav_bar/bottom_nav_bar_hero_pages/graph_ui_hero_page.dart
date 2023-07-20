@@ -1,57 +1,19 @@
-
 import 'dart:math';
-
-import 'package:ann_app/widgets/full_data_nav_bar/graph_data_processing.dart';
-
+import 'package:ann_app/widgets/graph_data/graph_data_formatting.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:ann_app/widgets/hero_route.dart';
-import 'package:ann_app/widgets/full_data_nav_bar/full_data_graphs.dart';
+import 'package:ann_app/widgets/graph_data//graph_generation.dart';
 
-const String _fulldatapopouttag = "animation-selection-pop-out";
-
-class FullDataButton extends StatelessWidget{
-  const FullDataButton({super.key, required this.payloadData});
+class GraphUIHero extends StatefulWidget{
+  const GraphUIHero({super.key, required this.payloadData, required this.heroTag});
   final List<List> payloadData;
+  final String heroTag;
 
   @override
-  Widget build(BuildContext context){
-    return  Padding(padding: const EdgeInsets.all(2),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-              return FullDataPopOut(payloadData: payloadData);
-            }
-            )
-            );
-          },
-
-          child: Hero(
-              tag: _fulldatapopouttag,
-              child: Material(
-                  color: Colors.transparent,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                  child: Icon(
-                      Icons.animation_sharp,
-                      size: 40,
-                      color: Theme.of(context).primaryColor
-                  )
-              )
-          ),
-        )
-    );
-  }
+  State<GraphUIHero> createState() => _GraphUIHero();
 }
 
-class FullDataPopOut extends StatefulWidget{
-  const FullDataPopOut({super.key, required this.payloadData});
-  final List<List> payloadData;
-  @override
-  State<FullDataPopOut> createState() => _FullDataPopOut();
-
-}
-
-class _FullDataPopOut extends State<FullDataPopOut>{
+class _GraphUIHero extends State<GraphUIHero>{
   List<int> selectedValue = [];
 
   double get getMaxX => getMaxXAxisValue(widget.payloadData);
@@ -88,7 +50,7 @@ class _FullDataPopOut extends State<FullDataPopOut>{
   List<LineChartBarData> get buildSelectedLineCharts => generateSelectedLineChartData(barChartDataWithColor, selectedValue);
 
   // Highest number of steps
-   getMaxXAxisValue(List<List> payloadData){
+  getMaxXAxisValue(List<List> payloadData){
     double highestSteps = 0.0;
     for(List instance in payloadData){
       if(instance[1].length.toDouble() > highestSteps){
@@ -116,9 +78,9 @@ class _FullDataPopOut extends State<FullDataPopOut>{
     return Center(
       child: SingleChildScrollView(
         child: Hero(
-            tag: _fulldatapopouttag,
+            tag: widget.heroTag,
             child: Container(
-              height: 650,
+                height: 650,
                 width: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
@@ -149,40 +111,40 @@ class _FullDataPopOut extends State<FullDataPopOut>{
                     color: Colors.transparent,
                     child: Column(
                         children:    [
-                           Expanded(
-                             flex: 4,
-                             child: Padding(
+                          Expanded(
+                            flex: 4,
+                            child: Padding(
                               padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
                               child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: buildSelectedLineCharts),
+                            ),
                           ),
-                           ),
-                           Expanded(
-                             flex: 1,
-                             child: Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: Wrap(
-                                 spacing: 5,
-                                 direction: Axis.horizontal,
-                                 children: List<Widget>.generate(barChartDataWithColor.length,(int index){
-                                   return ChoiceChip(
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Wrap(
+                                  spacing: 5,
+                                  direction: Axis.horizontal,
+                                  children: List<Widget>.generate(barChartDataWithColor.length,(int index){
+                                    return ChoiceChip(
                                       backgroundColor: barChartDataWithColor[index][1],
-                                       selectedColor: barChartDataWithColor[index][1],
-                                       label: Text("Generation $index"),
-                                       avatar: CircleAvatar(
-                                           child: Icon(selectedValue.contains(index) ? Icons.check : Icons.circle)
-                                       ),
-                                       selected: selectedValue.contains(index),
-                                       onSelected: (bool selected){
-                                         setState(() {
-                                           selectedValue.contains(index) ? selectedValue.remove(index) : selectedValue.add(index);
-                                         });
-                                       },
-                                   );
-                                 }
-                                 ).toList()
-                               ),
-                             ),
-                           )
+                                      selectedColor: barChartDataWithColor[index][1],
+                                      label: Text("Generation $index"),
+                                      avatar: CircleAvatar(
+                                          child: Icon(selectedValue.contains(index) ? Icons.check : Icons.circle)
+                                      ),
+                                      selected: selectedValue.contains(index),
+                                      onSelected: (bool selected){
+                                        setState(() {
+                                          selectedValue.contains(index) ? selectedValue.remove(index) : selectedValue.add(index);
+                                        });
+                                      },
+                                    );
+                                  }
+                                  ).toList()
+                              ),
+                            ),
+                          )
 
                         ]
                     ),
@@ -193,5 +155,3 @@ class _FullDataPopOut extends State<FullDataPopOut>{
     );
   }
 }
-
-
