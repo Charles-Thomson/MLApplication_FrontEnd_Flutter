@@ -19,14 +19,12 @@ class _FunctionSelectionUIHero extends State<FunctionSelectionUIHero>{
   @override
   Widget build(BuildContext context) {
     MaterialColor themePrimary = Theme.of(context).primaryColor as MaterialColor;
-    return Center(
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
-            child: Hero(
-                tag: widget.heroTag,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ScrollAbleFunctionSelection(updateConfigData: updateConfigData,),
-                ))));
+    return SafeArea(
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, kBottomNavigationBarHeight),
+        child: Hero(
+              tag: widget.heroTag,
+              child: ScrollAbleFunctionSelection(updateConfigData: updateConfigData,))),
+    );
   }
 }

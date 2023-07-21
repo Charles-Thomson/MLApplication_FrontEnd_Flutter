@@ -34,7 +34,6 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
    switch(widget.buttonState){
      case 0:
        return [
-
          MazeConfigurationUIButton(updateMazeMap: (newMapData){
            widget.updateMazeMap(newMapData);
          }),

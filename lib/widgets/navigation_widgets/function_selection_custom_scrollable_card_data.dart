@@ -19,7 +19,7 @@ var cardData = {
     "configKey" : "OUTPUT_LAYER_ACTIVATION_FUNCTION"
   },
 
-  "3": {"title": "Generation\n concatenation",
+  "3": {"title": "Generation Concatenation",
     "dropDownMenuItems": "Generation concatenation,Merging,Avg",
     "associatedText": "Select a Generation concatenation function Select a Generation concatenation function   Select a Generation concatenation function   Select a Generation concatenation function    ",
     "configKey" : "WEIGHTS_CONCATENATION_FUNCTIONS"

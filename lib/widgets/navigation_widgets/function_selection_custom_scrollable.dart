@@ -37,7 +37,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
               String configKey = data["configKey"]!;
 
               return Card(
-                color: Colors.blueGrey.withOpacity(0.9),
+                color: Colors.white.withOpacity(0.8),
                 elevation: 5,
                 borderOnForeground: false,
                 child: Column(
@@ -45,6 +45,7 @@ class ScrollAbleFunctionSelection extends StatefulWidget{
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(data["title"]!, style:  TextStyle(
+                        fontWeight: FontWeight.bold,
                         backgroundColor: Colors.blueGrey.withOpacity(0),
                         fontSize: 18
                       ),),

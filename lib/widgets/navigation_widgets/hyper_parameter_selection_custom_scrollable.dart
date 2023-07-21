@@ -35,7 +35,6 @@ class _ScrollAbleParameterSelection extends State<ScrollAbleParameterSelection>{
       slivers: [
         SliverAppBar(
           centerTitle: true,
-
           title: const Text("Parameter Selection", style: TextStyle(fontSize: 24),),
           backgroundColor: Theme.of(context).primaryColor,
           floating: true,
@@ -48,7 +47,7 @@ class _ScrollAbleParameterSelection extends State<ScrollAbleParameterSelection>{
                 var data = dataSet[index.toString()];
                 String configKey = data["configKey"]!;
                 return Card(
-                  color: Colors.blueGrey.withOpacity(0.9),
+                  color: Colors.white.withOpacity(0.8),
                   elevation: 5,
                   borderOnForeground: false,
                   child: Column(
@@ -91,7 +90,7 @@ class _ScrollAbleParameterSelection extends State<ScrollAbleParameterSelection>{
                   )
                 );
               },
-            childCount: 5
+            childCount: textControllers.length
           ),
         )
       ]

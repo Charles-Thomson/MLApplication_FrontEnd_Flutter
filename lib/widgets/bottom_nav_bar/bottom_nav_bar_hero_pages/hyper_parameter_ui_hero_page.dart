@@ -20,17 +20,14 @@ class _HyperParameterSelectionUIHero extends State<HyperParameterSelectionUIHero
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 100, 5, 60),
-          child: Hero(
-            tag: widget.heroTag,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ScrollAbleParameterSelection(updateConfigData: updateConfigData),
-            ),
-          ),
-        )
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, kBottomNavigationBarHeight),
+        child: Hero(
+          tag: widget.heroTag,
+          child: ScrollAbleParameterSelection(updateConfigData: updateConfigData),
+        ),
+      ),
     );
   }
 }

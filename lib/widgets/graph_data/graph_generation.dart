@@ -22,7 +22,7 @@ class CustomLineChart extends StatelessWidget{
     border: Border(
       bottom:
       BorderSide(color: Colors.black12.withOpacity(0.8), width: 4),
-      left: const BorderSide(color: Colors.black),
+      left: BorderSide(color: Colors.black12.withOpacity(0.8), width: 4),
       right: const BorderSide(color: Colors.transparent),
       top: const BorderSide(color: Colors.transparent),
     ),
@@ -37,7 +37,7 @@ class CustomLineChart extends StatelessWidget{
           fontSize: 18,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.2,
-          color: Colors.blue
+          color: Colors.black
       ),),
       axisNameSize: 18
 
@@ -53,7 +53,7 @@ class CustomLineChart extends StatelessWidget{
               fontSize: 24,
               fontWeight: FontWeight.bold,
               letterSpacing: 3,
-              color: Colors.lightBlue
+              color: Colors.black
           ), textAlign: TextAlign.center
       ),
       axisNameSize: 30,
@@ -66,7 +66,7 @@ class CustomLineChart extends StatelessWidget{
         fontSize: 18,
         fontWeight: FontWeight.bold,
         letterSpacing: 1.2,
-        color: Colors.blue
+        color: Colors.black
       ),),
       axisNameSize: 18,
       sideTitles: leftTitles(),

@@ -35,7 +35,7 @@ class _CustomDropDownMenu extends State<CustomDropDownMenu>{
                 child: Text(
                     style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.white
+                        color: Colors.black
                     ),
                     "Select a $selectorTitleName"),
               ),
@@ -48,7 +48,6 @@ class _CustomDropDownMenu extends State<CustomDropDownMenu>{
               decoration: InputDecoration(
                   labelStyle:  TextStyle( color: Colors.redAccent, fontSize: 16, backgroundColor: Colors.blueGrey.withOpacity(0)),
                   errorStyle:  TextStyle( color: Colors.redAccent, fontSize: 16, backgroundColor: Colors.blueGrey.withOpacity(0)),
-                  hintText: 'Testing hint text',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
               isEmpty: currentSelectedValue == '',
               child: DropdownButtonHideUnderline(
@@ -66,7 +65,7 @@ class _CustomDropDownMenu extends State<CustomDropDownMenu>{
                     items: widget.menuItems.map((String value){
                       return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value, style: const TextStyle(color: Colors.white),)
+                          child: Text(value, style: const TextStyle(color: Colors.black),)
                       );
                     }
                     ).toList(),

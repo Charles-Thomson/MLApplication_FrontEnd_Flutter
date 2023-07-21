@@ -75,46 +75,25 @@ class _GraphUIHero extends State<GraphUIHero>{
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-      child: SingleChildScrollView(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, kBottomNavigationBarHeight),
         child: Hero(
-            tag: widget.heroTag,
+          tag: widget.heroTag,
+          child: SingleChildScrollView(
             child: Container(
-                height: 650,
-                width: 400,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.blueGrey.shade700,
-                      Colors.blueGrey.shade500,
-                      Colors.blueGrey.shade300,
-                      Colors.blueGrey.shade300,
-                      Colors.blueGrey.shade400,
-                      Colors.blueGrey.shade700,
-                    ],
-                    stops: const [0.01, 0.1, 0.49, 0.51, 0.6, 1],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  color: Colors.grey.withOpacity(0.8),
-                  boxShadow: [BoxShadow(
-                      color: Colors.grey.withOpacity(0.6),
-                      blurRadius: 1,
-                      offset: const Offset(1, 1),
-                      blurStyle: BlurStyle.solid
-                  )],
-                ),
-
+                color: Colors.white.withOpacity(0.7),
+                height: MediaQuery.of(context).size.height / 1.1,
+                width:MediaQuery.of(context).size.width,
                 child: Center(
                   child: Material(
                     color: Colors.transparent,
                     child: Column(
                         children:    [
                           Expanded(
-                            flex: 4,
+                            flex: 6,
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 5, 20, 5),
+                              padding: const EdgeInsets.all(10.0),
                               child: CustomLineChart(maxXAxis: getMaxX, maxYAxis: getMaxY,lineChartPlots: buildSelectedLineCharts),
                             ),
                           ),
@@ -145,11 +124,12 @@ class _GraphUIHero extends State<GraphUIHero>{
                               ),
                             ),
                           )
-
                         ]
                     ),
                   ),
-                ))
+                ),
+              ),
+          ),
         ),
       ),
     );

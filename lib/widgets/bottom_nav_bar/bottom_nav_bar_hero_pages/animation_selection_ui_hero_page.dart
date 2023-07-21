@@ -18,56 +18,57 @@ class _AnimationSelectionUIHero extends State<AnimationSelectionUIHero>{
   @override
   Widget build(BuildContext context) {
 
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 400, 0, 60),
-      child: SingleChildScrollView(
-        child:
-        Hero(
-            tag: widget.heroTag,
-            child: SizedBox(
-              height: 380,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children:    [
-                    const SizedBox(
-                        height: 30,
-                        child: Material(
-                            color: Colors.transparent,
-
-                            child:  Text("Scroll to see each generation", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),))
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: SizedBox(
-                          height: 240,
-                          width: MediaQuery.of(context).size.height,
-                          child: CustomScrollView(
-                              scrollDirection: Axis.horizontal,
-                              slivers: [
-                                SliverList(
-                                    delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-                                      return GenerationDataCard(
-                                        index: index,
-                                        payloadData: widget.payloadData[index],
-                                        runAnimationCallBack: (animationPath){
-                                          widget.runAnimationCallBack(animationPath);
-                                        },) ;
-                                    },
-                                        childCount: widget.payloadData.length
-                                    )
-                                )
-                              ]
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, kBottomNavigationBarHeight),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SingleChildScrollView(
+              child:
+              Hero(
+                  tag: widget.heroTag,
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height / 3,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children:    [
+                          const Expanded(
+                            child: Material(
+                                color: Colors.transparent,
+                                child:  Text("Scroll to see each generation", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),)),
                           ),
-                        ),
-                      ),
-                    )
-                  ]
+                          Expanded(
+                            flex: 5,
+                            child: Center(
+                              child: CustomScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  slivers: [
+                                    SliverList(
+                                        delegate: SliverChildBuilderDelegate((BuildContext context, int index){
+                                          return GenerationDataCard(
+                                            index: index,
+                                            payloadData: widget.payloadData[index],
+                                            runAnimationCallBack: (animationPath){
+                                              widget.runAnimationCallBack(animationPath);
+                                            },
+                                          ) ;
+                                        },
+                                            childCount: widget.payloadData.length
+                                        )
+                                    )
+                                  ]
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
+                  )
               ),
-            )
+            ),
+          ],
         ),
-
       ),
     );
   }

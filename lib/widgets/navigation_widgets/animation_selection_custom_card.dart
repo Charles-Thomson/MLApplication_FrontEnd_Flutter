@@ -21,6 +21,7 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   get highestFitnessPath => widget.payloadData[1].cast<int>();
   get lowestFitness => widget.payloadData[3].toStringAsFixed(2);
   get lowestFitnessPath => widget.payloadData[4];
+  get gradientValue => double.parse(highestFitness) / 10;
 
   List<String> chipTitles = ["Fittest"]; // add additional chips here
   @override
@@ -34,140 +35,97 @@ class _GenerationDataCard extends State<GenerationDataCard>{
   Widget build(BuildContext context){
     List animationPaths = [highestFitnessPath];
     return Card(
-        color: Theme.of(context).primaryColor.withOpacity(0.2),
-        child: SizedBox(
-          width: 300,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex:2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text("Generation $cardIndex",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24
-                            )
-                        ),
-                      ),
+        color: Colors.white,
+        elevation: 4,
+        child: Container(
+          decoration: BoxDecoration(
+            // Leaving the border on for now
+            border: Border.all(
+              width: 1,
+              style: BorderStyle.solid
+            ),
 
-                      const Expanded(
-                        child:  Text("Successful: true",
-                          style: TextStyle(
-                              fontSize: 14
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[
+                Colors.blue.shade800,
+                Colors.blue.shade100,
+              ],
+              stops: [0.0, gradientValue]
 
-                Expanded(
-                  flex: 2,
-                  child: Row( children: <Widget>[
+            )
+          ),
+          width: MediaQuery.of(context).size.width,
+          height: 80,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
 
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                     Expanded(
                       flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Expanded(child: Text("Fitness", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-                          Expanded(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children:  [
-                                  Expanded(
-                                    child: Text("Highest: $highestFitness",
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text("Lowest: $lowestFitness",
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  )
-
-                                ]),
+                      child: Text("Generation $cardIndex",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24
                           )
-                        ],
                       ),
                     ),
                     Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:  [
-                          const Expanded(
-                            child:  Text("Path",
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                          ),
-                          Expanded(
-                            child: Column(children:  const <Widget>[
-                              Expanded(child: Text("Shortest path:  holder", style: TextStyle(fontSize: 14),)),
-
-                              Expanded(child: Text("Longest path:  holder", style: TextStyle(fontSize: 14),))
-
-                            ]),
-                          ),
-                        ],
+                      flex: 1,
+                      child: Text("Highest Fitness: $highestFitness",
+                            style: const TextStyle(
+                                fontSize: 14,
+                              fontWeight: FontWeight.bold
+                            ),
                       ),
                     ),
-
-                  ]
-                  ),
-                ),
-
-                const Expanded(
-                  flex:1,
-                    child: Text("Select A Path", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
-
-                Expanded(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children:  [
-                      Expanded(
-                        child: Wrap(
-                            spacing: 5,
-                            children: List<Widget>.generate(chipTitles.length, (int index){
-                              return ChoiceChip(
-                                label: Text(chipTitles[index]),
-                                avatar: CircleAvatar(
-                                    child: Icon(selectedValue == index ? Icons.check : Icons.circle)
-                                ),
-                                selected: selectedValue == index,
-                                onSelected: (bool selected){
-                                  setState(() {
-                                    selectedValue = selected ? index : null;
-                                    selectedAnimationPath = animationPaths[index];
-                                  });
-                                },
-                              );
-                            }
-                            ).toList()
+                    Expanded(
+                      flex: 1,
+                      child: Text("Path: $highestFitnessPath",
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+
+                  ],
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(onPressed: () {
-                        print("SYSTEM - ANIMATION: Card $cardIndex - Path: $selectedAnimationPath");
-                        widget.runAnimationCallBack(selectedAnimationPath);
-                        }, child: const Text("Run Selected Animation")),
-                    ],
-                  ),
-                )
-              ]
+              ),
+
+
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(onPressed: () {
+                  print("SYSTEM - ANIMATION: Card $cardIndex - Path: $selectedAnimationPath");
+                 widget.runAnimationCallBack(selectedAnimationPath); },
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: const BorderSide(color: Colors.red)
+                            )
+                        )
+                    ),
+
+                    child: Row(
+                      children: const [
+                        Text("Run"),
+                        Icon(Icons.play_arrow_sharp)
+                      ],
+                    )),
+              ),
+            )
+            ],
           ),
         )
     );
