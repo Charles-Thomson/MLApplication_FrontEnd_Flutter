@@ -68,7 +68,8 @@ class _CustomBottomNavBar extends State<CustomBottomNavBar>{
     return BottomAppBar(
       height: 60,
       shape: const CircularNotchedRectangle(),
-      color: Colors.blueGrey.shade100,
+      color: Colors.white,
+      elevation: 10,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children:  [

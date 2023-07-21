@@ -16,9 +16,21 @@ import 'package:ann_app/API/app_config_data_payload.dart' as api_payload;
 //BUG: The shading on the map isn't accurate when the map size changes
 //BUG: Values arnt being saved in the function selection drop down for the UI
 //BUG: Guard handling for the Map data
+//BUG: Overflow on map configuration
 
 
 // TODO TODAY/NEXT:
+// Block 1
+// Implement unified layout for hero pages
+// Look at protected areas ?
+// Build based on media size +/- an amount, not using padding ?
+// Create a builder for the top level hero widget that takes a tag and page data
+// returns child which will be the hero page
+
+// Extra: Builder for the hero buttons ->
+// Passing in an icon, tag, and page, returning a built button
+
+// Add safe area to bottom navBar ?
 // Testing and clean up needed
 // Need a future builder ? on waiting for the return payload
 // Need a clear of the back end DB'S on each run
@@ -129,84 +141,82 @@ class _MyHomePageState extends State<MyHomePage> {
          mapValid = false;
        });
      }
-
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text(widget.title),
+        // ),
 
-      bottomNavigationBar: CustomBottomNavBar(
-        buttonState: floatingABState,
+        bottomNavigationBar: CustomBottomNavBar(
+          buttonState: floatingABState,
 
-      runAnimationCallBack: (animationPath){
-        runAnimationCallBack(animationPath);
-      },
+        runAnimationCallBack: (animationPath){
+          runAnimationCallBack(animationPath);
+        },
 
-      updateConfigData: (configKey, newValue){
-        api_payload.updateConfigDataPayload(configKey, newValue);
-        updateLoadingValue();
-      },
+        updateConfigData: (configKey, newValue){
+          api_payload.updateConfigDataPayload(configKey, newValue);
+          updateLoadingValue();
+        },
 
-      updateMazeMap: (newMapData){
-        updateMazeMapSize(newMapData);
-      },
+        updateMazeMap: (newMapData){
+          updateMazeMapSize(newMapData);
+        },
 
-      payloadData: payloadData,
-      ),
+        payloadData: payloadData,
+        ),
 
 
 
-      floatingActionButton:
-          CustomFloatingButton(
-              floatingActionButtonState: floatingABState,
-              loadingValue: loadingValue,
+        floatingActionButton:
+            CustomFloatingButton(
+                floatingActionButtonState: floatingABState,
+                loadingValue: loadingValue,
 
-              updateFloatingActionButtonStateCallBack: (){
-                updateFABStateCallBack();
-              },
-              apiSubmissionCallBack: (){
-              placeHolderAPICallBack(); },
+                updateFloatingActionButtonStateCallBack: (){
+                  updateFABStateCallBack();
+                },
+                apiSubmissionCallBack: (){
+                placeHolderAPICallBack(); },
 
-              resetAllCallBack: (){
-                resetAll();}
-           ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+                resetAllCallBack: (){
+                  resetAll();}
+             ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
-      body: Column(
-        children:  [
-          const SizedBox(
-              height: 100
-          ),
-          Stack(
-            children: [
-            Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: BuiltMaze(
-                      updateTileDataCallBack: (index, tileState){
-                        int newTileState = updateTileData(index, tileState);
-                        return newTileState;
-                        },
-                      animationVisible: animationVisible,
-                      agentAnimationLocation: currentAnimationLocation,
-                      tileData: tileData,
-                      ),
-                  )
-                  ),
-              ),
+        body: Column(
+          children:  [
+            const SizedBox(
+                height: 100
             ),
+            Stack(
+              children: [
+              Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: BuiltMaze(
+                        updateTileDataCallBack: (index, tileState){
+                          int newTileState = updateTileData(index, tileState);
+                          return newTileState;
+                          },
+                        animationVisible: animationVisible,
+                        agentAnimationLocation: currentAnimationLocation,
+                        tileData: tileData,
+                        ),
+                    )
+                    ),
+                ),
+              ),
+            ]
+           ),
           ]
-         ),
-        ]
-    ));
+      )),
+    );
   }
 }
