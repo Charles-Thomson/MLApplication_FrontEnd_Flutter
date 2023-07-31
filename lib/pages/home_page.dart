@@ -65,21 +65,21 @@ class _MyHomePageState extends State<MyHomePage> {
   int updateTileData(int index, var tileState) => tileData[index] >= 3 ? tileData[index] = 0 : tileData[index] += 1;
 
   void updateFABState(){
-    print("In update FAB homepage");
+    // print("In update FAB homepage");
       setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;}
       );
   }
 
 
   void updateFABStateCallBack(){
-    print("In update FAB");
+    //print("In update FAB");
     if(mapValid == true){
       setState(() { floatingABState == 0 ? floatingABState = 1 : floatingABState = 0;}
     );}
   }
 
   void resetAll(){
-    print("SYSTEM -> RESET ALL CALLED");
+    //print("SYSTEM -> RESET ALL CALLED");
     maze_config.updateInConfig(); // resets the maze_config to defaults
     api_payload.resetConfigDataPayload(); // resets the api payload
     setState(() {
@@ -125,14 +125,17 @@ class _MyHomePageState extends State<MyHomePage> {
      bool mapValid = api_payload.validateAndSetMapData(tileData);
 
      if(mapValid == true){
-       api_payload.printCurrentConfig();
+       //api_payload.printCurrentConfig();
+       //api_calls.testApiCall();
        List<List> data = await api_calls.testApiCall();
+       //List<List> data = [];
+
        print("SYSTEM -> API call back made");
        setState(() {
          mapValid = true;
          payloadData = data;
        });
-       print(payloadData.length);
+       //print(payloadData.length);
        updateFABState();
 
      } else {

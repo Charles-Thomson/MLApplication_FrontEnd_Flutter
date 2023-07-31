@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:ann_app/API/app_config_data_payload.dart';
+import 'package:ann_app/API/api_endpoints.dart' as end_points;
 String url = '';
 String map = '';
 
@@ -11,25 +12,31 @@ List tagsJson = [];
 
 Future<List<List>> testApiCall() async {
   //Map configData = getCurrentConfigData;
-  try{
+  http.Client client = http.Client();
+  // try{
     var payload = {};
     payload['payloadBody'] = getCurrentConfigData;
+    // print(payload);
 
     String encodedPayload = json.encode(payload);
-    url = "http://10.0.2.2:5000/TESTPAYLOAD?query=$encodedPayload";
-    data = await passPayload(url);
+    url = "http://10.0.2.2:8000/run_main_system/$encodedPayload/";
+    // url = "http://10.0.2.2:8000/get_data/";
 
-    // Works as a return
+    data = await passPayload(url);
+    print(data);
+
+    // // Works as a return
     Map tagsJson = jsonDecode(data);
     print("JSON DECODED");
     List<List> formattedData = formatPayloadData(tagsJson);
 
     return formattedData;
+   // return [];
 
-  }catch(e){
-    print("In the catch");
-    return [];
-  }
+  // }catch(e){
+  //   print("In the catch");
+  //   return [];
+  // }
 
 }
 
@@ -58,3 +65,4 @@ passPayload(String url) async {
   http.Response response = await http.get(Uri.parse(url));
   return response.body;
 }
+
