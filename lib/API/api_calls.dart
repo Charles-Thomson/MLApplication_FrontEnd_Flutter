@@ -23,15 +23,13 @@ Future<List<List>> testApiCall() async {
     // url = "http://10.0.2.2:8000/get_data/";
 
     data = await passPayload(url);
-    print(data);
 
-    // // Works as a return
-    Map tagsJson = jsonDecode(data);
-    print("JSON DECODED");
-    List<List> formattedData = formatPayloadData(tagsJson);
+    var decoded_data = jsonDecode(data);
+
+    List<List> formattedData = formatPayloadData(decoded_data);
 
     return formattedData;
-   // return [];
+
 
   // }catch(e){
   //   print("In the catch");
@@ -40,23 +38,38 @@ Future<List<List>> testApiCall() async {
 
 }
 
-List<List> formatPayloadData(Map payloadData){
+List<List> formatPayloadData(List<dynamic> payloadData){
   print("In format payload");
   List<List> formattedData = [];
-  for (var key in payloadData.keys){
-    Map thisData = payloadData[key];
+  for(int i = 0; i < payloadData.length / 2; i += 2){
+    Map high_fit_data = payloadData[i];
+    Map low_fit_data = payloadData[i+1];
 
-    double highestFitness = double.parse(thisData["HIGHEST_FITNESS"].toString());
-    List highestFitnessPath = json.decode(thisData["HIGHEST_FITNESS_PATH"].toString());
-    List highestFitnessByStep = json.decode(thisData["HIGHEST_FITNESS_BY_STEP"].toString());
+    print(high_fit_data["traversed_path"]);
+    print(high_fit_data["traversed_path"].runtimeType);
 
-    double lowestFitness = double.parse(thisData["LOWEST_FITNESS"].toString());
-    List lowestFitnessPath = json.decode(thisData["LOWEST_FITNESS_PATH"].toString());
-    List lowestFitnessByStep = json.decode(thisData["LOWEST_FITNESS_BY_STEP"].toString());
+    double higest_fitness = double.parse(high_fit_data["fitness"]);
 
-    List returnData = [highestFitness,highestFitnessPath,highestFitnessByStep,lowestFitness,lowestFitnessPath, lowestFitnessByStep];
-    formattedData.add(returnData);
+    List<String> higest_fitness_path = high_fit_data["traversed_path"].split(',');
+    List<String> higest_fitness_path_as_fitness = high_fit_data["fitness_by_step"].split(',');
+
+    double lowest_fitness = double.parse(low_fit_data["fitness"]);
+    List<String> lowest_fitness_path = low_fit_data["traversed_path"].split(',');
+    List<String> lowest_fitness_path_as_fitness = low_fit_data["fitness_by_step"].split(',');
+
+    List<int> higest_fitness_path_int = higest_fitness_path.map(int.parse).toList();
+    List<double> higest_fitness_path_as_fitness_int = higest_fitness_path_as_fitness.map(double.parse).toList();
+
+    List<int> lowest_fitness_path_int = lowest_fitness_path.map(int.parse).toList();
+    List<double> lowest_fitness_path_as_fitness_int = lowest_fitness_path_as_fitness.map(double.parse).toList();
+
+
+
+    List data = [higest_fitness,higest_fitness_path_int, higest_fitness_path_as_fitness_int, lowest_fitness,lowest_fitness_path_int,lowest_fitness_path_as_fitness_int];
+    print(data);
+    formattedData.add(data);
   }
+
   return formattedData;
 
 }
